@@ -20,4 +20,14 @@ class RouteController extends Controller
     public function SignUp(){
         return view('templates.pages.sign-up');
     }
+
+    //dashboard
+    public function dashboard(){
+        return view('admin.dashboard.index');
+    }
+
+    //loginAdmin
+    public function loginAdmin(){
+        return view('admin.login');
+    }
 }

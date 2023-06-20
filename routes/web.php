@@ -34,4 +34,9 @@ Route::prefix('customer')->group(function () {
     Route::get('/register',[RouteController::class,"signUp"])->name('customer.register');
 });
 
+Route::prefix('admin')->group(function () {
+    Route::get('/login',[RouteController::class,"loginAdmin"])->name('admin.login');
+    Route::get('/dashboard',[RouteController::class,"dashboard"])->name('admin.dashboard');
+});
+
 

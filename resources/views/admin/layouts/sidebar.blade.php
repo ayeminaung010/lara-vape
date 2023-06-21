@@ -4,17 +4,17 @@
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
             aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard "
+        <a class="navbar-brand m-0"
             target="_blank">
             <img src="{{ asset('admin/assets/img/logo-ct.png') }}" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-1 font-weight-bold text-white">Material Dashboard 2</span>
+            <span class="ms-1 font-weight-bold text-white">Vape Dashboard</span>
         </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link text-white active bg-gradient-primary" href="../pages/dashboard.html">
+                <a href="{{ route('admin.dashboard') }}" class="nav-link text-white  @if(Route::currentRouteName() == 'admin.dashboard') bg-gradient-primary @endif" href="../pages/dashboard.html">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dashboard</i>
                     </div>
@@ -30,19 +30,19 @@
                     <span class="nav-link-text ms-1">Posts</span>
                 </a>
                 <div class="collapse" id="collapseExample">
-                    <a href="{{ route('category.index') }}" class="nav-link text-white " >
+                    <a href="{{ route('category.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'category.index') bg-gradient-primary @endif" >
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
                         </div>
                         <span class="nav-link-text ms-1">Category</span>
                     </a>
-                    <a href="{{ route('brands.index') }}" class="nav-link text-white " >
+                    <a href="{{ route('brands.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'brands.index') bg-gradient-primary @endif" >
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
                         </div>
                         <span class="nav-link-text ms-1">Brand</span>
                     </a>
-                    <a href="{{ route('products.index') }}" class="nav-link text-white " >
+                    <a href="{{ route('products.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'products.index') bg-gradient-primary @endif" >
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
                         </div>
@@ -59,13 +59,13 @@
                     <span class="nav-link-text ms-1">Menu</span>
                 </a>
                 <div class="collapse" id="menuCollapse">
-                    <a class="nav-link text-white " >
+                    <a class="nav-link text-white @if(Route::currentRouteName() == 'admin.dashboard') bg-gradient-primary @endif" >
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
                         </div>
                         <span class="nav-link-text ms-1">Menu Lists</span>
                     </a>
-                    <a class="nav-link text-white " >
+                    <a class="nav-link text-white  @if(Route::currentRouteName() == 'admin.dashboard') bg-gradient-primary @endif" >
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
                         </div>
@@ -83,13 +83,13 @@
                     <span class="nav-link-text ms-1">Frontend</span>
                 </a>
                 <div class="collapse" id="frontendCollapse">
-                    <a  href="{{ route('product_type.index') }}" class="nav-link text-white " >
+                    <a  href="{{ route('product_type.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'product_type.index') bg-gradient-primary @endif" >
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
                         </div>
                         <span class="nav-link-text ms-1">Product Type</span>
                     </a>
-                    <a href="{{ route('review.index') }}" class="nav-link text-white " >
+                    <a href="{{ route('review.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'review.index') bg-gradient-primary @endif" >
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
                         </div>
@@ -97,13 +97,63 @@
                     </a>
                 </div>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('orders.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'orders.index') bg-gradient-primary @endif" >
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">dashboard</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('payments.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'payments.index') bg-gradient-primary @endif" >
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">dashboard</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Payments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('users.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'users.index') bg-gradient-primary @endif" >
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">dashboard</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Users</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ route('subscriber.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'subscriber.index') bg-gradient-primary @endif" >
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">dashboard</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Subscribers</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('contact.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'contact.index') bg-gradient-primary @endif" >
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">dashboard</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Contact Message</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('seo.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'seo.index') bg-gradient-primary @endif" >
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">dashboard</i>
+                    </div>
+                    <span class="nav-link-text ms-1">SEO</span>
+                </a>
+            </li>
 
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages
                 </h6>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link text-white " href="../pages/profile.html">
+                <a class="nav-link text-white @if(Route::currentRouteName() == 'admin.dashboard') bg-gradient-primary @endif" >
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">person</i>
                     </div>
@@ -111,7 +161,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white " href="../pages/sign-up.html">
+                <a class="nav-link text-white " >
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">assignment</i>
                     </div>

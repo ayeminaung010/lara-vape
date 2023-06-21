@@ -13,7 +13,7 @@ class ProductTypeController extends Controller
      */
     public function index()
     {
-        $productTypes = ProductType::where('created_at','desc')->get();
+        $productTypes = ProductType::orderBy('created_at','desc')->paginate(5);
         return view('admin.pages.product-type.index',compact('productTypes'));
     }
 
@@ -22,7 +22,7 @@ class ProductTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.product-type.create');
     }
 
     /**

@@ -13,7 +13,8 @@ class SubscribeController extends Controller
      */
     public function index()
     {
-        //
+        $subscribers = Subscribe::orderBy('created_at', 'desc')->paginate(10);
+        return view('admin.pages.subscribers.index',compact('subscribers'));
     }
 
     /**

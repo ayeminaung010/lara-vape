@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brands;
-use App\Http\Requests\StoreBrandsRequest;
-use App\Http\Requests\UpdateBrandsRequest;
+use App\Models\SEO;
+use App\Http\Requests\StoreSEORequest;
+use App\Http\Requests\UpdateSEORequest;
 
-class BrandsController extends Controller
+class SEOController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $brands = Brands::orderBy('created_at','desc')->paginate(5);
-        return view('admin.pages.brand.index',compact('brands'));
+        $seo  = SEO::first();
+        return view('admin.pages.seo.index',compact('seo'));
     }
 
     /**
@@ -22,13 +22,13 @@ class BrandsController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.brand.create');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBrandsRequest $request)
+    public function store(StoreSEORequest $request)
     {
         //
     }
@@ -36,7 +36,7 @@ class BrandsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Brands $brands)
+    public function show(SEO $sEO)
     {
         //
     }
@@ -44,7 +44,7 @@ class BrandsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Brands $brands)
+    public function edit(SEO $sEO)
     {
         //
     }
@@ -52,7 +52,7 @@ class BrandsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBrandsRequest $request, Brands $brands)
+    public function update(UpdateSEORequest $request, SEO $sEO)
     {
         //
     }
@@ -60,7 +60,7 @@ class BrandsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Brands $brands)
+    public function destroy(SEO $sEO)
     {
         //
     }

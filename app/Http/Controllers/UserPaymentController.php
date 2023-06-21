@@ -13,7 +13,8 @@ class UserPaymentController extends Controller
      */
     public function index()
     {
-        //
+        $userPayments = UserPayment::orderBy('created_at','desc')->paginate(5);
+        return view('admin.pages.payments.index',compact('userPayments'));
     }
 
     /**

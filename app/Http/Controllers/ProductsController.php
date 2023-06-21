@@ -13,7 +13,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Products::where('created_at','desc')->paginate(5);
+        $products = Products::orderBy('created_at','desc')->paginate(5);
         return view('admin.pages.products.index',compact('products'));
     }
 

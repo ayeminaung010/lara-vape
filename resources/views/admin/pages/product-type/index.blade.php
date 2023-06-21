@@ -15,9 +15,9 @@
                         </div>
                     </div>
                     <div class="card-body px-0 pb-2">
-                        @if ($brands)
+                        @if ($productTypes)
                         <div class="table-responsive p-0">
-                            @if (count($brands) > 0)
+                            @if (count($productTypes) > 0)
                             <table class="table align-items-center mb-0">
                                 <thead>
                                     <tr>
@@ -53,7 +53,7 @@
                                         <td>
 
                                         </td>
-                                        
+
                                         <td>
 
                                         </td>

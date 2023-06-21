@@ -13,7 +13,8 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.reviews.index');
+        $reviews = Review::orderBy('created_at','desc')->paginate(5);
+        return view('admin.pages.reviews.index',compact('reviews'));
     }
 
     /**
@@ -21,7 +22,7 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.reviews.create');
     }
 
     /**

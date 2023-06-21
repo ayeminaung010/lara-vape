@@ -1,9 +1,9 @@
 @extends('admin.layouts.app')
 
 @section('btn')
-<a href="{{ route('category.index') }}" class=" btn btn-dribbble">
-    Back
-</a>
+    <a href="{{ route('category.index') }}" class=" btn btn-dribbble">
+        Back
+    </a>
 @endsection
 
 @section('content')
@@ -12,14 +12,18 @@
             <div class="">
                 <h5>Create Category</h5>
             </div>
-            <form action="" method="POST">
+            <form action="{{ route('category.store') }}" method="POST">
                 @csrf
                 <div class=" form-group">
                     <div class="input-group input-group-outline my-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" class="form-control">
+                        <input type="text" name="name" placeholder="Name" class="form-control">
                     </div>
-                    <button class=" btn btn-behance">
+                    <div class="">
+                        @error('name')
+                            <small class=" text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <button type="submit" class=" btn btn-behance">
                         Create
                     </button>
                 </div>

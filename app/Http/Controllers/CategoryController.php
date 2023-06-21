@@ -13,7 +13,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::where('created_at','desc')->paginate(5);
+        $categories = Category::orderBy('created_at','desc')->paginate(5);
         return view('admin.pages.category.index',compact('categories'));
     }
 
@@ -30,7 +30,10 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        $category = new Category();
+        $category->name = $request->name;
+        $category->save();
+        return redirect()->route('category.index');
     }
 
     /**

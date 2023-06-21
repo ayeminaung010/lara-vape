@@ -216,7 +216,7 @@
                                         </a>
                                         <a href="javascript:;" class="avatar avatar-xs rounded-circle"
                                             data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                            title="Romina Hadid">
+                                            title="Romina Hadid">   
                                             <img src="{{ asset('admin/assets/img/team-2.jpg') }}" alt="team2">
                                         </a>
                                         <a href="javascript:;" class="avatar avatar-xs rounded-circle"

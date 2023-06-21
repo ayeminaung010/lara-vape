@@ -27,57 +27,77 @@
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dashboard</i>
                     </div>
-                    <span class="nav-link-text ms-1">Dropdwon</span>
+                    <span class="nav-link-text ms-1">Posts</span>
                 </a>
                 <div class="collapse" id="collapseExample">
-                    <a class="nav-link text-white  " href="../pages/dashboard.html">
+                    <a href="{{ route('category.index') }}" class="nav-link text-white " >
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
                         </div>
-                        <span class="nav-link-text ms-1">Dashboard</span>
+                        <span class="nav-link-text ms-1">Category</span>
+                    </a>
+                    <a href="{{ route('brands.index') }}" class="nav-link text-white " >
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">dashboard</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Brand</span>
+                    </a>
+                    <a href="{{ route('products.index') }}" class="nav-link text-white " >
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">dashboard</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Products</span>
                     </a>
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white " href="../pages/tables.html">
+                <a class="nav-link text-white " data-bs-toggle="collapse" href="#menuCollapse" role="button"
+                    aria-expanded="false" aria-controls="menuCollapse">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">table_view</i>
+                        <i class="material-icons opacity-10">dashboard</i>
                     </div>
-                    <span class="nav-link-text ms-1">Tables</span>
+                    <span class="nav-link-text ms-1">Menu</span>
                 </a>
+                <div class="collapse" id="menuCollapse">
+                    <a class="nav-link text-white " >
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">dashboard</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Menu Lists</span>
+                    </a>
+                    <a class="nav-link text-white " >
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">dashboard</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Menu Items</span>
+                    </a>
+                </div>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link text-white " href="../pages/billing.html">
+                <a class="nav-link text-white " data-bs-toggle="collapse" href="#frontendCollapse" role="button"
+                    aria-expanded="false" aria-controls="frontendCollapse">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">receipt_long</i>
+                        <i class="material-icons opacity-10">dashboard</i>
                     </div>
-                    <span class="nav-link-text ms-1">Billing</span>
+                    <span class="nav-link-text ms-1">Frontend</span>
                 </a>
+                <div class="collapse" id="frontendCollapse">
+                    <a  href="{{ route('product_type.index') }}" class="nav-link text-white " >
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">dashboard</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Product Type</span>
+                    </a>
+                    <a href="{{ route('review.index') }}" class="nav-link text-white " >
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">dashboard</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Reviews</span>
+                    </a>
+                </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="../pages/virtual-reality.html">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">view_in_ar</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Virtual Reality</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="../pages/rtl.html">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
-                    </div>
-                    <span class="nav-link-text ms-1">RTL</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="../pages/notifications.html">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">notifications</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Notifications</span>
-                </a>
-            </li>
+
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages
                 </h6>
@@ -91,20 +111,25 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white " href="../pages/sign-in.html">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">login</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Sign In</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link text-white " href="../pages/sign-up.html">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">assignment</i>
                     </div>
                     <span class="nav-link-text ms-1">Sign Up</span>
                 </a>
+            </li>
+            <li class="nav-item">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <div class=" d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary d-flex   ">
+                            <div class=" text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">login</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Log Out</span>
+                        </button>
+                    </div>
+                </form>
             </li>
         </ul>
     </div>
@@ -113,9 +138,6 @@
             <a class="btn btn-outline-primary mt-4 w-100"
                 href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-dashboard?ref=sidebarfree"
                 type="button">Documentation</a>
-            <a class="btn bg-gradient-primary w-100"
-                href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree"
-                type="button">Upgrade to pro</a>
         </div>
     </div>
 </aside>

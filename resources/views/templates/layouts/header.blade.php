@@ -68,12 +68,21 @@
             class="navbar-nav ms-auto d-flex flex-wrap align-items-center mb-2 mb-lg-0"
           >
             <i class="bi bi-person fs-5"></i>
-            <li class="nav-item border-end border-1 border-dark sign-in-btn">
-              <a class="nav-link" aria-current="page" href="{{ route('customer.login') }}">Sign In</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="{{ route('customer.register') }}">Register</a>
-            </li>
+                @if (!Auth::user())
+                    <li class="nav-item border-end border-1 border-dark sign-in-btn">
+                        <a class="nav-link" aria-current="page" href="{{ route('customer.login') }}">Sign In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ route('customer.register') }}">Register</a>
+                    </li>
+                @else
+                    <li class="nav-item border-end border-1 sign-in-btn">
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="nav-link" aria-current="page" >Logout</button>
+                        </form>
+                    </li>
+                @endif
             <li class="nav-item ms-4">
               <a
                 class="text-decoration-none text-dark"

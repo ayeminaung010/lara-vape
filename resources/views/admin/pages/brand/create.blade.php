@@ -12,17 +12,28 @@
             <div class="">
                 <h5>Create Brand Name</h5>
             </div>
-            <form action="" method="POST">
+            <form action="{{ route('brands.store') }}" enctype="multipart/form-data" method="POST">
                 @csrf
                 <div class=" form-group">
-                    <div class="input-group input-group-outline my-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" class="form-control">
+                    <div class="">
+                        <div class="input-group input-group-outline my-3">
+                            <input type="text" name="name" class="form-control" placeholder="Enter Name">
+                        </div>
+                        <div class="">
+                            @error('name')
+                                <small class=" text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
                     </div>
                     <div class="">
                         <label class="form-label">Image</label>
                         <div class="input-group input-group-outline my-3">
-                            <input type="file" class="form-control">
+                            <input type="file" name="image" class="form-control">
+                        </div>
+                        <div class="">
+                            @error('image')
+                                <small class=" text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                     </div>
                     <button class=" btn btn-behance">

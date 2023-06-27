@@ -7,6 +7,22 @@
 @section('content')
     <div class="container-fluid py-4">
         <div class="row">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Fail!</strong> {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
             <div class="col-12">
                 <div class="card my-4">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
@@ -43,22 +59,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($reviews as $reivew)
                                     <tr>
                                         <td>
-
+                                            {{ ($reviews->currentPage() - 1) * 10 + $key + 1 }}
                                         </td>
                                         <td>
-
+                                            {{ $review->title }}
                                         </td>
                                         <td>
-
+                                            {{ $review->message }}
                                         </td>
-
                                         <td>
-
+                                            {{ $review->reviewer_name }}
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                                            <span class="text-secondary text-xs font-weight-bold">{{ $review->created_at->format('d-m-Y') }}/span>
                                         </td>
                                         <td class="align-middle">
                                             <div class="d-flex gap-3">
@@ -74,6 +90,7 @@
                                         </td>
 
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                             @else

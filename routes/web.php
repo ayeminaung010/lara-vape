@@ -70,6 +70,7 @@ Route::prefix('admin')->middleware('admin_auth')->group(function () {
         Route::get('/',[BrandsController::class,"index"])->name('brands.index');
         Route::get('/create',[BrandsController::class,"create"])->name('brands.create');
         Route::post('/store',[BrandsController::class,"store"])->name('brands.store');
+        Route::get('/edit/{id}',[BrandsController::class,"edit"])->name('brands.edit');
         Route::post('/update/{id}',[BrandsController::class,"update"])->name('brands.update');
         Route::delete('/delete/{id}',[BrandsController::class,"destroy"])->name('brands.destroy');
     });

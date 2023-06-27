@@ -11,7 +11,7 @@ class StoreReviewRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+    return true;
     }
 
     /**
@@ -22,7 +22,24 @@ class StoreReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string',
+        'message' => 'required|string',
+            'rating' => 'required|numeric|min:1|max:5',
+            'reviewer_name' => 'required',
         ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Title is required!',
+            'message.required' => 'Message is required!',
+            'rating.required' => 'Rating is required!',
+            'reviewer_name.required' => 'Reviewer name is required!',
+        ];
+    
     }
 }

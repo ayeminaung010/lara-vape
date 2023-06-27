@@ -13,7 +13,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = Review::orderBy('created_at','desc')->paginate(5);
+    $reviews = Review::orderBy('created_at','desc')->paginate(10);
         return view('admin.pages.reviews.index',compact('reviews'));
     }
 
@@ -30,7 +30,7 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -44,24 +44,24 @@ class ReviewController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Review $review)
+    public function edit(Review $review,$id)
     {
-        //
+    dd($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateReviewRequest $request, Review $review)
+    public function update(UpdateReviewRequest $request, Review $review,$id)
     {
-        //
+        dd($id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Review $review)
+    public function destroy(Review $review,$id)
     {
-        //
+    dd($id);
     }
 }

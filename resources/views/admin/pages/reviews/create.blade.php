@@ -15,29 +15,48 @@
             <form action="" method="POST">
                 @csrf
                 <div class=" form-group">
-                    <div class="input-group input-group-outline my-3">
-                        <label class="form-label">Title</label>
-                        <input type="text" class="form-control">
-                    </div>
+
                     <div class="">
-                        <label class="form-label">Message</label>
                         <div class="input-group input-group-outline my-3">
-                            <textarea name="" class=" form-control" id="" cols="30" rows="10"></textarea>
+                            <input type="text"  name="title" value="{{ old('title') }}" placeholder="Enter Title" class="form-control">
+                        </div>
+                        <div class="">
+                            @error('title')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                     </div>
                     <div class="">
-                        <label class="form-label">Rating</label>
                         <div class="input-group input-group-outline my-3">
-                            <input type="number" class="form-control">
+                            <textarea name="message" placeholder="Enter Message" class=" form-control" id="" cols="30" rows="10">{{ old('message') }}</textarea>
+                        </div>
+                        <div class="">
+                            @error('message')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                     </div>
                     <div class="">
-                        <label class="form-label">Reviewer Name</label>
                         <div class="input-group input-group-outline my-3">
-                            <input type="text" class="form-control">
+                            <input type="number" placeholder="Enter rating" name="rating" value="{{ old('rating') }}" class="form-control">
+                        </div>
+                        <div class="">
+                            @error('rating')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                     </div>
-                    <button class=" btn btn-behance">
+                    <div class="">
+                        <div class="input-group input-group-outline my-3">
+                            <input type="text" placeholder="Enter Reviewer Name" name="reviewer_name" class="form-control">
+                        </div>
+                        <div class="">
+                            @error('reviewer_name')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <button type="submit" class=" btn btn-behance">
                         Create
                     </button>
                 </div>

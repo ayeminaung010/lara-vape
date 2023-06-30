@@ -40,52 +40,76 @@
                                             name</th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Slug</th>
+                                            email</th>
                                         <th
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            image</th>
+                                            phone</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Date</th>
-                                        {{-- <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            action</th> --}}
                                         {{-- <th class="text-secondary opacity-7"></th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($subscribers as $key=>$subscriber)
                                     <tr>
                                         <td>
-
+                                            {{ ($subscribers->currentPage() - 1) * 10 + $key + 1 }}
                                         </td>
                                         <td>
-
+                                            {{ $subscriber->first_name . $subscriber->last_name }}
                                         </td>
                                         <td>
-
+                                            {{ $subscriber->email }}
                                         </td>
-
                                         <td>
-
+                                            {{ $subscriber->phone }}
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                                            <span class="text-secondary text-xs font-weight-bold">{{ $subscriber->created_at->format('d-m-Y') }}</span>
                                         </td>
                                         <td class="align-middle">
                                             <div class="d-flex gap-3">
-                                                <a href="javascript:;" class="text-info font-weight-bold text-xs"
-                                                    data-toggle="tooltip" data-original-title="Edit user">
-                                                    Edit
-                                                </a>
                                                 <a href="javascript:;" class="text-danger font-weight-bold text-xs"
-                                                    data-toggle="tooltip" data-original-title="Edit user">
+                                                    data-toggle="tooltip" data-original-title="Edit user"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteModal{{ $subscriber->id }}">
                                                     Delete
                                                 </a>
                                             </div>
                                         </td>
-
                                     </tr>
+
+                                    <!-- delete Modal -->
+                                    <div class="modal fade" id="deleteModal{{ $subscriber->id }}" tabindex="-1"
+                                        aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5">
+                                                        Delete Subscriber</h1>
+                                                    <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <form action="#"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <div class="modal-body">
+                                                        Are you sure to delete this subscriber?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Cancel</button>
+                                                        <button type="submit"
+                                                            class="btn btn-danger">Delete</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
                                 </tbody>
                             </table>
                             @else

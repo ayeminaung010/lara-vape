@@ -99,7 +99,9 @@
             <small>Review Guidelines</small>
           </a>
         </div>
-        <div class=""></div>
+        <div class="">
+            <span>Copyright © 2023 Vape Vibe. Powered by Yolo Digital Myanmar.</span>
+        </div>
       </div>
     </div>
   </footer>

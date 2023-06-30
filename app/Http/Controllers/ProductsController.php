@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Brands;
 use App\Models\Category;
 use App\Models\Products;
+use App\Models\SubCategory;
+use App\Models\ProductColor;
 use App\Http\Requests\StoreProductsRequest;
 use App\Http\Requests\UpdateProductsRequest;
 
@@ -25,8 +27,9 @@ class ProductsController extends Controller
     public function create()
     {
         $brands = Brands::all();
-        $categories = Category::all();
-        return view('admin.pages.products.create',compact('brands','categories'));
+        $subCategories = SubCategory::all();
+        $colors = ProductColor::all();
+        return view('admin.pages.products.create',compact('brands','subCategories','colors'));
     }
 
     /**
@@ -37,11 +40,13 @@ class ProductsController extends Controller
         $product = new Products();
         $product->name = $request->name;
         $product->brand_id = $request->brand_id;
-        $product->category_id = $request->category_id;
+        // $product->category_id = $request->category_id;
+        $product->subCategory_id = $request->subCategory_id;
         $product->description = $request->description;
         $product->original_price = $request->original_price;
         $product->discount_price = $request->discount_price;
         $product->stock = $request->stock;
+        $product->color = json_encode($request->color);
         if($request->hasFile('image')){
             $image = $request->file('image');
             $imageName = uniqid().'.'.$image->getClientOriginalName();
@@ -68,8 +73,11 @@ class ProductsController extends Controller
     {
         $product = Products::find($id);
         $brands = Brands::all();
+        $subCategories = SubCategory::all();
         $categories = Category::all();
-        return view('admin.pages.products.edit',compact('product','brands','categories'));
+        $colors = ProductColor::all();
+        $color_arr = json_decode($product->color);
+        return view('admin.pages.products.edit',compact('product','brands','categories','colors', 'subCategories','color_arr'));
     }
 
     /**
@@ -80,11 +88,13 @@ class ProductsController extends Controller
         $product = Products::find($id);
         $product->name = $request->name;
         $product->brand_id = $request->brand_id;
-        $product->category_id = $request->category_id;
+        // $product->category_id = $request->category_id;
+        $product->subCategory_id = $request->subCategory_id;
         $product->description = $request->description;
         $product->original_price = $request->original_price;
         $product->discount_price = $request->discount_price;
         $product->stock = $request->stock;
+        $product->color = json_encode($request->color);
         if($request->hasFile('image')){
             $oldImg = public_path('dbImg/products/'.$product->image);
             if(file_exists($oldImg)){

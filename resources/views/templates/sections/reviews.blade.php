@@ -24,6 +24,7 @@
         <div class="splide" aria-label="Splide Basic HTML Example">
             <div class="splide__track">
                 <ul class="splide__list">
+                    @foreach ($reviews as $review )
                     <li class="splide__slide">
                         <div class="review--container py-6 px-4">
                             <span class=" ">
@@ -34,73 +35,15 @@
                                 <i class="bi bi-star-fill"></i>
                             </span>
                             <div class="mt-2">
-                                <h5 class="review--title">BEST flavour</h5>
+                                <h5 class="review--title">{{ $review->title }}</h5>
                                 <p class="review--text">
-                                    Tried just about all of them and only ever order this
-                                    one because it’s my all time fav
+                                    {{ Str::substr($review->message, 0, 60). '....' }}
                                 </p>
-                                <h6 class="review--name">Kamryn M.</h6>
+                                <h6 class="review--name">{{ $review->reviewer_name }}</h6>
                             </div>
                         </div>
                     </li>
-                    <li class="splide__slide">
-                        <div class="review--container py-6 px-4">
-                            <span class=" ">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </span>
-                            <div class="mt-2">
-                                <h5 class="review--title">BEST flavour</h5>
-                                <p class="review--text">
-                                    Tried just about all of them and only ever order this
-                                    one because it’s my all time fav
-                                </p>
-                                <h6 class="review--name">Kamryn M.</h6>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="splide__slide">
-                        <div class="review--container py-6 px-4">
-                            <span class=" ">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </span>
-                            <div class="mt-2">
-                                <h5 class="review--title">Gold Tobacco</h5>
-                                <p class="review--text">
-                                    Love this flavour. It has quickly become a flavour that
-                                    I have added to my usual order.
-                                </p>
-                                <h6 class="review--name">Trudy M.</h6>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="splide__slide">
-                        <div class="review--container py-6 px-4">
-                            <span class=" ">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </span>
-                            <div class="mt-2">
-                                <h5 class="review--title">Gold Tobacco</h5>
-                                <p class="review--text">
-                                    Love this flavour. It has quickly become a flavour that
-                                    I have added to my usual order.
-                                </p>
-                                <h6 class="review--name">Trudy M.</h6>
-                            </div>
-                        </div>
-                    </li>
+                    @endforeach
                 </ul>
             </div>
         </div>

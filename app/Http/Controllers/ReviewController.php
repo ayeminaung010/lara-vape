@@ -30,7 +30,13 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request)
     {
-        dd($request->all());
+        $review = new Review();
+        $review->title = $request->title;
+        $review->message = $request->message;
+        $review->rating_star = $request->rating;
+        $review->reviewer_name = $request->reviewer_name;
+        $review->save();
+        return redirect()->route('review.index')->with(['success' => 'Review created successfully']);
     }
 
     /**
@@ -46,15 +52,22 @@ class ReviewController extends Controller
      */
     public function edit(Review $review,$id)
     {
-    dd($id);
+        $review = Review::find($id);
+        return view('admin.pages.reviews.edit',compact('review'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateReviewRequest $request, Review $review,$id)
+    public function update(StoreReviewRequest $request, Review $review,$id)
     {
-        dd($id);
+        $review = Review::find($id);
+        $review->title = $request->title;
+        $review->message = $request->message;
+        $review->rating_star = $request->rating;
+        $review->reviewer_name = $request->reviewer_name;
+        $review->save();
+        return redirect()->route('review.index')->with(['success' => 'Review updated successfully']);
     }
 
     /**
@@ -62,6 +75,8 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review,$id)
     {
-    dd($id);
+        $review = Review::find($id);
+        $review->delete();
+        return redirect()->route('review.index')->with(['success' => 'Review deleted successfully']);
     }
 }

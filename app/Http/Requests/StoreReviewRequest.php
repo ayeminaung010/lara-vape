@@ -23,7 +23,7 @@ class StoreReviewRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
-        'message' => 'required|string',
+            'message' => 'required|string',
             'rating' => 'required|numeric|min:1|max:5',
             'reviewer_name' => 'required',
         ];
@@ -40,6 +40,6 @@ class StoreReviewRequest extends FormRequest
             'rating.required' => 'Rating is required!',
             'reviewer_name.required' => 'Reviewer name is required!',
         ];
-    
+
     }
 }

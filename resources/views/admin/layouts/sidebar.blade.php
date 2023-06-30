@@ -36,11 +36,23 @@
                         </div>
                         <span class="nav-link-text ms-1">Category</span>
                     </a>
+                    <a href="{{ route('subCategory.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'subCategory.index') bg-gradient-primary @endif" >
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">widgets</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Sub Category</span>
+                    </a>
                     <a href="{{ route('brands.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'brands.index') bg-gradient-primary @endif" >
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">widgets</i>
                         </div>
                         <span class="nav-link-text ms-1">Brand</span>
+                    </a>
+                    <a href="{{ route('productColor.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'productColor.index') bg-gradient-primary @endif" >
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">widgets</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Product Colors</span>
                     </a>
                     <a href="{{ route('products.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'products.index') bg-gradient-primary @endif" >
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">

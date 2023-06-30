@@ -18,10 +18,16 @@
                                     password as if you are an existing customer. To reset your password simply click “Reset
                                     password” and follow the prompts in your email.
                                 </p>
-                                <input type="text" name="email" class=" form-control rounded-0 py-3 "
+                                <input type="text" name="email" class="form-control rounded-0 py-3 "
                                     placeholder="Email Address">
+                                    @error('email')
+                                    <small class=" text-danger">{{ $message }}</small>
+                                    @enderror
                                 <input type="password" name="password" class=" form-control rounded-0 py-3"
                                     placeholder="Enter Password">
+                                    @error('password')
+                                    <small class=" text-danger">{{ $message }}</small>
+                                    @enderror
                                 <button type="submit" class=" btn btn-dark text-uppercase rounded-0 py-3">Log In</button>
                             </form>
 

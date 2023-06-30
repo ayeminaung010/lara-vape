@@ -5,56 +5,15 @@
             <h4>Our brands</h4>
         </div>
         <div class="d-flex flex-wrap gap-3">
-            <div class="brands--logo">
-                <a href="#">
-                    <img src="{{ asset('user/images/brands/V-E-liquid-logo.avif') }}" class="w-100 bg-white" alt="" />
-                </a>
-            </div>
-            <div class="brands--logo">
-                <a href="#">
-                    <img src="{{ asset('user/images/brands/V-E-liquid-logo.avif') }}" class="w-100 bg-white" alt="" />
-                </a>
-            </div>
-            <div class="brands--logo">
-                <a href="#">
-                    <img src="{{ asset('user/images/brands/V-E-liquid-logo.avif') }}" class="w-100 bg-white" alt="" />
-                </a>
-            </div>
-            <div class="brands--logo">
-                <a href="#">
-                    <img src="{{ asset('user/images/brands/V-E-liquid-logo.avif') }}" class="w-100 bg-white" alt="" />
-                </a>
-            </div>
-            <div class="brands--logo">
-                <a href="#">
-                    <img src="{{ asset('user/images/brands/V-E-liquid-logo.avif') }}" class="w-100 bg-white" alt="" />
-                </a>
-            </div>
-            <div class="brands--logo">
-                <a href="#">
-                    <img src="{{ asset('user/images/brands/V-E-liquid-logo.avif') }}" class="w-100 bg-white" alt="" />
-                </a>
-            </div>
-            <div class="brands--logo">
-                <a href="#">
-                    <img src="{{ asset('user/images/brands/V-E-liquid-logo.avif') }}" class="w-100 bg-white" alt="" />
-                </a>
-            </div>
-            <div class="brands--logo">
-                <a href="#">
-                    <img src="{{ asset('user/images/brands/V-E-liquid-logo.avif') }}" class="w-100 bg-white" alt="" />
-                </a>
-            </div>
-            <div class="brands--logo">
-                <a href="#">
-                    <img src="{{ asset('user/images/brands/V-E-liquid-logo.avif') }}" class="w-100 bg-white" alt="" />
-                </a>
-            </div>
-            <div class="brands--logo">
-                <a href="#">
-                    <img src="{{ asset('user/images/brands/V-E-liquid-logo.avif') }}" class="w-100 bg-white" alt="" />
-                </a>
-            </div>
+            @foreach ($brands as $brand)
+                <div class="brands--logo">
+                    @if ($brand->image !== null)
+                    <a href="#">
+                        <img src="{{ asset('dbImg/brands/'.$brand->image) }}" height="120" class="w-100 bg-white" alt="{{ $brand->name }}" />
+                    </a>
+                    @endif
+                </div>
+            @endforeach
         </div>
     </div>
 </section>

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\SEOController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
@@ -13,7 +14,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SubscribeController;
 use App\Http\Controllers\ProductTypeController;
+use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UserPaymentController;
+use App\Http\Controllers\ProductColorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +46,15 @@ Route::middleware([
 
 //all views
 Route::get('/',[RouteController::class,"home"]);
+Route::prefix('products')->group(function () {
+    Route::get('/',[RouteController::class,"products"])->name('products');
+    Route::get('/{id}',[RouteController::class,"productDetail"])->name('product.detail');
+});
+Route::post('/subscribe',[SubscribeController::class,"store"])->name('subscribe.store');
+
+//api
+Route::post('/addToCart',[ApiController::class,"addToCart"])->name('addToCart');;
+
 Route::prefix('customer')->group(function () {
     Route::get('/login',[RouteController::class,"signIn"])->name('customer.login');
     Route::post('/auth',[RouteController::class,"customerAuth"])->name('customer.auth');
@@ -64,6 +76,22 @@ Route::prefix('admin')->middleware('admin_auth')->group(function () {
         Route::post('/store',[CategoryController::class,"store"])->name('category.store');
         Route::post('/update/{id}',[CategoryController::class,"update"])->name('category.update');
         Route::delete('/delete/{id}',[CategoryController::class,"destroy"])->name('category.destroy');
+    });
+
+    Route::prefix('sub-category')->group(function () {
+        Route::get('/',[SubCategoryController::class,"index"])->name('subCategory.index');
+        Route::get('/create',[SubCategoryController::class,"create"])->name('subCategory.create');
+        Route::post('/store',[SubCategoryController::class,"store"])->name('subCategory.store');
+        Route::post('/update/{id}',[SubCategoryController::class,"update"])->name('subCategory.update');
+        Route::delete('/delete/{id}',[SubCategoryController::class,"destroy"])->name('subCategory.destroy');
+    });
+
+    Route::prefix('product-color')->group(function () {
+        Route::get('/',[ProductColorController::class,"index"])->name('productColor.index');
+        Route::get('/create',[ProductColorController::class,"create"])->name('productColor.create');
+        Route::post('/store',[ProductColorController::class,"store"])->name('productColor.store');
+        Route::post('/update/{id}',[ProductColorController::class,"update"])->name('productColor.update');
+        Route::delete('/delete/{id}',[ProductColorController::class,"destroy"])->name('productColor.destroy');
     });
 
     Route::prefix('brands')->group(function () {
@@ -113,17 +141,20 @@ Route::prefix('admin')->middleware('admin_auth')->group(function () {
 
     Route::prefix('users')->group(function () {
         Route::get('/',[UserController::class,"index"])->name('users.index');
+        Route::delete('delete/{id}',[UserController::class,"destroy"])->name('users.destroy');
     });
 
     Route::prefix('subscriber')->group(function () {
         Route::get('/',[SubscribeController::class,"index"])->name('subscriber.index');
+        Route::delete('delete/{id}',[SubscribeController::class,"destroy"])->name('subscriber.destroy');
     });
 
     Route::prefix('contact')->group(function () {
         Route::get('/',[ContactController::class,"index"])->name('contact.index');
+        Route::delete('delete/{id}',[ContactController::class,"destroy"])->name('contact.destroy');
     });
 
-    Route::prefix('seo')->group(function () {
+    Route::prefix('seo')->group(function (){
         Route::get('/',[SEOController::class,"index"])->name('seo.index');
     });
 

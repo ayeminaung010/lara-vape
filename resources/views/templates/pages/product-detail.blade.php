@@ -18,15 +18,17 @@
         </nav>
     </section>
 
-    <section id="product-detail">
-        <div class="row">
+    <section id="product-detail" class="container">
+        <div class="row justify-content-evenly">
             <div class="col-lg-6">
-                <img src="./public/products/product1.jpg" class="w-100" alt="" />
+                <div class=" d-flex justify-content-center">
+                    <img src="{{ asset('dbImg/products/'.$product->image) }}" class="w-100" alt="" />
+                </div>
             </div>
             <div class="col-lg-6 py-4">
                 <div class="d-flex flex-column gap-3">
                     <div class="d-flex flex-column">
-                        <h3 class="fw-bold">Innokin ZF Replacement Coils (5 Pack)</h3>
+                        <h3 class="fw-bold " >{{ $product->name }}</h3>
                         <span class="fs-5">
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-fill"></i>
@@ -40,11 +42,19 @@
                             <option value="">Choose an Type</option>
                         </select>
                     </div>
-                    <h3 class="price">$15.00</h3>
+                    <div class="">
+                        @if ($product->discount_price)
+                            <span class="discount-price h4">{{ $product->discount_price }} Kyats</span>
+                            <span class="current-price"><del>{{ $product->original_price }}Kyats</del>
+                            </span>
+                        @else
+                            <h6 class="current-price h4">{{ $product->original_price }} Kyats</h6>
+                        @endif
+                    </div>
                     <div class="d-flex gap-2 flex-wrap">
-                        <button class="btn btn-dark rounded-0">-</button>
-                        <input type="number" class="form-control" style="width: 100px" value="1" />
-                        <button class="btn btn-dark rounded-0">+</button>
+                        <button class="btn btn-dark rounded-0" id="removeQty" >-</button>
+                        <input type="number" class="form-control" id="quantity" style="width: 100px" max="{{ $product->stock }}" min="1" value="1" />
+                        <button class="btn btn-dark rounded-0" id="addQty">+</button>
                     </div>
                     <div class="d-flex flex-wrap gap-3">
                         <div class="col-lg-7">
@@ -61,12 +71,7 @@
                     <div class="mt-3">
                         <h6 class="fw-bold text-uppercase">Product Description</h6>
                         <p>
-                            ZF Coil is the new coil for the DL&RDL Innokin Z Force Tank.
-                            The new DuoPrime ZF coil platform fundamentally changes coil
-                            design. The second layer of mesh is embedded in the wick,
-                            which heats up slowly. This massively increases wicking
-                            action, resulting in better flavor, denser vapor, and improved
-                            coil longevity.
+                            {{ $product->description }}
                         </p>
                         <span class="text-decoration-underline">Read more</span>
                     </div>
@@ -304,6 +309,33 @@
             </div>
         </div>
     </section>
-
 </main>
+@endsection
+
+@section('js')
+<script>
+    const quantity = document.querySelector('#quantity');
+    const removeQty = document.querySelector('#removeQty');
+    const addQty = document.querySelector('#addQty');
+    const quantityNo = parseInt(quantity.value);
+    let count = quantityNo;
+
+    removeQty.addEventListener('click',removeQuantity);
+    addQty.addEventListener('click',addQuantity);
+    console.log(quantity.max);
+    function removeQuantity(){
+        if(count > 1) {
+            count--;
+            quantity.value = count;
+        }
+    }
+
+    function addQuantity(){
+        if(count < quantity.max){
+            count++;
+            quantity.value = count;
+        }
+    }
+</script>
+
 @endsection

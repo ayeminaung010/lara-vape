@@ -44,7 +44,7 @@
                                             name</th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            category</th>
+                                            sub category</th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Brand</th>
@@ -70,7 +70,8 @@
                                             {{ $product->name }}
                                         </td>
                                         <td>
-                                            {{ $product->category->name }}
+                                            {{-- {{ $product->subCategory->name }} --}}
+                                            {{-- {{ $product->category  }} --}}
                                         </td>
                                         <td>
                                             {{ $product->brand->name }}

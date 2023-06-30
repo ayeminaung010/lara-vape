@@ -8,6 +8,11 @@
   </head>
   <body>
     @include("templates.layouts.header")
+    @if(Auth::check())
+        @if (Auth::user()->role == 'user')
+        <input type="hidden"  class="user_id" value="{{ Auth::user()->id }}">
+        @endif
+    @endif
     @yield("content")
 
     @include("templates.layouts.footer")

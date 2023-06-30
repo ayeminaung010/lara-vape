@@ -16,7 +16,7 @@
                 @csrf
                 <div class=" form-group">
                     <div class="my-3">
-                        <img src="{{ asset('dbImg/products/'.$product->image) }}" alt="">
+                        <img src="{{ asset('dbImg/products/'.$product->image) }}" width="200" height="200" alt="">
                     </div>
                     <div class="my-3">
                         <div class="input-group input-group-outline ">
@@ -41,7 +41,7 @@
                         </div>
                     </div>
 
-                    <div class="">
+                    {{-- <div class="">
                         <div class="">
                             <label class="form-label">Category Name</label>
                             <select name="category_id" class="  form-select px-4" id="">
@@ -54,6 +54,22 @@
                         </div>
                         <div class="">
                             @error('category_id')
+                                <small class=" text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div> --}}
+                    <div class="">
+                        <div class="">
+                            <label class="form-label">Sub Category Name</label>
+                            <select name="subCategory_id" class="  form-select px-4" id="">
+                                <option value="" selected disabled>Choose One</option>s
+                                @foreach ($subCategories as $subCategory )
+                                    <option value="{{ $subCategory->id }}" @selected(old('subCategory_id',$product->subCategory_id) == $subCategory->id)>{{ $subCategory->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="">
+                            @error('subCategory_id')
                                 <small class=" text-danger">{{ $message }}</small>
                             @enderror
                         </div>
@@ -109,6 +125,26 @@
                         </div>
                         <div class="">
                             @error('stock')
+                                <small class=" text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <div class=" d-flex flex-wrap  items-center justify-content-center gap-3 ">
+                            @foreach ($colors as $key=>$color)
+                                <div class="d-flex input-group-outline ">
+                                    @if ($color_arr !== null)
+                                        <input type="checkbox" id="color_{{ $key }}" value="{{ $color->name }}" name="color[]" style="height: 20px;width:20px" class=" form-checkbox"
+                                        {{ in_array($color->name,$color_arr)? "checked" : "" }}
+                                        >
+                                        <label for="color_{{ $key }}">{{ $color->name }}</label>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="">
+                            @error('color')
                                 <small class=" text-danger">{{ $message }}</small>
                             @enderror
                         </div>

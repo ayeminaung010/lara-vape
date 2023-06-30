@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subscribe;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreSubscribeRequest;
 use App\Http\Requests\UpdateSubscribeRequest;
 
@@ -28,9 +29,15 @@ class SubscribeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSubscribeRequest $request)
+    public function store(Request $request)
     {
-        //
+        $subscribe = new Subscribe();
+        $subscribe->first_name = $request->first_name;
+        $subscribe->last_name = $request->last_name;
+        $subscribe->phone = $request->phone;
+        $subscribe->email = $request->email;
+        $subscribe->save();
+        return redirect()->back();
     }
 
     /**
@@ -60,8 +67,10 @@ class SubscribeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Subscribe $subscribe)
+    public function destroy(Subscribe $subscribe,$id)
     {
-        //
+        $subscribe = Subscribe::find($id);
+        $subscribe->delete();
+        return redirect()->route('subscriber.index')->with('success','Subscriber deleted successfully');
     }
 }

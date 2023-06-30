@@ -36,18 +36,34 @@
                         </div>
                     </div>
 
-                    <div class="">
+                    {{-- <div class="">
                         <div class="">
                             <label class="form-label">Category Name</label>
-                            <select name="category_id" class="  form-select px-4" id="">
+                            <select name="subCategory_id" class="  form-select px-4" id="">
                                 <option value="" selected disabled>Choose One</option>
-                                @foreach ($categories as $category )
-                                    <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>{{ $category->name }}</option>
+                                @foreach ($subCategories as $subCategory )
+                                    <option value="{{ $subCategory->id }}" @selected(old('subCategory_id') == $subCategory->id)>{{ $subCategory->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="">
-                            @error('category_id')
+                            @error('subCategory_id')
+                                <small class=" text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div> --}}
+                    <div class="">
+                        <div class="">
+                            <label class="form-label">Sub Category Name</label>
+                            <select name="subCategory_id" class="  form-select px-4" id="">
+                                <option value="" selected disabled>Choose One</option>s
+                                @foreach ($subCategories as $subCategory )
+                                    <option value="{{ $subCategory->id }}" @selected(old('subCategory_id') == $subCategory->id)>{{ $subCategory->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="">
+                            @error('subCategory_id')
                                 <small class=" text-danger">{{ $message }}</small>
                             @enderror
                         </div>
@@ -96,6 +112,22 @@
                         </div>
                         <div class="">
                             @error('stock')
+                                <small class=" text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <div class=" d-flex flex-wrap  items-center justify-content-center gap-3 ">
+                            @foreach ($colors as $key=>$color)
+                                <div class="d-flex input-group-outline ">
+                                    <input type="checkbox" id="color_{{ $key }}" value="{{ $color->name }}" name="color[]" style="height: 20px;width:20px" class=" form-checkbox">
+                                    <label for="color_{{ $key }}">{{ $color->name }}</label>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="">
+                            @error('color')
                                 <small class=" text-danger">{{ $message }}</small>
                             @enderror
                         </div>

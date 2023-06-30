@@ -10,25 +10,26 @@
                             Plus, be the first to know about exclusive promotions, Black
                             Friday deals, discounts and more.
                         </p>
-                        <form action="#" class="d-flex flex-column gap-2" id="subscribe--form"
-                            method="post">
+                        <form action="{{ route('subscribe.store') }}" class="d-flex flex-column gap-2" id="subscribe--form"
+                            method="POST">
+                            @csrf
                             <div class="d-flex flex-column">
                                 <div class="d-flex gap-3">
                                     <div class="input-group">
-                                        <input type="text" class="form-control rounded-0"
+                                        <input type="text" name="first_name" class="form-control rounded-0"
                                             placeholder="First Name" />
                                     </div>
                                     <div class="input-group">
-                                        <input type="text" class="form-control rounded-0"
+                                        <input type="text" name="last_name" class="form-control rounded-0"
                                             placeholder="Last Name" />
                                     </div>
                                 </div>
                                 <div class="input-group mt-3">
-                                    <input type="email" class="form-control rounded-0"
+                                    <input type="email" name="email" class="form-control rounded-0"
                                         placeholder="Email Address" />
                                 </div>
                                 <div class="input-group mt-3">
-                                    <input type="number" class="form-control rounded-0"
+                                    <input type="number" name="phone" class="form-control rounded-0"
                                         placeholder="Phone Number" />
                                 </div>
                             </div>
@@ -55,7 +56,8 @@
                     <div class="col-lg-8">
                         <h4 class="fw-bold">Prescription</h4>
                         <div class="mt-3">
-                            <img src="{{ asset('user/images/subscribe/subscribe1.png') }}" class="w-100" alt="" />
+                            <img src="{{ asset('user/images/subscribe/subscribe1.png') }}" class="w-100"
+                                alt="" />
                         </div>
                         <button class="btn btn-dark text-uppercase rounded-0 px-5 py-3 mt-3">
                             Find Out More

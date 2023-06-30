@@ -58,13 +58,15 @@
                                     @foreach ($brands as $key=>$brand )
                                     <tr>
                                         <td>
-                                            {{ ($brands->currentPage() - 1) * 5 + $key + 1 }}
+                                            {{ ($brands->currentPage() - 1) * 20 + $key + 1 }}
                                         </td>
                                         <td>
                                             {{ $brand->name }}
                                         </td>
                                         <td>
-                                            <img src="{{ asset('dbImg/brands/'. $brand->image) }}"  alt="{{ $brand->name }}" width="100" height="100" >
+                                            @if ($brand->image !== null)
+                                                <img src="{{ asset('dbImg/brands/'. $brand->image) }}"  alt="{{ $brand->name }}" width="100" height="100" >
+                                            @endif
                                         </td>
                                         <td class="align-middle text-center">
                                             <span class="text-secondary text-xs font-weight-bold">{{ $brand->created_at->format('d-m-Y') }}</span>
@@ -124,6 +126,9 @@
                         @endif
                     </div>
                 </div>
+            </div>
+            <div class="">
+                {{ $brands->links() }}
             </div>
         </div>
     </div>

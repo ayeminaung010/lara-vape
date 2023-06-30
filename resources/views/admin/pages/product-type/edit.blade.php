@@ -16,6 +16,9 @@
                 @csrf
                 <div class=" form-group">
                     <div class="">
+                        <img src="{{ asset('dbImg/product-type/'.$productType->image)  }}" alt="">
+                    </div>
+                    <div class="">
                         <div class="input-group input-group-outline my-3">
                             <input type="text" name="name" value="{{ old('name',$productType->name) }}" placeholder="Enter Name" class="form-control">
                         </div>

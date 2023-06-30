@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -78,4 +79,15 @@ class RouteController extends Controller
     }
 
 
+    //products
+    public function products(){
+        $products = Products::get();
+        return view('templates.pages.products',compact('products'));
+    }
+
+    //productDetail
+    public function productDetail($id){
+        $product = Products::find($id);
+        return view('templates.pages.product-detail',compact('product'));
+    }
 }

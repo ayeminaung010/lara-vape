@@ -23,12 +23,12 @@ class UpdateProductsRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'category_id' => 'required|integer',
+            // 'category_id' => 'required|integer',
             'brand_id' => 'required|integer',
             'original_price' => 'required|numeric',
-            'discount_price' => 'numeric',
             'stock' => 'required|integer',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp',
+            'subCategory_id' => 'required|integer',
         ];
     }
 
@@ -39,12 +39,13 @@ class UpdateProductsRequest extends FormRequest
     public function messages(): array
     {
         return [
-        'name.required' => 'Name is required',
-            'category_id.required' => 'Category is required',
-        'brand_id.required' => 'Brand is required',
-        'original_price.required' => 'Original price is required',
-        'stock.required' => 'Stock is required',
-        'image.mimes' => 'Image must be jpeg,png,jpg,gif,svg,webp'
+            'name.required' => 'Name is required',
+            // 'category_id.required' => 'Category is required',
+            'brand_id.required' => 'Brand is required',
+            'original_price.required' => 'Original price is required',
+            'stock.required' => 'Stock is required',
+            'image.mimes' => 'Image must be jpeg,png,jpg,gif,svg,webp',
+            'subCategory_id.required' => 'SubCategory is required',
         ];
     }
 }

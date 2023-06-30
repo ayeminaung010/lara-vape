@@ -15,12 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->Text('description');
-            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+            // $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->foreignId('brand_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('subCategory_id')->constrained('sub_categories')->cascadeOnDelete();
             $table->double('original_price');
-            $table->double('discount_price');
+            $table->double('discount_price')->nullable();
             $table->integer('stock');
             $table->string('image');
+            $table->string('color',200);
             $table->timestamps();
         });
     }

@@ -98,6 +98,7 @@ card.forEach((el) => {
   el.addEventListener("mouseover", (e) => {
     const parent = e.target.closest(".own-card");
     const button = parent.querySelector(".addToCartContainer");
+    button.style.display = "block";
     if(!button.classList.contains("hideBtn")){
       button.classList.add("showBtn");
     }
@@ -106,6 +107,7 @@ card.forEach((el) => {
   el.addEventListener("mouseleave", (e) => {
     const parent = e.target.closest(".own-card");
     const button = parent.querySelector(".addToCartContainer");
+    button.style.display = "none";
     if(button.classList.contains("showBtn")){
       button.classList.remove("showBtn");
       button.classList.add("hideBtn");

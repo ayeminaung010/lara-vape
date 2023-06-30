@@ -12,7 +12,7 @@
             <div class="">
                 <h5>Create Review</h5>
             </div>
-            <form action="" method="POST">
+            <form action="{{ route('review.store') }}" method="POST">
                 @csrf
                 <div class=" form-group">
 
@@ -48,7 +48,7 @@
                     </div>
                     <div class="">
                         <div class="input-group input-group-outline my-3">
-                            <input type="text" placeholder="Enter Reviewer Name" name="reviewer_name" class="form-control">
+                            <input type="text" placeholder="Enter Reviewer Name" value="{{ old('reviewer_name') }}" name="reviewer_name" class="form-control">
                         </div>
                         <div class="">
                             @error('reviewer_name')

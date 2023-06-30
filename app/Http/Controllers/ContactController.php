@@ -13,7 +13,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::orderBy('created_at', 'desc')->paginate(5);
+        $contacts = Contact::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.pages.contacts.index',compact('contacts'));
     }
 
@@ -62,6 +62,8 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        $contact = Contact::find($id);
+        $contact->delete();
+        return redirect()->route('contact.index')->with(['success' => 'Contact deleted successfully']);
     }
 }

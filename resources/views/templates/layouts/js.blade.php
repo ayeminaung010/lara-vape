@@ -40,6 +40,7 @@
   });
 </script>
 
+
 <script>
   var splide = new Splide(".splide", {
     perPage: 3,
@@ -73,3 +74,4 @@
       splide.go("+1");
     });
 </script>
+

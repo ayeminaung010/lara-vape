@@ -13,7 +13,9 @@ class ProductColorController extends Controller
      */
     public function index()
     {
-        $colors = ProductColor::orderBy('created_at','desc')->paginate(10);
+        $colors = ProductColor::orderBy('created_at','desc')
+                ->where('name', 'like', '%' . request('search') . '%')
+                ->paginate(10);
         return view('admin.pages.product-color.index',compact('colors'));
     }
 

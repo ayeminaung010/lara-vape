@@ -27,7 +27,7 @@
                         <select name="category_id" class=" form-select px-4" id="">
                             <option value="" selected disabled>Choose One</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" @selected(old('category_id', $product->brand_id) == $brand->id)>{{ $brand->name }}
+                                <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>{{ $category->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -38,7 +38,7 @@
                                 class=" text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-                    <button type="submit" class=" btn btn-behance">
+                    <button type="submit" class="mt-2 btn btn-behance">
                         Create
                     </button>
                 </div>

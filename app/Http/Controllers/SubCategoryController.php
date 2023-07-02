@@ -14,7 +14,9 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-        $subCategories = SubCategory::orderBy('created_at','desc')->paginate(10);
+        $subCategories = SubCategory::orderBy('created_at','desc')
+                    ->where('name', 'like', '%' . request('search') . '%')
+                    ->paginate(10);
         $categories = Category::get();
         return view('admin.sub-category.index',compact('subCategories', 'categories'));
     }
@@ -33,7 +35,11 @@ class SubCategoryController extends Controller
      */
     public function store(StoreSubCategoryRequest $request)
     {
-        //
+        $subCategory = new SubCategory();
+        $subCategory->name = $request->name;
+        $subCategory->category_id = $request->category_id;
+        $subCategory->save();
+        return redirect()->route('subCategory.index')->with(['success' => 'SubCategory Created Successfully']);
     }
 
     /**
@@ -55,16 +61,22 @@ class SubCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSubCategoryRequest $request, SubCategory $subCategory)
+    public function update(StoreSubCategoryRequest $request, SubCategory $subCategory,$id)
     {
-        //
+        $subCategory = SubCategory::find($id);
+        $subCategory->name = $request->name;
+        $subCategory->category_id = $request->category_id;
+        $subCategory->save();
+        return redirect()->route('subCategory.index')->with(['success' => 'SubCategory Updated Successfully']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SubCategory $subCategory)
+    public function destroy(SubCategory $subCategory,$id)
     {
-        //
+        $subCategory = SubCategory::find($id);
+        $subCategory->delete();
+        return redirect()->route('subCategory.index')->with(['success' => 'SubCategory Deleted Successfully']);
     }
 }

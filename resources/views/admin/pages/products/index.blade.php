@@ -24,6 +24,17 @@
                 </div>
             @endif
             <div class="col-12">
+                <div class="row justify-content-end">
+                    <div class="col-lg-3">
+                        <form action="{{ route(Route::currentRouteName()) }}" method="GET">
+                            @csrf
+                            <div class=" d-flex  ">
+                                <input type="text" name="search" placeholder="Search You Wish" class="form-control">
+                                <button type="submit" class=" btn btn-dark">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="card my-4">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">

@@ -13,7 +13,12 @@ class ReviewController extends Controller
      */
     public function index()
     {
-    $reviews = Review::orderBy('created_at','desc')->paginate(10);
+    $reviews = Review::orderBy('created_at','desc')
+        ->where('title', 'like', '%' . request('search') . '%')
+        ->orWhere('message', 'like', '%' . request('search') . '%')
+        ->orWhere('reviewer_name', 'like', '%' . request('search') . '%')
+        ->orWhere('rating_star', 'like', '%' . request('search') . '%')
+        ->paginate(10);
         return view('admin.pages.reviews.index',compact('reviews'));
     }
 

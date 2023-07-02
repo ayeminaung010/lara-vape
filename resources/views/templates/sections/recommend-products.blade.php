@@ -9,7 +9,20 @@
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
                 <!-- Slides -->
-                <div class="swiper-slide">
+                @foreach (App\Models\Products::get() as $product)
+                <div class="swiper-slide ">
+                    <img src="{{ asset('dbImg/products/' . $product->image) }}"
+                        class=" " width="300" height="200" alt="" />
+                    <div class="d-flex justify-content-between mt-3">
+                        <h6 class="brand-name">{{ $product->brand->name }}</h6>
+                        <p>{{ $product->discount_price ? $product->discount_price : $product->original_price }}Kyats</p>
+                    </div>
+                    <div class="">
+                        <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
+                    </div>
+                </div>
+                @endforeach
+                {{-- <div class="swiper-slide">
                     <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
                         class="w-100" alt="" />
                     <div class="d-flex justify-content-between mt-3">
@@ -19,84 +32,8 @@
                     <div class="">
                         <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
                     </div>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                        class="w-100" alt="" />
-                    <div class="d-flex justify-content-between mt-3">
-                        <h6 class="brand-name">UWELL</h6>
-                        <p>$39.99</p>
-                    </div>
-                    <div class="">
-                        <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                        class="w-100" alt="" />
-                    <div class="d-flex justify-content-between mt-3">
-                        <h6 class="brand-name">UWELL</h6>
-                        <p>$39.99</p>
-                    </div>
-                    <div class="">
-                        <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                        class="w-100" alt="" />
-                    <div class="d-flex justify-content-between mt-3">
-                        <h6 class="brand-name">UWELL</h6>
-                        <p>$39.99</p>
-                    </div>
-                    <div class="">
-                        <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                        class="w-100" alt="" />
-                    <div class="d-flex justify-content-between mt-3">
-                        <h6 class="brand-name">UWELL</h6>
-                        <p>$39.99</p>
-                    </div>
-                    <div class="">
-                        <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                        class="w-100" alt="" />
-                    <div class="d-flex justify-content-between mt-3">
-                        <h6 class="brand-name">UWELL</h6>
-                        <p>$39.99</p>
-                    </div>
-                    <div class="">
-                        <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                        class="w-100" alt="" />
-                    <div class="d-flex justify-content-between mt-3">
-                        <h6 class="brand-name">UWELL</h6>
-                        <p>$39.99</p>
-                    </div>
-                    <div class="">
-                        <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                        class="w-100" alt="" />
-                    <div class="d-flex justify-content-between mt-3">
-                        <h6 class="brand-name">UWELL</h6>
-                        <p>$39.99</p>
-                    </div>
-                    <div class="">
-                        <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
-                    </div>
-                </div>
+                </div> --}}
+ 
             </div>
             <!-- If we need pagination -->
             <div class="swiper-pagination"></div>

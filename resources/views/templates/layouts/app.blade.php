@@ -1,22 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    @include("templates.layouts.seo")
-    @vite([ 'resources/css/app.css','resources/sass/app.scss','resources/js/app.js'])
+
+<head>
+    @include('templates.layouts.seo')
+    @vite(['resources/css/app.css', 'resources/sass/app.scss', 'resources/js/app.js'])
     @include('templates.layouts.css')
-    @yield("css")
-  </head>
-  <body>
-    @include("templates.layouts.header")
-    @if(Auth::check())
+    @yield('css')
+</head>
+
+<body>
+    @include('templates.layouts.header')
+    @if (Auth::check())
         @if (Auth::user()->role == 'user')
-        <input type="hidden"  class="user_id" value="{{ Auth::user()->id }}">
+            <input type="hidden" class="user_id" value="{{ Auth::user()->id }}">
         @endif
     @endif
-    @yield("content")
+    @yield('content')
 
-    @include("templates.layouts.footer")
-    @include("templates.layouts.js")
-    @yield("js")
-  </body>
+    @include('templates.layouts.footer')
+    @include('templates.layouts.js')
+    @yield('js')
+
+</body>
+
+<script>
+    const user_id = document.querySelector('.user_id')?.value;
+    const cartBox = document.querySelector('.cartBox');
+    const data = {
+        'user_id' : user_id
+    }
+
+    const emptyCart = () => {
+        const div = document.createElement('div');
+        div.classList.add('item-in-cart', 'p-3')
+        div.innerHTML = `
+                <div class=" card border p-3 relative">
+                    <div class=" d-flex flex-column gap-2">
+
+                        <p class=" fw-bold small">Your cart is empty</p>
+                    </div>
+                </div>
+                `;
+        cartBox.append(div);
+    }
+    const updateTotalQuantity = () => {
+        const total =  [...document.querySelectorAll('.cart-quantity')].reduce((preV,curV) =>{
+            return preV + parseFloat(curV.value);
+        },0);
+        document.querySelector('#cartCount').innerHTML = total;
+    }
+
+    const updateTotalCost = () =>{
+        const total =  [...document.querySelectorAll('.cart-cost')].reduce((preV,curV) =>{
+            return preV + parseFloat(curV.innerHTML);
+        },0)
+        document.querySelector('#subTotal').innerHTML = total + " Kyats";
+    }
+
+
+    if(user_id){
+        getCarts();
+        updateTotalCost();
+        updateTotalQuantity();
+    }else{
+        emptyCart();
+    }
+
+    function getCarts(){
+        axios.post('getCarts', {
+            data
+        })
+        .then(function(response) {
+            const data = response?.data;
+            if(response?.data?.length > 0){
+                for (let i = 0; i < response?.data?.length ; i++) {
+                    const div = document.createElement('div');
+                    div.classList.add('item-in-cart', 'p-3')
+                    div.innerHTML = `
+                            <div class=" card border p-3 relative">
+                                <div class=" d-flex flex-column gap-2">
+                                    <div class="card-img-container">
+                                        <img src="/dbImg/products/${data[i]?.product_image}" width="100" height="100" class="card-item-img">
+                                    </div>
+                                    <p class=" fw-bold small">${data[i]?.product_name}</p>
+                                    <small>${data[i]?.color == null ? '' : data[i]?.color}</small>
+                                </div>
+                                <input type="hidden" value="${data[i]?.product_id}" class="product_id">
+                                <div class="row d-flex justify-content-between align-items-center">
+                                    <div class=" col-5">
+                                        <div class=" cart-item-quantity input-group input-group-sm">
+                                            <button class="btn btn-primary" onclick='dec(event,${data[i]?.discount_price ? data[i]?.discount_price : data[i]?.original_price})'>
+                                                <i class=" bi bi-dash pe-none"></i>
+                                            </button>
+                                            <input type="number" data-quantity="quantity" class="cart-quantity form-control text-center" value="${data[i]?.quantity}" max="${data[i]?.stock}">
+                                            <button class="btn btn-primary" onclick='inc(event,${data[i]?.discount_price ? data[i]?.discount_price : data[i]?.original_price})'>
+                                                <i class=" bi bi-plus pe-none"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class=" col-5">
+                                        <p> <span class='cart-cost'>${data[i]?.discount_price ? data[i]?.discount_price : data[i]?.original_price }</span> Kyats</p>
+                                    </div>
+                                </div>
+                                <div class=" position-absolute  " style="top:10px;right:10px">
+                                    <button onclick="removeItem(event)" class="btn btn-outline-danger ">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            `;
+                    cartBox.append(div);
+                }
+            }else{
+                emptyCart();
+            }
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    }
+
+    const addToCartBtns = document.querySelectorAll('.addToCartBtn');
+
+    let cartCount = 0;
+    // updateTotalCost();
+    document.addEventListener('click', e => {
+        if (e.target.matches('.addToCartBtn')) {
+            const container = e.target.closest('.own-card');
+            const product_id = container.querySelector('.productId').value;
+            const productName = container.querySelector('.product-name').innerText;
+            const product_image = container.querySelector('.own-card-image').src;
+            const product_color = container.querySelector('.color_name')?.value;
+            const product_price = container.querySelector('.discount-price') ? container.querySelector(
+                    '.discount-price').getAttribute('data-price') : container.querySelector('.current-price')
+                .getAttribute('data-price');
+            const user_id = document.querySelector('.user_id')?.value;
+            const quantity = 1;
+
+            const cartData = {
+                'id': product_id,
+                'title': productName,
+                'price': product_price,
+                'image': product_image,
+                'color' : product_color ? product_color : ''
+            }
+            if (user_id !== undefined) {
+                const data = {
+                    'product_id': product_id,
+                    'quantity': quantity,
+                    'user_id': user_id,
+                    'color' : product_color ? product_color : ''
+                }
+                axios.post('addToCart', {
+                        data
+                    })
+                    .then(function(response) {
+                        console.log(response);
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            }
+            createItemInCart(cartData);
+            cartCount++;
+            addAnimate();
+            document.querySelector('#cartCount').innerHTML = cartCount;
+            console.log(document.querySelector('#cartCount').innerHTML);
+        }
+    })
+
+    function addAnimate() {
+        document.querySelector('#cartCount').classList.add('animate__flash');
+        setTimeout(() => {
+            document.querySelector('#cartCount').classList.remove('animate__flash');
+        }, 1000);
+    }
+
+
+    window.inc = function (event,price){
+        const currentCart = event.target.closest('.item-in-cart');
+        const cartQuantity = currentCart.querySelector('.cart-quantity');
+        const cartCost = currentCart.querySelector('.cart-cost');
+        cartQuantity.valueAsNumber += 1;
+        cartCost.innerHTML = (price * cartQuantity.valueAsNumber);
+        const data = {
+            'user_id' : user_id,
+            'product_id' : currentCart.querySelector('.product_id').value,
+            'quantity' : cartQuantity.valueAsNumber
+        }
+        if(user_id){
+            axios.post('/addQuantity', {
+                data
+            })
+            .then(function(response) {
+                console.log(response);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
+
+        cartCount++;
+        addAnimate();
+        document.querySelector('#cartCount').innerHTML = cartCount;
+        updateTotalCost();
+    }
+
+    window.dec = function (event,price){
+        const currentCart = event.target.closest('.item-in-cart');
+        const cartQuantity = currentCart.querySelector('.cart-quantity');
+        const cartCost = currentCart.querySelector('.cart-cost');
+        if(cartQuantity.valueAsNumber === 1){
+            return;
+        }else{
+            cartQuantity.valueAsNumber -= 1;
+        }
+        cartCost.innerHTML = (price * cartQuantity.valueAsNumber);
+        const data = {
+            'user_id' : user_id,
+            'product_id' : currentCart.querySelector('.product_id').value,
+            'quantity' : cartQuantity.valueAsNumber
+        }
+        if(user_id){
+            axios.post('/removeQuantity', {
+                data
+            })
+            .then(function(response) {
+                console.log(response);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
+        cartCount--;
+        addAnimate();
+        document.querySelector('#cartCount').innerHTML = cartCount;
+        updateTotalCost();
+    }
+    window.removeItem = function(event){
+        const currentCart = event.target.closest('.item-in-cart');
+        currentCart.remove();
+        const data = {
+            'user_id' : user_id,
+            'product_id' : currentCart.querySelector('.product_id').value
+        }
+        if(user_id){
+            axios.post('/removeItem', {
+                data
+            })
+            .then(function(response) {
+                console.log(response);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
+        cartCount  = cartCount - currentCart.querySelector('.cart-quantity').valueAsNumber;
+        addAnimate();
+        document.querySelector('#cartCount').innerHTML = cartCount;
+        updateTotalCost();
+    }
+
+    window.clearCart = function(event){
+        const currentCart = document.querySelector('.cartBox');
+        currentCart.remove();
+        const data = {
+            'user_id' : user_id
+        }
+        if(user_id){
+            axios.post('/clearCarts', {
+                data
+            })
+            .then(function(response) {
+                console.log(response);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
+        cartCount = 0;
+        addAnimate();
+        document.querySelector('#cartCount').innerHTML = cartCount;
+        updateTotalCost();
+    }
+
+    const createItemInCart = ({
+        id,
+        title,
+        price,
+        image,
+        color
+    }) => {
+        const div = document.createElement('div');
+        div.classList.add('item-in-cart', 'p-3')
+        div.innerHTML = `
+                <div class=" card border p-3 relative">
+                    <div class=" d-flex flex-column gap-2">
+                        <div class="card-img-container">
+                            <img src="${image}" width="100" height="100" class="card-item-img">
+                        </div>
+                        <p class=" fw-bold small">${title}</p>
+                        <small>${color}</small>
+                    </div>
+                    <input type="hidden" value="${id}" class="product_id">
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class=" col-5">
+                            <div class=" cart-item-quantity input-group input-group-sm">
+                                <button class="btn btn-primary" onclick='dec(event,${price})'>
+                                    <i class=" bi bi-dash pe-none"></i>
+                                </button>
+                                <input type="number" data-quantity="quantity"  class="cart-quantity form-control text-center" value="1">
+                                <button class="btn btn-primary" onclick='inc(event,${price})'>
+                                    <i class=" bi bi-plus pe-none"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class=" col-5">
+                            <p> <span class='cart-cost'>${price}</span> Kyats</p>
+                        </div>
+                    </div>
+                    <div class=" position-absolute  " style="top:10px;right:10px">
+                        <button onclick="removeItem(event)" class="btn btn-outline-danger ">
+                            <i class="bi bi-trash3-fill"></i>
+                        </button>
+                    </div>
+                </div>
+                `;
+        cartBox.append(div)
+        updateTotalCost();
+    }
+</script>
 </html>

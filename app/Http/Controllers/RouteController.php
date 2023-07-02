@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Brands;
+use App\Models\Category;
 use App\Models\Products;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -80,10 +83,46 @@ class RouteController extends Controller
 
 
     //products
-    public function products(){
-        $products = Products::get();
-        return view('templates.pages.products',compact('products'));
+    public function products(Request $request)
+    {
+        $sort = $request->input('sort'); // Get the selected sorting option from the request
+
+        $productsQuery = Products::query();
+
+        // Apply sorting
+        if ($sort) {
+            if ($sort === 'name') {
+                $productsQuery->orderBy('name');
+            } elseif ($sort === 'price') {
+                $productsQuery->orderBy('price');
+            } elseif ($sort === 'created_at') {
+                $productsQuery->orderBy('created_at');
+            }
+        }
+
+        // Apply category filtering
+        $filterCategories = $request->query('fliterCategory');
+        if ($filterCategories) {
+            $subCategories = SubCategory::whereIn('category_id', $filterCategories)->get();
+            $subCategoryIds = $subCategories->pluck('id')->toArray();
+            $productsQuery->whereIn('subCategory_id', $subCategoryIds);
+        }
+
+
+        // Apply brand filtering
+        $filterBrands = $request->input('filterBrand');
+        if ($filterBrands) {
+            $productsQuery->whereIn('brand_id', $filterBrands);
+        }
+
+        $products = $productsQuery->get();
+        $categories = Category::get();
+        $brands = Brands::get();
+
+        return view('templates.pages.products', compact('products', 'categories', 'brands'));
     }
+
+
 
     //productDetail
     public function productDetail($id){

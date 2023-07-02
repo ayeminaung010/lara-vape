@@ -32,88 +32,50 @@
         <section class="container my-5" id="products">
             <div class="row">
                 <div class="col-lg-2">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <h6>Filter</h6>
-                        <button class="btn btn-secondary">Reset</button>
-                    </div>
-                    <hr />
-                    <!-- collapse start  -->
-                    <div>
-                        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse"
-                            href="#categoryCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            <h6>Category</h6>
-                            <i class="bi bi-caret-down"></i>
+                    <form action="{{ URL::current() }}" method="GET">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h6>Sort</h6>
+                            <div class="">
+                                <button type="submit" class="btn btn-info">Fliter</button>
+                                <button class="btn btn-secondary">Reset</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="collapse" id="categoryCollapse">
-                        <div class="d-flex align-items-center  justify-content-between">
-                            <small>New Pod Kits (20) </small>
-                            <input type="checkbox" id="" class=" form-check-input">
+                        <hr />
+                        <!-- collapse start  -->
+                        <div>
+                            <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse"
+                                href="#categoryCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <h6>Category</h6>
+                                <i class="bi bi-caret-down"></i>
+                            </div>
                         </div>
-                        <div class="d-flex align-items-center  justify-content-between">
-                            <small> Pod Kits (0) </small>
-                            <input type="checkbox" class=" form-check-input" id="">
+                        <div class="collapse" id="categoryCollapse">
+
+                            @foreach ($categories as $category)
+                            <div class="d-flex align-items-center my-2  justify-content-between">
+                                <small>{{  $category->name }} (20) </small>
+                                <input type="checkbox" id="" name="filterCategory[]" value="{{ $category->id }}" class=" form-check-input" @if(in_array($category->id) ) checked @endif>
+                            </div>
+                            @endforeach
                         </div>
-                    </div>
-                    <!-- collapse end  -->
-                    <hr />
-                    <!-- collapse start  -->
-                    <div>
-                        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse"
-                            href="#resistanceCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            <h6>Resistance</h6>
-                            <i class="bi bi-caret-down"></i>
+                        <!-- collapse end  -->
+                        <hr />
+                        <div>
+                            <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse"
+                                href="#brandCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <h6>Brand</h6>
+                                <i class="bi bi-caret-down"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="collapse" id="resistanceCollapse">
-                        <div class="d-flex align-items-center  justify-content-between">
-                            <small>New Pod Kits (20) </small>
-                            <input type="checkbox" id="" class=" form-check-input">
+                        <div class="collapse" id="brandCollapse">
+                            @foreach ($brands as $brand)
+                            <div class="d-flex align-items-center my-2  justify-content-between">
+                                <small>{{ $brand->name }} (20) </small>
+                                <input type="checkbox" id="" name="filterBrand[]"  value="{{ $brand->id }}" class=" form-check-input" @if(old('filterBrand') == $brand->id) checked @endif>
+                            </div>
+                            @endforeach
                         </div>
-                        <div class="d-flex align-items-center  justify-content-between">
-                            <small> Pod Kits (0) </small>
-                            <input type="checkbox" class=" form-check-input" id="">
-                        </div>
-                    </div>
-                    <!-- collapse end  -->
-                    <hr />
-                    <!-- collapse start  -->
-                    <div>
-                        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse"
-                            href="#typeCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            <h6>Type</h6>
-                            <i class="bi bi-caret-down"></i>
-                        </div>
-                    </div>
-                    <div class="collapse" id="typeCollapse">
-                        <div class="d-flex align-items-center  justify-content-between">
-                            <small>New Pod Kits (20) </small>
-                            <input type="checkbox" id="" class=" form-check-input">
-                        </div>
-                        <div class="d-flex align-items-center  justify-content-between">
-                            <small> Pod Kits (0) </small>
-                            <input type="checkbox" class=" form-check-input" id="">
-                        </div>
-                    </div>
-                    <hr />
-                    <!-- collapse start  -->
-                    <div>
-                        <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse"
-                            href="#brandCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            <h6>Brand</h6>
-                            <i class="bi bi-caret-down"></i>
-                        </div>
-                    </div>
-                    <div class="collapse" id="brandCollapse">
-                        <div class="d-flex align-items-center  justify-content-between">
-                            <small>New Pod Kits (20) </small>
-                            <input type="checkbox" id="" class=" form-check-input">
-                        </div>
-                        <div class="d-flex align-items-center  justify-content-between">
-                            <small> Pod Kits (0) </small>
-                            <input type="checkbox" class=" form-check-input" id="">
-                        </div>
-                    </div>
+                    </form>
                 </div>
 
                 <div class="col-lg-10">
@@ -241,129 +203,5 @@
     </main>
 @endsection
 @section('js')
-    <script>
-        const addToCartBtns = document.querySelectorAll('.addToCartBtn');
 
-        const cartBox = document.querySelector('.cartBox');
-        document.addEventListener('click', e => {
-            if (e.target.matches('.addToCartBtn')) {
-                const container = e.target.closest('.own-card');
-                const product_id = container.querySelector('.productId').value;
-                const productName = container.querySelector('.product-name').innerText;
-                const product_image = container.querySelector('.own-card-image').src;
-                const product_color = container.querySelector('.color_name')?.value;
-                const product_price = container.querySelector('.discount-price') ? container.querySelector(
-                        '.discount-price').getAttribute('data-price') : container.querySelector('.current-price')
-                    .getAttribute('data-price');
-                const user_id = document.querySelector('.user_id')?.value;
-                const quantity = 1;
-
-                const cartData = {
-                    'id': product_id,
-                    'title': productName,
-                    'price': product_price,
-                    'image': product_image,
-                    'color' : product_color ? product_color : ''
-                }
-                if (user_id !== undefined) {
-                    const data = {
-                        'product_id': product_id,
-                        'quantity': quantity,
-                        'user_id': user_id,
-                        'color' : product_color ? product_color : ''
-                    }
-                    axios.post('addToCart', {
-                            data
-                        })
-                        .then(function(response) {
-                            console.log(response);
-                        })
-                        .catch(function(error) {
-                            console.log(error);
-                        });
-                }
-                createItemInCart(cartData);
-            }
-        })
-        window.inc = function (event,price){
-            const currentCart = event.target.closest('.item-in-cart');
-            const cartQuantity = currentCart.querySelector('.cart-quantity');
-            const cartCost = currentCart.querySelector('.cart-cost');
-            cartQuantity.valueAsNumber += 1;
-            cartCost.innerHTML = (price * cartQuantity.valueAsNumber);
-            // updateTotalCost();
-
-        }
-
-
-        window.dec = function (event,price){
-            const currentCart = event.target.closest('.item-in-cart');
-            const cartQuantity = currentCart.querySelector('.cart-quantity');
-            const cartCost = currentCart.querySelector('.cart-cost');
-            if(cartQuantity.valueAsNumber === 1){
-                return;
-            }else{
-                cartQuantity.valueAsNumber -= 1;
-            }
-            cartCost.innerHTML = (price * cartQuantity.valueAsNumber);
-            // updateTotalCost();
-        }
-        window.removeItem = function(event){
-            const currentCart = event.target.closest('.item-in-cart');
-            currentCart.remove();
-            // updateTotalCost();
-        }
-
-        // window.clearCart = function(event){
-        //     console.log(event);
-        //     const currentCart = event.target.closest('.cartBox');
-        //     currentCart.remove();
-        //     // updateTotalCost();
-        // }
-
-        const createItemInCart = ({
-            id,
-            title,
-            price,
-            image,
-            color
-        }) => {
-            const div = document.createElement('div');
-            div.classList.add('item-in-cart', 'p-3')
-            div.innerHTML = `
-                    <div class=" card border p-3 relative">
-                        <div class=" d-flex flex-column gap-2">
-                            <div class="card-img-container">
-                                <img src="${image}" width="100" height="100" class="card-item-img">
-                            </div>
-                            <p class=" fw-bold small">${title}</p>
-                            <small>${color}</small>
-                        </div>
-                        <div class="row d-flex justify-content-between align-items-center">
-                            <div class=" col-5">
-                                <div class=" cart-item-quantity input-group input-group-sm">
-                                    <button class="btn btn-primary" onclick='dec(event,${price})'>
-                                        <i class=" bi bi-dash pe-none"></i>
-                                    </button>
-                                    <input type="number" class="cart-quantity form-control text-center" value="1">
-                                    <button class="btn btn-primary" onclick='inc(event,${price})'>
-                                        <i class=" bi bi-plus pe-none"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class=" col-5">
-                                <p> <span class='cart-cost'>${price}</span> Kyats</p>
-                            </div>
-                        </div>
-                        <div class=" position-absolute  " style="top:10px;right:10px">
-                            <button onclick="removeItem(event)" class="btn btn-outline-danger ">
-                                <i class="bi bi-trash3-fill"></i>
-                            </button>
-                        </div>
-                    </div>
-                    `;
-            cartBox.append(div)
-            // updateTotalCost();
-        }
-    </script>
 @endsection

@@ -13,7 +13,9 @@ class ProductTypeController extends Controller
      */
     public function index()
     {
-    $productTypes = ProductType::orderBy('created_at','desc')->paginate(10);
+    $productTypes = ProductType::orderBy('created_at','desc')
+                ->orWhere('name', 'like', '%' . request('search') . '%')
+                ->paginate(10);
         return view('admin.pages.product-type.index',compact('productTypes'));
     }
 
@@ -30,7 +32,6 @@ class ProductTypeController extends Controller
      */
     public function store(StoreProductTypeRequest $request)
     {
-        // dd($request->all());
         $productType = new ProductType();
         $productType->name = $request->name;
         $productType->slug = $request->slug;

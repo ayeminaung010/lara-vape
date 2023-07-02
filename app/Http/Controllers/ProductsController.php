@@ -17,7 +17,13 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Products::orderBy('created_at','desc')->paginate(10);
+        $products = Products::orderBy('created_at','desc')
+        ->where('name', 'like', '%' . request('search') . '%')
+        ->orWhere('original_price', 'like', '%' . request('search') . '%')
+        ->orWhere('discount_price', 'like', '%' . request('search') . '%')
+        ->orWhere('stock', 'like', '%' . request('search') . '%')
+        ->orWhere('description', 'like', '%' . request('search') . '%')
+        ->paginate(10);
         return view('admin.pages.products.index',compact('products'));
     }
 

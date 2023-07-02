@@ -53,7 +53,12 @@ Route::prefix('products')->group(function () {
 Route::post('/subscribe',[SubscribeController::class,"store"])->name('subscribe.store');
 
 //api
-Route::post('/addToCart',[ApiController::class,"addToCart"])->name('addToCart');;
+Route::post('/addToCart',[ApiController::class,"addToCart"])->name('addToCart');
+Route::post('/getCarts',[ApiController::class,"getCarts"])->name('getCarts');
+Route::post('/clearCarts',[ApiController::class,"clearCarts"])->name('clearCarts');
+Route::post('/removeQuantity',[ApiController::class,"removeQuantity"])->name('removeQuantity');
+Route::post('/addQuantity',[ApiController::class,"addQuantity"])->name('addQuantity');
+Route::post('/removeItem',[ApiController::class,"removeItem"])->name('removeItem');
 
 Route::prefix('customer')->group(function () {
     Route::get('/login',[RouteController::class,"signIn"])->name('customer.login');

@@ -9,4 +9,5 @@ class Cart extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
 }

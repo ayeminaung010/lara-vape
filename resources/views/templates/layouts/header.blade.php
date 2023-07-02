@@ -69,13 +69,21 @@
                                 </form>
                             </li>
                         @endif
+                    @else
+                        <li class="nav-item border-end border-1 border-dark sign-in-btn">
+                            <a class="nav-link" aria-current="page" href="{{ route('customer.login') }}">Sign In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page"
+                                href="{{ route('customer.register') }}">Register</a>
+                        </li>
                     @endif
                     <li class="nav-item ms-4">
                         <a class="text-decoration-none text-dark" aria-current="page" href="#" type="button"
                             data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <i class="bi bi-cart fs-5"></i>
                             My Bag
-                            <span class="cart-count"> 0 </span>
+                            <span id="cartCount" class="cart-count animate__animated ">0</span>
                         </a>
                     </li>
                 </ul>
@@ -95,7 +103,7 @@
             <div class="d-flex flex-column gap-2 px-3 py-2">
                 <div class=" d-flex  justify-content-between">
                     <h6>CART SUBTOTAL</h6>
-                    <span id="subTotal"></span>
+                    <span id="subTotal">0 Kyats</span>
                 </div>
                 <button onclick="clearCart(event)" class=" btn btn-danger rounded-0 py-2 ">
                     Clear Cart

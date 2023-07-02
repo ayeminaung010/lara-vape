@@ -9,3 +9,4 @@
         @include('templates.sections.subscribe')
     </main>
 @endsection
+

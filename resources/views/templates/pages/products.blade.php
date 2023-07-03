@@ -4,21 +4,30 @@
         <!-- breadcrumb section  -->
         <section id="breadcrumb" class="container mt-3">
             <nav aria-label="breadcrumb">
+                @php
+                    $url = URL::current(); // Get the current URL
+                    $urlWithoutQueryParams = strtok($url, '?'); // Remove the query parameters
+                    $segments = explode('/', trim($urlWithoutQueryParams, '/'));
+                    $breadCrumbName = end($segments);
+                @endphp
+
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#"><small>Home</small></a>
+                        <a href="{{ url('/') }}"><small>Home</small></a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <small>new Product</small>
+                        <small>{{ $breadCrumbName }}</small>
                     </li>
                 </ol>
+
             </nav>
         </section>
 
         <!-- title section  -->
         <section id="title">
             <div class="container">
-                <h1 class="fw-bold text-center">New Products</h1>
+                <h1 class="fw-bold text-center">
+                    {{ $breadCrumbName ? ucwords(str_replace(['-', ' '], ['', 'php'], $breadCrumbName)) : 'Products' }}</h1>
                 <p class="text-center fw-medium mt-4">
                     Check out all of our brand new vapes, e-liquid, coils and
                     accessories here! If you're looking to get your hands on the latest
@@ -44,18 +53,37 @@
                         <!-- collapse start  -->
                         <div>
                             <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse"
-                                href="#categoryCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                href="#categoryCollapse" role="button" aria-expanded="false"
+                                aria-controls="collapseExample">
                                 <h6>Category</h6>
                                 <i class="bi bi-caret-down"></i>
                             </div>
                         </div>
                         <div class="collapse" id="categoryCollapse">
-
-                            @foreach ($categories as $category)
-                            <div class="d-flex align-items-center my-2  justify-content-between">
-                                <small>{{  $category->name }} (20) </small>
-                                <input type="checkbox" id="" name="filterCategory[]" value="{{ $category->id }}" class=" form-check-input" @if(in_array($category->id) ) checked @endif>
+                            @foreach ($subCategories as $subCategory)
+                                <div class="d-flex align-items-center my-2  justify-content-between">
+                                    <small>{{ $subCategory->name }} ({{ $subCategory->productsCount() }}) </small>
+                                    <input type="checkbox" id="" name="filterCategory[]"
+                                        value="{{ $subCategory->id }}" class=" form-check-input" {{-- @if (in_array($category->id)) checked @endif --}}>
+                                </div>
+                            @endforeach
+                        </div>
+                        <!-- collapse end  -->
+                        <hr />
+                        <div>
+                            <div class="d-flex align-items-center justify-content-between" data-bs-toggle="collapse"
+                                href="#colorCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <h6>Color</h6>
+                                <i class="bi bi-caret-down"></i>
                             </div>
+                        </div>
+                        <div class="collapse" id="colorCollapse">
+                            @foreach ($productColors as $color)
+                                <div class="d-flex align-items-center my-2  justify-content-between">
+                                    <small>{{ $color->name }} </small>
+                                    <input type="checkbox" id="" name="filterColor[]" value="{{ $color->id }}"
+                                        class=" form-check-input" {{-- @if (in_array($category->id)) checked @endif --}}>
+                                </div>
                             @endforeach
                         </div>
                         <!-- collapse end  -->
@@ -69,10 +97,11 @@
                         </div>
                         <div class="collapse" id="brandCollapse">
                             @foreach ($brands as $brand)
-                            <div class="d-flex align-items-center my-2  justify-content-between">
-                                <small>{{ $brand->name }} (20) </small>
-                                <input type="checkbox" id="" name="filterBrand[]"  value="{{ $brand->id }}" class=" form-check-input" @if(old('filterBrand') == $brand->id) checked @endif>
-                            </div>
+                                <div class="d-flex align-items-center my-2  justify-content-between">
+                                    <small>{{ $brand->name }} </small>
+                                    <input type="checkbox" id="" name="filterBrand[]" value="{{ $brand->id }}"
+                                        class=" form-check-input" {{-- @if (old('filterBrand') == $brand->id) checked @endif --}}>
+                                </div>
                             @endforeach
                         </div>
                     </form>
@@ -129,7 +158,7 @@
                                     </div>
                                 </div>
                                 <div class="addToCartContainer bg-white pt-4">
-                                    @if ($product->color !== "null")
+                                    @if ($product->color !== 'null')
                                         <select name="" id="" class="color_name form-control">
                                             @foreach (json_decode($product->color) as $color)
                                                 <option value="{{ $color }}">{{ $color }}</option>
@@ -151,57 +180,33 @@
                             <h5>Discover products recommended just for you!</h5>
                         </div>
                         <div class=" d-flex flex-wrap  gap-4">
-                            <div class="own--small--card">
-                                <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                                    class="w-100 product--image" alt="" />
-                                <div class="d-flex justify-content-between mt-3">
-                                    <h6 class="product--name w-50">UWELL Crown D Replacement Pod</h6>
-                                    <div class="d-flex gap-2 flex-wrap">
-                                        <h6 class="discount-price">5.99$</h6>
-                                        <h6 class="current-price"><del>9.99$</del></h6>
-                                    </div>
+                            @foreach (App\Models\Products::paginate('5') as $product)
+                                <div class="own--small--card">
+                                    <a href="{{ route('product.detail', $product->id) }}">
+                                        <img src="{{ asset('dbImg/products/' . $product->image) }}" height="200"
+                                            class="w-100 product--image" alt="" />
+                                        <div class="d-flex justify-content-between mt-3">
+                                            <h6 class="product--name w-50"><a
+                                                    href="{{ route('product.detail', $product->id) }}">{{ $product->name }}</a>
+                                            </h6>
+                                            @if ($product->discount_price)
+                                                <div class="d-flex gap-2 flex-wrap">
+                                                    <h6 class="discount-price">{{ $product->discount_price }}Kyats</h6>
+                                                    <h6 class="current-price"><del>{{ $product->original_price }}
+                                                            Kyats</del></h6>
+                                                </div>
+                                            @else
+                                                <h6 class="current-price">{{ $product->original_price }}Kyats</h6>
+                                            @endif
+                                        </div>
+                                    </a>
                                 </div>
-                            </div>
-                            <div class="own--small--card">
-                                <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                                    class="w-100 product--image" alt="" />
-                                <div class="d-flex justify-content-between mt-3">
-                                    <h6 class="product--name w-50">UWELL Crown D Replacement Pod</h6>
-                                    <div class="d-flex gap-2 flex-wrap">
-                                        <h6 class="discount-price">5.99$</h6>
-                                        <h6 class="current-price"><del>9.99$</del></h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="own--small--card">
-                                <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                                    class="w-100 product--image" alt="" />
-                                <div class="d-flex justify-content-between mt-3">
-                                    <h6 class="product--name w-50">UWELL Crown D Replacement Pod</h6>
-                                    <div class="d-flex gap-2 flex-wrap">
-                                        <h6 class="discount-price">5.99$</h6>
-                                        <h6 class="current-price"><del>9.99$</del></h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="own--small--card">
-                                <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                                    class="w-100 product--image" alt="" />
-                                <div class="d-flex justify-content-between mt-3">
-                                    <h6 class="product--name w-50">UWELL Crown D Replacement Pod</h6>
-                                    <div class="d-flex gap-2 flex-wrap">
-                                        <h6 class="discount-price">5.99$</h6>
-                                        <h6 class="current-price"><del>9.99$</del></h6>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
+
                         </div>
                     </section>
                 </div>
             </div>
         </section>
     </main>
-@endsection
-@section('js')
-
 @endsection

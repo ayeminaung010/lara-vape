@@ -30,7 +30,39 @@ class SEOController extends Controller
      */
     public function store(StoreSEORequest $request)
     {
-        //
+        $seo = SEO::first();
+        if($request->hasFile('seo_image')){
+            $oldImg  = public_path('dbImg/seo/'.$seo->logo);
+            if(file_exists($oldImg) && $seo->logo != null){
+                unlink($oldImg);
+            }
+            $image = $request->file('seo_image');
+            $imageName = uniqid().'.'.$image->getClientOriginalName();
+            $image->move(public_path('dbImg/seo'),$imageName);
+            $seo->seo_image = $imageName;
+        }
+
+        if($request->hasFile('favicon')){
+        $oldImg  = public_path('dbImg/seo/'.$seo->favicon);
+            if(file_exists($oldImg) && $seo->favicon != null){
+                unlink($oldImg);
+            }
+            $image = $request->file('favicon');
+            $imageName = uniqid().'.'.$image->getClientOriginalName();
+            $image->move(public_path('dbImg/seo'),$imageName);
+            $seo->favicon = $imageName;
+        }
+
+        $seo->title = $request->title;
+        $seo->keywords = $request->keywords;
+        $seo->author = $request->author;
+        $seo->description = $request->description;
+
+        $seo->social_title = $request->social_title;
+        $seo->social_description = $request->social_description;
+
+        $seo->save();
+        return redirect()->back()->with('success','SEO Updated Successfully');
     }
 
     /**

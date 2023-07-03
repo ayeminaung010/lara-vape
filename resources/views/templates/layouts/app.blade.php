@@ -26,23 +26,42 @@
 <script>
     const user_id = document.querySelector('.user_id')?.value;
     const cartBox = document.querySelector('.cartBox');
+    const offCanvas = document.querySelector('.offcanvas-body');
     const data = {
         'user_id' : user_id
     }
 
     const emptyCart = () => {
         const div = document.createElement('div');
-        div.classList.add('item-in-cart', 'p-3')
+        div.classList.add('empty-cart', 'p-3')
         div.innerHTML = `
-                <div class=" card border p-3 relative">
+                <div class=" border p-3 relative">
                     <div class=" d-flex flex-column gap-2">
-
-                        <p class=" fw-bold small">Your cart is empty</p>
+                        <h1 class=" fs-5 fw-bold small text-center">Your Cart is Empty</h1>
+                        <a href="{{ route('products') }}" class="btn btn-dark">Continue Shopping</a>
                     </div>
                 </div>
                 `;
-        cartBox.append(div);
+        offCanvas.append(div);
     }
+
+    const continueCheckOut = () => {
+        const emptyCart = document.querySelector('.empty-cart');
+        if(emptyCart){
+            Swal.fire({
+                title: 'Your Cart is Empty',
+                text: 'Please add items to your cart.',
+                icon: 'warning',
+                confirmButtonText: 'OK',
+                customClass: {
+                  confirmButton: 'btn btn-primary'
+                }
+            });
+        }else{
+            window.location.href = "{{ route('user.checkout') }}";
+        }
+    }
+
     const updateTotalQuantity = () => {
         const total =  [...document.querySelectorAll('.cart-quantity')].reduce((preV,curV) =>{
             return preV + parseFloat(curV.value);
@@ -57,6 +76,10 @@
         document.querySelector('#subTotal').innerHTML = total + " Kyats";
     }
 
+    function RemoveEmptyInCart(){
+        const emptyDiv = document.querySelector('.empty-cart');
+        emptyDiv?.remove();
+    }
 
     if(user_id){
         getCarts();
@@ -67,12 +90,13 @@
     }
 
     function getCarts(){
-        axios.post('getCarts', {
+        axios.post('/getCarts', {
             data
         })
         .then(function(response) {
             const data = response?.data;
             if(response?.data?.length > 0){
+                RemoveEmptyInCart();
                 for (let i = 0; i < response?.data?.length ; i++) {
                     const div = document.createElement('div');
                     div.classList.add('item-in-cart', 'p-3')
@@ -127,9 +151,9 @@
     document.addEventListener('click', e => {
         if (e.target.matches('.addToCartBtn')) {
             const container = e.target.closest('.own-card');
-            const product_id = container.querySelector('.productId').value;
-            const productName = container.querySelector('.product-name').innerText;
-            const product_image = container.querySelector('.own-card-image').src;
+            const product_id = container.querySelector('.productId')?.value;
+            const productName = container.querySelector('.product-name')?.innerText;
+            const product_image = container.querySelector('.own-card-image')?.src;
             const product_color = container.querySelector('.color_name')?.value;
             const product_price = container.querySelector('.discount-price') ? container.querySelector(
                     '.discount-price').getAttribute('data-price') : container.querySelector('.current-price')
@@ -151,7 +175,7 @@
                     'user_id': user_id,
                     'color' : product_color ? product_color : ''
                 }
-                axios.post('addToCart', {
+                axios.post('/addToCart', {
                         data
                     })
                     .then(function(response) {
@@ -161,6 +185,7 @@
                         console.log(error);
                     });
             }
+            RemoveEmptyInCart();
             createItemInCart(cartData);
             cartCount++;
             addAnimate();

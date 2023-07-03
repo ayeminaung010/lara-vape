@@ -11,6 +11,7 @@ use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SubscribeController;
 use App\Http\Controllers\ProductTypeController;
@@ -48,7 +49,8 @@ Route::middleware([
 Route::get('/',[RouteController::class,"home"]);
 Route::prefix('products')->group(function () {
     Route::get('/',[RouteController::class,"products"])->name('products');
-    Route::get('/{id}',[RouteController::class,"productDetail"])->name('product.detail');
+    Route::get('/{slug}',[RouteController::class,"slugProducts"])->name('product.slugProducts');
+    Route::get('/detail/{id}',[RouteController::class,"productDetail"])->name('product.detail');
 });
 Route::post('/subscribe',[SubscribeController::class,"store"])->name('subscribe.store');
 
@@ -59,12 +61,17 @@ Route::post('/clearCarts',[ApiController::class,"clearCarts"])->name('clearCarts
 Route::post('/removeQuantity',[ApiController::class,"removeQuantity"])->name('removeQuantity');
 Route::post('/addQuantity',[ApiController::class,"addQuantity"])->name('addQuantity');
 Route::post('/removeItem',[ApiController::class,"removeItem"])->name('removeItem');
-
+// end api
 Route::prefix('customer')->group(function () {
     Route::get('/login',[RouteController::class,"signIn"])->name('customer.login');
     Route::post('/auth',[RouteController::class,"customerAuth"])->name('customer.auth');
     Route::get('/register',[RouteController::class,"signUp"])->name('customer.register');
     Route::post('/register',[RouteController::class,"customerRegister"])->name('customer.register');
+});
+
+Route::prefix('user')->group(function () {
+    Route::get('/checkout',[RouteController::class,"checkout"])->name('user.checkout');
+    Route::get('/payments',[RouteController::class,"payments"])->name('user.payments');
 });
 
 //admin views
@@ -136,6 +143,11 @@ Route::prefix('admin')->middleware('admin_auth')->group(function () {
         Route::delete('/delete/{id}',[ReviewController::class,"destroy"])->name('review.destroy');
     });
 
+    Route::prefix('frontend')->group(function () {
+        Route::get('/',[FrontendController::class,"index"])->name('frontend.index');
+        Route::post('/store',[FrontendController::class,"store"])->name('frontend.store');
+    });
+
     Route::prefix('orders')->group(function () {
         Route::get('/',[OrderController::class,"index"])->name('orders.index');
     });
@@ -161,6 +173,7 @@ Route::prefix('admin')->middleware('admin_auth')->group(function () {
 
     Route::prefix('seo')->group(function (){
         Route::get('/',[SEOController::class,"index"])->name('seo.index');
+        Route::post('/store',[SEOController::class,"store"])->name('seo.store');
     });
 
 });

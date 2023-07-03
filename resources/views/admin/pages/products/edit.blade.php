@@ -64,7 +64,7 @@
                             <select name="subCategory_id" class="  form-select px-4" id="">
                                 <option value="" selected disabled>Choose One</option>s
                                 @foreach ($subCategories as $subCategory )
-                                    <option value="{{ $subCategory->id }}" @selected(old('subCategory_id',$product->subCategory_id) == $subCategory->id)>{{ $subCategory->name }}</option>
+                                    <option value="{{ $subCategory->id }}" @selected(old('subCategory_id',$product->sub_category_id) == $subCategory->id)>{{ $subCategory->name }}</option>
                                 @endforeach
                             </select>
                         </div>

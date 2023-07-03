@@ -14,16 +14,35 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            'Accessories',
-            'Coil And Catridge',
-            'Disposable',
-            'E-Liquids',
-            'Pod Device',
-            'Vape Device'
+            [
+            'name' => 'Accessories',
+            'slug' => 'accessories',
+            ],
+            [
+                'name' => 'Coil And Catridge',
+                'slug' => 'coil-and-catridge',
+            ],
+            [
+                'name' => 'Disposable',
+                'slug' => 'disposable',
+            ],
+            [
+                'name' => 'E-Liquids',
+            'slug' => 'e-liquids',
+            ],
+            [
+                'name' => 'Pod Device',
+                'slug' => 'pod-device',
+            ],
+            [
+                'name' => 'Vape Device',
+                'slug' => 'vape-device'
+            ]
         ];
         foreach ($categories as  $category) {
             Category::create([
-                'name' => $category
+                'name' => $category['name'],
+                'slug'  => $category['slug']
             ]);
         }
     }

@@ -22,7 +22,7 @@
         <div class="row justify-content-evenly">
             <div class="col-lg-6">
                 <div class=" d-flex justify-content-center">
-                    <img src="{{ asset('dbImg/products/'.$product->image) }}" class="w-100" alt="" />
+                    <img src="{{ asset('dbImg/products/'.$product->image) }}" class="w-100 product_img" alt="" />
                 </div>
             </div>
             <div class="col-lg-6 py-4">
@@ -38,9 +38,14 @@
                         </span>
                     </div>
                     <div class="">
-                        <select name="" class="form-control mt-4 w-75" id="">
-                            <option value="">Choose an Type</option>
+                       @if ($product->color != null)
+                        <select name="product_color" class="form-control mt-4 w-75 " id="product_color">
+                                <option value="" selected disabled>Choose an color</option>
+                                @foreach (json_decode($product->color) as $color)
+                                    <option value="{{ $color }}">{{ $color }}</option>
+                                @endforeach
                         </select>
+                       @endif
                     </div>
                     <div class="">
                         @if ($product->discount_price)
@@ -58,7 +63,7 @@
                     </div>
                     <div class="d-flex flex-wrap gap-3">
                         <div class="col-lg-7">
-                            <button class="btn btn-dark text-uppercase w-100 rounded-0 py-3">
+                            <button  class="addToCart btn btn-dark text-uppercase w-100 rounded-0 py-3">
                                 Add to Cart
                             </button>
                         </div>
@@ -317,12 +322,12 @@
     const quantity = document.querySelector('#quantity');
     const removeQty = document.querySelector('#removeQty');
     const addQty = document.querySelector('#addQty');
+    const addToCart = document.querySelector('.addToCart');
     const quantityNo = parseInt(quantity.value);
     let count = quantityNo;
 
     removeQty.addEventListener('click',removeQuantity);
     addQty.addEventListener('click',addQuantity);
-    console.log(quantity.max);
     function removeQuantity(){
         if(count > 1) {
             count--;
@@ -336,6 +341,36 @@
             quantity.value = count;
         }
     }
+
+    addToCart.addEventListener('click',function(){
+        const cartData = {
+            'id': {{ $product->id }},
+            'title': '{{ $product->name }}',
+            'price': {{ $product->discount_price ? $product->discount_price : $product->original_price }},
+            'image': document.querySelector('.product_img').src,
+            'color' : document.querySelector('#product_color') ? document.querySelector('#product_color')?.value : '',
+        }
+        if (user_id !== undefined) {
+            const data = {
+                'product_id': {{ $product->id }},
+                'quantity': quantity.value,
+                'user_id': document.querySelector('.user_id').value,
+                'color' : document.querySelector('#product_color') ? document.querySelector('#product_color')?.value : ''
+            }
+            console.log(data);
+            axios.post('/addToCart', {
+                    data
+                })
+                .then(function(response) {
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+        RemoveEmptyInCart();
+        createItemInCart(cartData);
+    })
 </script>
 
 @endsection

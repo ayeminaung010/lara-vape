@@ -23,6 +23,16 @@
                             <small class=" text-danger">{{ $message }}</small>
                         @enderror
                     </div>
+
+                    <div class="input-group input-group-outline my-3">
+                        <input type="text" name="slug" placeholder="Enter Slug" class="form-control">
+                    </div>
+                    <div class="">
+                        @error('slug')
+                            <small class=" text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
                     <button type="submit" class=" btn btn-behance">
                         Create
                     </button>

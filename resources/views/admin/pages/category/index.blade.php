@@ -55,6 +55,9 @@
                                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                                     name</th>
                                                 <th
+                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                    slug</th>
+                                                <th
                                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                     Date</th>
                                                 {{-- <th
@@ -71,6 +74,9 @@
                                                     </td>
                                                     <td>
                                                         {{ $category->name }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $category->slug }}
                                                     </td>
                                                     <td class="align-middle text-center">
                                                         <span
@@ -118,6 +124,18 @@
                                                                         </div>
                                                                         <div class="">
                                                                             @error('name')
+                                                                                <small
+                                                                                    class=" text-danger">{{ $message }}</small>
+                                                                            @enderror
+                                                                        </div>
+
+                                                                        <div class="input-group input-group-outline my-3">
+                                                                            <input type="text" name="slug"
+                                                                                placeholder="Enter Slug" class="form-control"
+                                                                                value="{{ $category->slug }}">
+                                                                        </div>
+                                                                        <div class="">
+                                                                            @error('slug')
                                                                                 <small
                                                                                     class=" text-danger">{{ $message }}</small>
                                                                             @enderror

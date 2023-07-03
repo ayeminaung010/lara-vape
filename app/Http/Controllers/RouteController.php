@@ -8,6 +8,7 @@ use App\Models\Brands;
 use App\Models\Category;
 use App\Models\Products;
 use App\Models\SubCategory;
+use App\Models\ProductColor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -105,9 +106,8 @@ class RouteController extends Controller
         if ($filterCategories) {
             $subCategories = SubCategory::whereIn('category_id', $filterCategories)->get();
             $subCategoryIds = $subCategories->pluck('id')->toArray();
-            $productsQuery->whereIn('subCategory_id', $subCategoryIds);
+            $productsQuery->whereIn('sub_category_id', $subCategoryIds);
         }
-
 
         // Apply brand filtering
         $filterBrands = $request->input('filterBrand');
@@ -117,16 +117,40 @@ class RouteController extends Controller
 
         $products = $productsQuery->get();
         $categories = Category::get();
+        $subCategories = SubCategory::get();
         $brands = Brands::get();
-
-        return view('templates.pages.products', compact('products', 'categories', 'brands'));
+        $productColors = ProductColor::get();
+        return view('templates.pages.products', compact('products', 'categories', 'brands', 'subCategories','productColors'));
     }
 
+    // slugProducts
+    public function slugProducts($slug){
+        $category = Category::where('slug',$slug)->first();
+        $subCategories = SubCategory::where('category_id',$category->id)->get();
+        $subCategoryIds = $subCategories->pluck('id')->toArray();
+        $products = Products::whereIn('sub_category_id',$subCategoryIds)->get();
+
+        $categories = Category::get();
+        $subCategories = SubCategory::get();
+        $productColors = ProductColor::get();
+        $brands = Brands::get();
+        return view('templates.pages.products',compact('products','categories','brands','subCategories','productColors'));
+    }
 
 
     //productDetail
     public function productDetail($id){
         $product = Products::find($id);
         return view('templates.pages.product-detail',compact('product'));
+    }
+
+    //checkout
+    public function checkout(){
+        return view('templates.pages.checkout');
+    }
+
+    //payments
+    public function payments(){
+        return view('templates.pages.payments');
     }
 }

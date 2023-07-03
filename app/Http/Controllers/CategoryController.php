@@ -34,6 +34,7 @@ class CategoryController extends Controller
     {
         $category = new Category();
         $category->name = $request->name;
+        $category->slug = $request->slug;
         $category->save();
         return redirect()->route('category.index')->with('success','Category created successfully');
     }
@@ -61,6 +62,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $category->name = $request->name;
+        $category->slug = $request->slug;
         $category->save();
         return redirect()->route('category.index')->with('success','Category updated successfully');
     }

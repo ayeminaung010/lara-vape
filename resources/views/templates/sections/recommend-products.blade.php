@@ -11,15 +11,23 @@
                 <!-- Slides -->
                 @foreach (App\Models\Products::get() as $product)
                 <div class="swiper-slide ">
-                    <img src="{{ asset('dbImg/products/' . $product->image) }}"
-                        class=" " width="300" height="200" alt="" />
-                    <div class="d-flex justify-content-between mt-3">
-                        <h6 class="brand-name">{{ $product->brand->name }}</h6>
-                        <p>{{ $product->discount_price ? $product->discount_price : $product->original_price }}Kyats</p>
-                    </div>
-                    <div class="">
-                        <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
-                    </div>
+                    <a href="{{ route('product.detail',$product->id) }}">
+                        <div class=" " style="width:300px">
+                            <img src="{{ asset('dbImg/products/' . $product->image) }}"
+                                class=" " width="300" height="200" alt="" />
+                            <div class="d-flex justify-content-between mt-3">
+                                <h6 class="brand-name">{{ $product->brand->name }}</h6>
+                                <p>{{ $product->discount_price ? $product->discount_price : $product->original_price }}Kyats</p>
+                            </div>
+                            <div class="">
+                                <h5 class="product-name">
+                                    <a href="{{ route('product.detail',$product->id) }}">
+                                    {{ $product->name }}
+                                    </a>
+                                </h5>
+                            </div>
+                        </div>
+                    </a>
                 </div>
                 @endforeach
                 {{-- <div class="swiper-slide">
@@ -33,16 +41,16 @@
                         <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
                     </div>
                 </div> --}}
- 
+
             </div>
-            <!-- If we need pagination -->
+            <!-- pagination -->
             <div class="swiper-pagination"></div>
 
-            <!-- If we need navigation buttons -->
+            <!-- navigation buttons -->
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
 
-            <!-- If we need scrollbar -->
+            <!-- scrollbar -->
             <div class="swiper-scrollbar"></div>
         </div>
     </div>

@@ -47,7 +47,7 @@ class ProductsController extends Controller
         $product->name = $request->name;
         $product->brand_id = $request->brand_id;
         // $product->category_id = $request->category_id;
-        $product->subCategory_id = $request->subCategory_id;
+        $product->sub_category_id = $request->subCategory_id;
         $product->description = $request->description;
         $product->original_price = $request->original_price;
         $product->discount_price = $request->discount_price;
@@ -95,7 +95,7 @@ class ProductsController extends Controller
         $product->name = $request->name;
         $product->brand_id = $request->brand_id;
         // $product->category_id = $request->category_id;
-        $product->subCategory_id = $request->subCategory_id;
+        $product->sub_category_id = $request->subCategory_id;
         $product->description = $request->description;
         $product->original_price = $request->original_price;
         $product->discount_price = $request->discount_price;

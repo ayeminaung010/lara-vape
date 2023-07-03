@@ -22,4 +22,10 @@ class Category extends Model
     {
         return $this->hasMany(SubCategory::class);
     }
+
+    public function productsCount()
+    {
+        return $this->hasManyThrough(Products::class, SubCategory::class)->count();
+    }
+
 }

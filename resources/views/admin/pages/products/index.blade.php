@@ -81,11 +81,14 @@
                                             {{ $product->name }}
                                         </td>
                                         <td>
-                                            {{-- {{ $product->subCategory->name }} --}}
-                                            {{-- {{ $product->category  }} --}}
+                                            @foreach (App\Models\SubCategory::get() as $subCategory)
+                                                {{ $product->sub_category_id  == $subCategory->id ? $subCategory->name : ''}}
+                                            @endforeach
                                         </td>
                                         <td>
-                                            {{ $product->brand->name }}
+                                            @foreach (App\Models\Brands::get() as $brand)
+                                                {{ $product->brand_id  == $brand->id ? $brand->name : ''}}
+                                            @endforeach
                                         </td>
                                         <td>
                                             {{ $product->stock  }}

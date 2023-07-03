@@ -12,6 +12,18 @@ class SEOSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $data = [
+            'title' => 'Ecommerce',
+            'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi repellendus nam iste accusamus eos ab ad placeat non. Recusandae autem reiciendis earum cupiditate beatae saepe nemo quaerat possimus incidunt non!
+            ',
+            'keywords' => 'Ecommerce',
+            'author' => 'Ecommerce',
+            'social_title' => 'Ecommerce',
+            'social_description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi repellendus nam iste accusamus eos ab ad placeat non. Recusandae autem reiciendis earum cupiditate beatae saepe nemo quaerat possimus incidunt non!
+            ',
+        ];
+
+        \App\Models\SEO::create($data);
     }
 }
+

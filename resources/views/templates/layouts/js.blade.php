@@ -4,6 +4,7 @@
 <script src="{{ asset('user/vendor/js/swiper.min.js') }}"></script>
 <script src="{{ asset('user/vendor/js/splide.min.js') }}"></script>
 <script src="{{ asset('user/vendor/js/axios.min.js')}}"></script>
+<script src="{{ asset('user/vendor/js/sweetAlert.min.js')}}"></script>
 
 <script>
   $(".slick-container").slick({

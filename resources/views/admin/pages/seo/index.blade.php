@@ -87,7 +87,6 @@
                                 <label for="">Description</label>
                                 <textarea name="description" class="  form-control" id="" cols="30" rows="10" placeholder="Enter Description">{{ $seo->description }}</textarea>
                             </div>
-
                             <div class="">
                                 @error('description')
                                     <small class=" text-danger">{{ $message }}</small>

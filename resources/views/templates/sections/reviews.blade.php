@@ -26,7 +26,7 @@
                 <ul class="splide__list">
                     @foreach ($reviews as $review )
                     <li class="splide__slide">
-                        <div class="review--container py-6 px-4">
+                        <div class="review--container  py-6 px-4">
                             <span class=" ">
                                 <i class="bi bi-star-fill"></i>
                                 <i class="bi bi-star-fill"></i>

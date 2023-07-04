@@ -58,6 +58,26 @@
                 }
             });
         }else{
+            const random = Math.floor(Math.random() * 10000000000);
+            const orderList = [];
+            const orderCode = 'VB'+'_' + random + '_VAPE';
+            const cart = document.querySelectorAll('.item-in-cart');
+            const totalQty = document.querySelector('#cartCount').innerText;
+            cart.forEach(function(row) {
+              const productId = row.querySelector('.product_id').value;
+              const qty = row.querySelector('.cart-quantity').value;
+              const total = row.querySelector('.cart-cost').innerHTML;
+
+              orderList.push({
+                'user_id': user_id,
+                'product_id': productId,
+                'quantity': qty,
+                'total_price': total,
+                'order_code': orderCode,
+              });
+            });
+            localStorage.setItem('orderList',JSON.stringify(orderList));
+            localStorage.setItem('orderCode',orderCode);
             window.location.href = "{{ route('user.checkout') }}";
         }
     }
@@ -74,21 +94,11 @@
             return preV + parseFloat(curV.innerHTML);
         },0)
         document.querySelector('#subTotal').innerHTML = total + " Kyats";
+        localStorage.setItem("total_price", total);
     }
 
-    function RemoveEmptyInCart(){
-        const emptyDiv = document.querySelector('.empty-cart');
-        emptyDiv?.remove();
-    }
 
-    if(user_id){
-        getCarts();
-        updateTotalCost();
-        updateTotalQuantity();
-    }else{
-        emptyCart();
-    }
-
+    let quantityTotal = 0;
     function getCarts(){
         axios.post('/getCarts', {
             data
@@ -98,6 +108,8 @@
             if(response?.data?.length > 0){
                 RemoveEmptyInCart();
                 for (let i = 0; i < response?.data?.length ; i++) {
+                    quantityTotal += data[i]?.quantity;
+                    document.querySelector('#cartCount').innerText = quantityTotal;
                     const div = document.createElement('div');
                     div.classList.add('item-in-cart', 'p-3')
                     div.innerHTML = `
@@ -134,6 +146,7 @@
                             </div>
                             `;
                     cartBox.append(div);
+                    updateTotalCost();
                 }
             }else{
                 emptyCart();
@@ -144,10 +157,22 @@
         });
     }
 
+    function RemoveEmptyInCart(){
+        const emptyDiv = document.querySelector('.empty-cart');
+        emptyDiv?.remove();
+    }
+
+    if(user_id){
+        updateTotalCost();
+        getCarts();
+        updateTotalQuantity();
+    }else{
+        emptyCart();
+    }
+
     const addToCartBtns = document.querySelectorAll('.addToCartBtn');
 
     let cartCount = 0;
-    // updateTotalCost();
     document.addEventListener('click', e => {
         if (e.target.matches('.addToCartBtn')) {
             const container = e.target.closest('.own-card');
@@ -228,6 +253,7 @@
         cartCount++;
         addAnimate();
         document.querySelector('#cartCount').innerHTML = cartCount;
+        updateTotalQuantity();
         updateTotalCost();
     }
 
@@ -260,6 +286,7 @@
         cartCount--;
         addAnimate();
         document.querySelector('#cartCount').innerHTML = cartCount;
+        updateTotalQuantity();
         updateTotalCost();
     }
     window.removeItem = function(event){

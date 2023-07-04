@@ -72,6 +72,7 @@ Route::prefix('customer')->group(function () {
 Route::prefix('user')->group(function () {
     Route::get('/checkout',[RouteController::class,"checkout"])->name('user.checkout');
     Route::get('/payments',[RouteController::class,"payments"])->name('user.payments');
+    Route::post('/submit/order',[RouteController::class,"submitOrder"])->name('user.submitOrder');
 });
 
 //admin views

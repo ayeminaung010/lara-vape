@@ -6,23 +6,25 @@
                 <h4>Review & Payments</h4>
                 <div class="row">
                     <div class="col-lg-10">
-                        <form action="#" method="POST" class="d-flex flex-column">
+                        <form action="{{ route('user.submitOrder') }}" enctype="multipart/form-data" method="POST" class="d-flex flex-column">
                             @csrf
+                            <input type="hidden" name="total_price" class="total_price" value="" >
                             <div class="my-2">
                                 <label for="">Upload Your Payments Transaction <strong class=" text-danger">*</strong></label>
                                 <input type="file" name="payment_img" class="form-control rounded-0 py-3 "
                                 >
                                 @error('name')
-                                <small class=" text-danger">{{ $message }}</small>
+                                    <small class=" text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
+                            <input type="hidden" name="order_code" class="order_code" value="" >
                             <div class="my-2">
                                 <textarea name="note" id="" placeholder="Enter Message(Optional)" class=" form-control" cols="30" rows="10"></textarea>
                                 @error('note')
-                                <small class=" text-danger">{{ $message }}</small>
+                                    <small class=" text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <button class=" btn btn-dark rounded-0  py-2">Confirm Payment</button>
+                            <button type="submit" class="confirmPayment btn btn-dark rounded-0  py-2">Confirm Payment</button>
                         </form>
                     </div>
                 </div>
@@ -33,11 +35,30 @@
                     <h5 class=" text-warning">*Please Send to below Payoneer Account*</h5>
                     <p>Account Name: <strong>U Aung Ko Ko</strong></p>
                     <p>Account Number: <strong>123456789</strong></p>
-                    <p>Amount: <strong>1000 MMK</strong></p>
-                    <p>Remark: <strong>Order ID: 123456789</strong></p>
+                    <p>Amount: <strong id="total_amount">1000 MMK</strong></p>
+                    <p>Order ID:<strong id="order_id"> 123456789</strong></p>
                     <p>After you send the money, please upload the transaction slip and confirm the payment.</p>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        const orderCode = localStorage.getItem('orderCode');
+        const totalPrice = localStorage.getItem('total_price');
+        const orderList = JSON.parse(localStorage.getItem('orderList'));
+
+        const confirmPayment = document.querySelector('.confirmPayment');
+        const total_amount = document.querySelector('#total_amount');
+        const order_id  = document.querySelector('#order_id');
+        const order_code = document.querySelector('.order_code');
+        const total_price = document.querySelector('.total_price');
+
+        total_amount.innerText = totalPrice + " " + "MMK";
+        order_id.innerText = " " + orderCode;
+        order_code.value = orderCode;
+        total_price.value = totalPrice;
+    </script>
 @endsection

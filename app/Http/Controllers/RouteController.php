@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Order;
 use App\Models\Brands;
 use App\Models\Category;
 use App\Models\Products;
+use App\Models\OrderList;
 use App\Models\SubCategory;
+use App\Models\UserPayment;
 use App\Models\ProductColor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -153,4 +158,69 @@ class RouteController extends Controller
     public function payments(){
         return view('templates.pages.payments');
     }
+
+    //submitOrder
+    public function submitOrder(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $validatedData = $request->validate([
+                'note' => 'string',
+                'payment_img' => 'image|mimes:jpeg,png,jpg,gif,svg,webp'
+            ]);
+
+            //payment save
+            $payment = new UserPayment();
+            $payment->user_id = Auth::user()->id;
+            $payment->note = $request->note;
+            $payment->note = $request->note;
+
+            if ($request->hasFile('payment_img')) {
+                $image = $request->file('payment_img');
+                $imageName = uniqid().'.'.$image->getClientOriginalName();
+                $image->move(public_path('dbImg/payments'), $imageName);
+                $payment->image = $imageName;
+            }
+            $payment->save();
+
+            $carts = Cart::select('carts.*','products.name as productName','products.original_price as originalPrice','products.discount_price as discountPrice','products.image as productImage',)
+                    ->leftJoin('products','products.id','carts.product_id')
+                    ->where('user_id',Auth::user()->id)
+                    ->get(); //get all cart data
+
+            //create order
+            $order = new Order();
+            $order->user_id = Auth::user()->id;
+            $order->order_code  = $request->order_code;
+            $order->total_price = $request->total_price;
+            $order->user_payment_id = $payment->id;
+            $order->save();
+
+            foreach($carts as $cart){
+                $price = $cart->discount_price ? $cart->discountPrice : $cart->originalPrice * $cart->quantity;
+                $orderList = new OrderList();
+                $orderList->user_id = Auth::user()->id;
+                $orderList->product_id = $cart->product_id;
+                $orderList->product_color = $cart->color;
+                $orderList->quantity = $cart->quantity;
+                $orderList->total_price = $price;
+                $orderList->order_code = $request->order_code;
+                $orderList->save();
+            }
+            $carts->delete();
+
+            // Commit the transaction
+            DB::commit();
+
+            // Additional logic after the transaction is successful
+
+            return response()->json(['message' => 'Order submitted successfully']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            // Handle the error or return an error response
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 }

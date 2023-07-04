@@ -10,6 +10,7 @@ use Database\Seeders\BrandsSeeder;
 use Database\Seeders\ReviewSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\FrontendSeeder;
+use Database\Seeders\ProductsSeeder;
 use Database\Seeders\SubCategorySeeder;
 use Database\Seeders\ProductColorSeeder;
 
@@ -35,7 +36,8 @@ class DatabaseSeeder extends Seeder
             ReviewSeeder::class,
             ProductColorSeeder::class,
             FrontendSeeder::class,
-            SEOSeeder::class
+            SEOSeeder::class,
+            ProductsSeeder::class
             // AdminSeeder::class
         ]);
     }

@@ -5,6 +5,7 @@
 <script src="{{ asset('user/vendor/js/splide.min.js') }}"></script>
 <script src="{{ asset('user/vendor/js/axios.min.js')}}"></script>
 <script src="{{ asset('user/vendor/js/sweetAlert.min.js')}}"></script>
+<script src="{{ asset('user/vendor/js/megamenu.js')}}"></script>
 
 <script>
   $(".slick-container").slick({

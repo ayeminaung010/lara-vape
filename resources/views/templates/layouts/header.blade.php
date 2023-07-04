@@ -122,7 +122,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a href="{{ route('customer.login') }}"  class="btn btn-primary">Login</a>
+                    <a href="{{ route('customer.login') }}" class="btn btn-primary">Login</a>
                 </div>
             </div>
         </div>
@@ -146,7 +146,9 @@
                 <button onclick="clearCart(event)" class=" btn btn-danger rounded-0 py-2 ">
                     Clear Cart
                 </button>
-                <button class=" btn btn-dark rounded-0 py-2 " data-bs-toggle="modal" @if(Auth::check()) @if(Auth::user()->role === 'user') data-bs-target="#checkOutModal" @else data-bs-target="#loginModal" @endif @else data-bs-target="#loginModal" @endif >
+                <button class=" btn btn-dark rounded-0 py-2 " data-bs-toggle="modal"
+                    @if (Auth::check()) @if (Auth::user()->role === 'user') data-bs-target="#checkOutModal" @else data-bs-target="#loginModal" @endif
+                @else data-bs-target="#loginModal" @endif >
                     Proceed to Checkout
                 </button>
             </div>
@@ -168,28 +170,30 @@
                         {{ $category->name }}
                         <!-- <div class="triangle-bottom"></div> -->
                     </button>
+
+                    @if (count($category->subCategories) > 0)
                     <ul class="dropdown-menu rounded-0 p-0 m-0">
                         <div class="d-flex flex-column justify-content-between">
                             <div class="d-flex gap-5 flex-wrap p-5">
-                                <div class="single-dropdown-item">
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <a class="" href="#">
-                                                <h6>New Pod Kits</h6>
-                                            </a>
-                                        </li>
-                                        <hr />
-                                        <li>
-                                            <a class="" href="#"> UWELL Caliburn A3 Pod Kit </a>
-                                        </li>
-                                        <li>
-                                            <a class="" href="#"> UWELL Crown D Pod Kit </a>
-                                        </li>
-                                        <li>
-                                            <a class="" href="#"> SMOK Novo X Pod Kit </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                @foreach ($category->subCategories as $sub)
+                                    <div class="single-dropdown-item">
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <a class="" href="#">
+                                                    <h6>{{ $sub->name }}</h6>
+                                                </a>
+                                            </li>
+                                            <hr />
+                                            @foreach ($sub->products as $key=>$pd)
+                                                @if($key <= 5)
+                                                    <li>
+                                                        <a class="" href="#">{{ $pd->name }}</a>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endforeach
                             </div>
                             <span class="bg-dark py-2 px-5 rounded-0 mt-auto text-start">
                                 <a href="{{ route('product.slugProducts', $category->slug) }}"
@@ -200,84 +204,11 @@
                             </span>
                         </div>
                     </ul>
+                    @endif
                 </div>
             @endforeach
-            {{-- <div class="dropdown">
-                <button class="btn btn-close-white dropdown--btn py-2" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    New Products
-                </button>
-                <ul class="dropdown-menu rounded-0 p-0 m-0">
-                    <div class="d-flex flex-column justify-content-between">
-                        <div class="d-flex gap-5 flex-wrap p-5">
-                            <div class="single-dropdown-item">
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <a class="" href="#">
-                                            <h6>New Pod Kits</h6>
-                                        </a>
-                                    </li>
-                                    <hr />
-                                    <li>
-                                        <a class="" href="#"> UWELL Caliburn A3 Pod Kit </a>
-                                    </li>
-                                    <li>
-                                        <a class="" href="#"> UWELL Crown D Pod Kit </a>
-                                    </li>
-                                    <li>
-                                        <a class="" href="#"> SMOK Novo X Pod Kit </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="single-dropdown-item">
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <a class="" href="#">
-                                            <h6>New Pod Kits</h6>
-                                        </a>
-                                    </li>
-                                    <hr />
-                                    <li>
-                                        <a class="" href="#"> UWELL Caliburn A3 Pod Kit </a>
-                                    </li>
-                                    <li>
-                                        <a class="" href="#"> UWELL Crown D Pod Kit </a>
-                                    </li>
-                                    <li>
-                                        <a class="" href="#"> SMOK Novo X Pod Kit </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="single-dropdown-item">
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <a class="" href="#">
-                                            <h6>New Pod Kits</h6>
-                                        </a>
-                                    </li>
-                                    <hr />
-                                    <li>
-                                        <a class="" href="#"> UWELL Caliburn A3 Pod Kit </a>
-                                    </li>
-                                    <li>
-                                        <a class="" href="#"> UWELL Crown D Pod Kit </a>
-                                    </li>
-                                    <li>
-                                        <a class="" href="#"> SMOK Novo X Pod Kit </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <span class="bg-dark py-2 px-5 rounded-0 mt-auto text-start">
-                            <a href=""
-                                class="d-flex flex-wrap align-items-center gap-2 text-decoration-none text-white">
-                                Show All Products
-                                <i class="bi bi-arrow-right fs-4"></i>
-                            </a>
-                        </span>
-                    </div>
-                </ul>
-            </div> --}}
+
         </div>
     </div>
+
 </section>

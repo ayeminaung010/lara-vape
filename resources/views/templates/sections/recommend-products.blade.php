@@ -10,9 +10,9 @@
             <div class="swiper-wrapper">
                 <!-- Slides -->
                 @foreach (App\Models\Products::get() as $product)
-                <div class="swiper-slide ">
+                <div class="swiper-slide">
                     <a href="{{ route('product.detail',$product->id) }}">
-                        <div class=" " style="width:300px">
+                        <div class=" " >
                             <img src="{{ asset('dbImg/products/' . $product->image) }}"
                                 class=" " width="300" height="200" alt="" />
                             <div class="d-flex justify-content-between mt-3">
@@ -22,7 +22,7 @@
                             <div class="">
                                 <h5 class="product-name">
                                     <a href="{{ route('product.detail',$product->id) }}">
-                                    {{ $product->name }}
+                                        {{ $product->name }}
                                     </a>
                                 </h5>
                             </div>

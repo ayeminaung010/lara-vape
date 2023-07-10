@@ -34,28 +34,27 @@
                 <div class="card my-4">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                            <h6 class="text-white text-capitalize ps-3">Orders</h6>
+                            <h6 class="text-white text-capitalize ps-3">Pending Payments</h6>
                         </div>
                     </div>
                     <div class="card-body px-0 pb-2">
-                        @if ($orders)
+                        @if ($userPayments)
                         <div class="table-responsive p-0">
-                            @if (count($orders) > 0)
+                            @if (count($userPayments) > 0)
                             <table class="table align-items-center mb-0">
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            No</th>
+                                            id</th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            User Name</th>
+                                            User</th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Order Code</th>
-                                        <th
+                                            image</th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Total Price</th>
+                                            status</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Date</th>
@@ -66,39 +65,45 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($orders as $key=>$order)
-                                    <tr>
-                                        <td>
-                                            {{ ($orders->currentPage() - 1) * 10 + $key + 1 }}
-                                        </td>
-                                        <td>
-                                            {{ $order->user->first_name . ' ' . $order->user->last_name }}
-                                        </td>
-                                        <td>
-                                            {{ $order->order_code }}
-                                        </td>
-
-                                        <td>
-                                            {{ $order->total_price . " MMK" }}
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">{{ $order->created_at->format('d-m-Y') }}</span>
-                                        </td>
-                                        <td class="align-middle">
-                                            <div class="d-flex gap-3">
-                                                <a href="{{ route('orders.show',$order->order_code) }}" class="text-info font-weight-bold text-xs"
-                                                    data-toggle="tooltip" data-original-title="Edit user">
-                                                    Detail
-                                                </a>
-                                                <a href="javascript:;" class="text-danger font-weight-bold text-xs"
-                                                    data-toggle="tooltip" data-original-title="Edit user">
-                                                    Delete
-                                                </a>
-                                            </div>
-                                        </td>
-
-                                    </tr>
-                                    @endforeach
+                                 @foreach ($userPayments as $key=>$p)
+                                 <tr>
+                                    <td>
+                                        {{ ($userPayments->currentPage() - 1) * 10 + $key + 1 }}
+                                    </td>
+                                    <td>
+                                        {{ $p->user->first_name . " " . $p->user->last_name }}
+                                    </td>
+                                    <td>
+                                        <img src="{{ asset("dbImg/payments/".$p->image) }}" width="200" height="100" alt="">
+                                    </td>
+                                    <td>
+                                        @if ($p->status == '0')
+                                            <button class="btn btn-warning">
+                                                Pending...
+                                            </button>
+                                        @elseif ($p->status == '1')
+                                            <button class="btn btn-success">
+                                                Success
+                                            </button>
+                                        @else
+                                            <button class="btn btn-danger">
+                                                Rejected
+                                            </button>
+                                        @endif
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold">{{ $p->created_at->format('d-m-Y') }}</span>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="d-flex gap-3">
+                                            <a href="{{ route('payments.show',$p->id) }}" class="text-info font-weight-bold text-xs"
+                                                data-toggle="tooltip" data-original-title="Edit user">
+                                                Detail
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                 @endforeach
                                 </tbody>
                             </table>
                             @else

@@ -13,7 +13,8 @@ class UserPaymentController extends Controller
      */
     public function index()
     {
-        $userPayments = UserPayment::orderBy('created_at','desc')->paginate(5);
+        $userPayments = UserPayment::orderBy('created_at','desc')
+                ->paginate(10);
         return view('admin.pages.payments.index',compact('userPayments'));
     }
 
@@ -36,9 +37,10 @@ class UserPaymentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(UserPayment $userPayment)
+    public function show(UserPayment $userPayment,$id )
     {
-        //
+        $payment = UserPayment::orWhere('id',$id)->orWhere('order_code',$id)->firstOrFail();
+        return view('admin.pages.payments.show',compact('payment'));
     }
 
     /**
@@ -60,8 +62,47 @@ class UserPaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserPayment $userPayment)
+    public function destroy(UserPayment $userPayment,$id)
     {
         //
+    }
+
+    //approve
+    public function approve(UserPayment $userPayment,$id)
+    {
+        $payment = UserPayment::find($id);
+        $payment->status = 1;
+        $payment->save();
+        return redirect()->back()->with('success','Payment Approved');
+    }
+
+    //reject
+    public function reject(UserPayment $userPayment,$id)
+    {
+        $payment = UserPayment::find($id);
+        $payment->status = 2;
+        $payment->save();
+        return redirect()->back()->with('success','Payment Rejected');
+    }
+
+    //pending
+    public function pending(UserPayment $userPayment)
+    {
+        $userPayments = UserPayment::where('status',0)->paginate('10');
+        return view('admin.pages.payments.pending',compact('userPayments'));
+    }
+
+    //successful
+    public function successful(UserPayment $userPayment)
+    {
+        $userPayments = UserPayment::where('status',1)->paginate('10');
+        return view('admin.pages.payments.successful',compact('userPayments'));
+    }
+
+    //rejected
+    public function rejected(UserPayment $userPayment)
+    {
+        $userPayments = UserPayment::where('status',2)->paginate('10');
+        return view('admin.pages.payments.rejected',compact('userPayments'));
     }
 }

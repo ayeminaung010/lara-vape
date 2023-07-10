@@ -163,10 +163,19 @@ Route::prefix('admin')->middleware('admin_auth')->group(function () {
 
     Route::prefix('orders')->group(function () {
         Route::get('/',[OrderController::class,"index"])->name('orders.index');
+        Route::get('/detail/{code}',[OrderController::class,"show"])->name('orders.show');
     });
 
     Route::prefix('payments')->group(function () {
         Route::get('/',[UserPaymentController::class,"index"])->name('payments.index');
+        Route::get('/detail/{id}',[UserPaymentController::class,"show"])->name('payments.show');
+        Route::get('/detail/{code}',[UserPaymentController::class,"show"])->name('payments.show.code');
+        Route::get('/approve/{id}',[UserPaymentController::class,"approve"])->name('payments.approve');
+        Route::get('/reject/{id}',[UserPaymentController::class,"reject"])->name('payments.reject');
+
+        Route::get('/pending',[UserPaymentController::class,'pending'])->name('payments.pending');
+        Route::get('/successful',[UserPaymentController::class,'successful'])->name('payments.successful');
+        Route::get('/rejected',[UserPaymentController::class,'rejected'])->name('payments.rejected');
     });
 
     Route::prefix('users')->group(function () {

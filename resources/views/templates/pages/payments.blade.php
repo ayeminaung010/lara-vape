@@ -21,7 +21,7 @@
                         </button>
                     </div>
                 @endif
-                
+
                 <div class="row">
                     <div class="col-lg-10">
                         <form action="{{ route('user.submitOrder') }}" enctype="multipart/form-data" method="POST" class="d-flex flex-column">
@@ -41,6 +41,13 @@
                                 @error('note')
                                     <small class=" text-danger">{{ $message }}</small>
                                 @enderror
+                            </div>
+                            <div class="">
+                                <input type="hidden" name="deliveryName" value="" >
+                                <input type="hidden" name="deliveryEmail" value="" >
+                                <input type="hidden" name="deliveryPhone" value="" >
+                                <input type="hidden" name="deliveryAddress" value="" >
+                                <input type="hidden" name="deliveryNote" value="" >
                             </div>
                             <button type="submit" class="confirmPayment btn btn-dark rounded-0  py-2">Confirm Payment</button>
                         </form>
@@ -66,6 +73,7 @@
     <script>
         const orderCode = localStorage.getItem('orderCode');
         const totalPrice = localStorage.getItem('total_price');
+        const deliveryData  = JSON.parse(localStorage.getItem('deliveryAddress'));
         const orderList = JSON.parse(localStorage.getItem('orderList'));
 
         const confirmPayment = document.querySelector('.confirmPayment');
@@ -78,5 +86,16 @@
         order_id.innerText = " " + orderCode;
         order_code.value = orderCode;
         total_price.value = totalPrice;
+
+        const deliveryName = document.querySelector('input[name="deliveryName"]');
+        const deliveryEmail = document.querySelector('input[name="deliveryEmail"]');
+        const deliveryPhone = document.querySelector('input[name="deliveryPhone"]');
+        const deliveryAddress = document.querySelector('input[name="deliveryAddress"]');
+        const deliveryNote = document.querySelector('input[name="deliveryNote"]');
+        deliveryName.value = deliveryData?.name;
+        deliveryEmail.value = deliveryData?.email;
+        deliveryNote.value = deliveryData?.note;
+        deliveryPhone.value = deliveryData?.phone;
+        deliveryAddress.value = deliveryData?.address;
     </script>
 @endsection

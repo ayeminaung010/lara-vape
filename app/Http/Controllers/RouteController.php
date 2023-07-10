@@ -16,6 +16,7 @@ use App\Models\SubCategory;
 use App\Models\UserPayment;
 use App\Models\ProductColor;
 use Illuminate\Http\Request;
+use App\Models\DeliveryDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -200,8 +201,7 @@ class RouteController extends Controller
             $payment = new UserPayment();
             $payment->user_id = Auth::user()->id;
             $payment->note = $request->note;
-            $payment->note = $request->note;
-
+            $payment->order_code = $request->order_code;
             if ($request->hasFile('payment_img')) {
                 $image = $request->file('payment_img');
                 $imageName = uniqid().'.'.$image->getClientOriginalName();
@@ -223,6 +223,16 @@ class RouteController extends Controller
             $order->user_payment_id = $payment->id;
             $order->save();
 
+            //delivery detail
+            $deliveryDetail =  new DeliveryDetail();
+            $deliveryDetail->name = $request->deliveryName;
+            $deliveryDetail->email = $request->deliveryEmail;
+            $deliveryDetail->phone = $request->deliveryPhone;
+            $deliveryDetail->address =  $request->deliveryAddress;
+            $deliveryDetail->message = $request->deliveryNote;
+            $deliveryDetail->order_id = $order->id;
+            $deliveryDetail->save();
+
             foreach($carts as $cart){
                 $price = $cart->discount_price ? $cart->discountPrice : $cart->originalPrice * $cart->quantity;
                 $orderList = new OrderList();
@@ -240,9 +250,7 @@ class RouteController extends Controller
             DB::commit();
 
             // Additional logic after the transaction is successful
-
-            return response()->json(['message' => 'Order submitted successfully']);
-
+            return redirect()->route('user.orderSuccess')->with('success','Order placed successfully');
         } catch (\Exception $e) {
             DB::rollBack();
 

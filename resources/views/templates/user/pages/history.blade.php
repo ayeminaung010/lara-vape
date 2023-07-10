@@ -17,7 +17,7 @@
                                 <li class=" bg-body-tertiary text-uppercase @if(Route::currentRouteName() == 'user.orderLists') active @endif  py-3 px-4">My Orders</li>
                             </a>
                             <a href="{{ route('user.history') }}">
-                                <li class=" bg-body-tertiary text-uppercase  py-3 px-4">My History</li>
+                                <li class=" bg-body-tertiary text-uppercase @if(Route::currentRouteName() == 'user.history') active @endif  py-3 px-4">My History</li>
                             </a>
                             <a href="#">
                                 <li class=" bg-body-tertiary text-uppercase  py-3 px-4">My Favourites</li>
@@ -67,7 +67,7 @@
                         @else
                         <div class=" d-flex  flex-column justify-content-center align-items-center">
                             <p class="text-center fs-2 p-5">No Items! </p>
-                            <a href="{{ route('products') }}" class="btn btn-primary ">GO SHOPPING</a>
+                            <a href="{{ route('products') }}" class="btn btn-dark rounded-0 ">GO SHOPPING</a>
                         </div>
                         @endif
                     </div>

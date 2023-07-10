@@ -48,13 +48,13 @@
                                             id</th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            name</th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Slug</th>
+                                            User</th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             image</th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            status</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Date</th>
@@ -65,37 +65,45 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                        <td>
-
-                                        </td>
-
-                                        <td>
-
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
-                                        </td>
-                                        <td class="align-middle">
-                                            <div class="d-flex gap-3">
-                                                <a href="javascript:;" class="text-info font-weight-bold text-xs"
-                                                    data-toggle="tooltip" data-original-title="Edit user">
-                                                    Edit
-                                                </a>
-                                                <a href="javascript:;" class="text-danger font-weight-bold text-xs"
-                                                    data-toggle="tooltip" data-original-title="Edit user">
-                                                    Delete
-                                                </a>
-                                            </div>
-                                        </td>
-
-                                    </tr>
+                                 @foreach ($userPayments as $key=>$p)
+                                 <tr>
+                                    <td>
+                                        {{ ($userPayments->currentPage() - 1) * 10 + $key + 1 }}
+                                    </td>
+                                    <td>
+                                        {{ $p->user->first_name . " " . $p->user->last_name }}
+                                    </td>
+                                    <td>
+                                        <img src="{{ asset("dbImg/payments/".$p->image) }}" width="200" height="100" alt="">
+                                    </td>
+                                    <td>
+                                        @if ($p->status == '0')
+                                            <button class="btn btn-warning">
+                                                Pending...
+                                            </button>
+                                        @elseif ($p->status == '1')
+                                            <button class="btn btn-success">
+                                                Success
+                                            </button>
+                                        @else
+                                            <button class="btn btn-danger">
+                                                Rejected
+                                            </button>
+                                        @endif
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold">{{ $p->created_at->format('d-m-Y') }}</span>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="d-flex gap-3">
+                                            <a href="{{ route('payments.show',$p->id) }}" class="text-info font-weight-bold text-xs"
+                                                data-toggle="tooltip" data-original-title="Edit user">
+                                                Detail
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                 @endforeach
                                 </tbody>
                             </table>
                             @else

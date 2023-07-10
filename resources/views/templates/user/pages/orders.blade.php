@@ -67,7 +67,7 @@
                         @else
                         <div class=" d-flex  flex-column justify-content-center align-items-center">
                             <p class="text-center fs-2 p-5">No Items! </p>
-                            <a href="{{ route('products') }}" class="btn btn-primary ">GO SHOPPING</a>
+                            <a href="{{ route('products') }}" class="btn btn-dark rounded-0 ">GO SHOPPING</a>
                         </div>
                         @endif
                     </div>

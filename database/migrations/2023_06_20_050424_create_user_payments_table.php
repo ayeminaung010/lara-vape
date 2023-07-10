@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('user_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('order_code',200);
             $table->string('image',200);
             $table->text('note')->nullable();
             $table->boolean('status')->nullable()->default(false);

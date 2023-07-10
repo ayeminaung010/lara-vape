@@ -94,4 +94,6 @@ class UserController extends Controller
         $orders = Order::where('user_id',Auth::user()->id)->where('status', '1')->where('status', '2')->paginate(10);
         return view('templates.user.pages.history',compact('orders'));
     }
+
+    
 }

@@ -123,13 +123,48 @@
                     <span class="nav-link-text ms-1">Orders</span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="{{ route('payments.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'payments.index') bg-gradient-primary @endif" >
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">paid</i>
                     </div>
                     <span class="nav-link-text ms-1">Payments</span>
                 </a>
+            </li> --}}
+            <li class="nav-item">
+                <a  class="nav-link text-white " data-bs-toggle="collapse" href="#paymentCollapse" role="button"
+                    aria-expanded="false" aria-controls="paymentCollapse">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">paid</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Payments</span>
+                </a>
+                <div class="collapse" id="paymentCollapse">
+                    <a href="{{ route('payments.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'payments.index') bg-gradient-primary @endif" >
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">checklist</i>
+                        </div>
+                        <span class="nav-link-text ms-1">All Payments</span>
+                    </a>
+                    <a  href="{{ route('payments.pending') }}" class="nav-link text-white @if(Route::currentRouteName() == 'payments.pending') bg-gradient-primary @endif" >
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">run_circle</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Pending Payments</span>
+                    </a>
+                    <a href="{{ route('payments.successful') }}" class="nav-link text-white @if(Route::currentRouteName() == 'payments.successful') bg-gradient-primary @endif" >
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">task_alt</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Successful Payments</span>
+                    </a>
+                    <a href="{{ route('payments.rejected') }}" class="nav-link text-white @if(Route::currentRouteName() == 'payments.rejected') bg-gradient-primary @endif" >
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">thumb_down_alt</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Rejected Payments</span>
+                    </a>
+                </div>
             </li>
             <li class="nav-item">
                 <a href="{{ route('users.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'users.index') bg-gradient-primary @endif" >

@@ -10,6 +10,7 @@
         @yield('title')
     </title>
     @include('admin.layouts.css')
+    @yield('css')
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">

@@ -171,7 +171,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link text-white @if(Route::currentRouteName() == 'admin.dashboard') bg-gradient-primary @endif" >
+                <a href="{{ route("profile.index") }}" class="nav-link text-white @if(Route::currentRouteName() == 'profile.index') bg-gradient-primary @endif" >
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">person</i>
                     </div>
@@ -179,11 +179,11 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white " >
+                <a href="{{ route('profile.password') }}" class="nav-link text-white " >
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">assignment</i>
                     </div>
-                    <span class="nav-link-text ms-1">Sign Up</span>
+                    <span class="nav-link-text ms-1">Change Password</span>
                 </a>
             </li>
             <li class="nav-item">

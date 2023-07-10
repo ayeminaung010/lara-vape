@@ -78,6 +78,7 @@
             });
             localStorage.setItem('orderList',JSON.stringify(orderList));
             localStorage.setItem('orderCode',orderCode);
+            updateTotalCost();
             window.location.href = "{{ route('user.checkout') }}";
         }
     }
@@ -135,7 +136,7 @@
                                         </div>
                                     </div>
                                     <div class=" col-5">
-                                        <p> <span class='cart-cost'>${data[i]?.discount_price ? data[i]?.discount_price : data[i]?.original_price }</span> Kyats</p>
+                                        <p> <span class='cart-cost'>${data[i]?.discount_price ? data[i]?.discount_price : data[i]?.original_price  * data[i]?.quantity}</span> Kyats</p>
                                     </div>
                                 </div>
                                 <div class=" position-absolute  " style="top:10px;right:10px">
@@ -163,9 +164,9 @@
     }
 
     if(user_id){
-        updateTotalCost();
         getCarts();
         updateTotalQuantity();
+        updateTotalCost();
     }else{
         emptyCart();
     }

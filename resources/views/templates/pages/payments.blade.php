@@ -2,8 +2,26 @@
 @section('content')
     <div class="container">
         <div class="row   justify-content-center align-items-center my-5">
-            <div class="col-lg-6 ">
+            <div class="col-lg-6 mt-3">
                 <h4>Review & Payments</h4>
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Fail!</strong> {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Updated!</strong> {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                
                 <div class="row">
                     <div class="col-lg-10">
                         <form action="{{ route('user.submitOrder') }}" enctype="multipart/form-data" method="POST" class="d-flex flex-column">
@@ -29,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 order-md-first">
                 <h4 class=" fw-bold">Please Follow the instruction below</h4>
                 <div class=" mt-3">
                     <h5 class=" text-warning">*Please Send to below Payoneer Account*</h5>

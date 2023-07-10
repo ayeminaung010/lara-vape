@@ -67,12 +67,24 @@ Route::prefix('customer')->group(function () {
     Route::post('/auth',[RouteController::class,"customerAuth"])->name('customer.auth');
     Route::get('/register',[RouteController::class,"signUp"])->name('customer.register');
     Route::post('/register',[RouteController::class,"customerRegister"])->name('customer.register');
+    Route::get('/reset-password',[RouteController::class,"resetPassword"])->name('customer.resetPassword');
+    Route::post('/reset-password',[RouteController::class,"customerUpdatePassword"])->name('customer.password.update');
 });
 
 Route::prefix('user')->group(function () {
     Route::get('/checkout',[RouteController::class,"checkout"])->name('user.checkout');
     Route::get('/payments',[RouteController::class,"payments"])->name('user.payments');
     Route::post('/submit/order',[RouteController::class,"submitOrder"])->name('user.submitOrder');
+    Route::post('/submit/review',[RouteController::class,"submitReview"])->name('user.submitReview');
+    Route::get('/order-success',[RouteController::class,"orderSuccess"])->name('user.orderSuccess');
+
+    Route::get('/profile',[UserController::class,"profile"])->name('user.profile');
+    Route::post('/profile/update/{id}',[UserController::class,"updateProfile"])->name('user.profile.update');
+    Route::get('/password-change',[UserController::class,"passwordChange"])->name('user.passwordChange');
+    Route::post('/password-change',[UserController::class,"updatePassword"])->name('user.password.update');
+
+    Route::get('/order-lists',[UserController::class,"orderLists"])->name('user.orderLists');
+    Route::get('/history',[UserController::class,"history"])->name('user.history');
 });
 
 //admin views
@@ -177,6 +189,12 @@ Route::prefix('admin')->middleware('admin_auth')->group(function () {
         Route::post('/store',[SEOController::class,"store"])->name('seo.store');
     });
 
+    Route::prefix('profile')->group(function () {
+        Route::get('/',[AdminController::class,"profile"])->name('profile.index');
+        Route::post('/update/{id}',[AdminController::class,"update"])->name('profile.update');
+        Route::get('/password',[AdminController::class,"password"])->name('profile.password');
+        Route::post('/password/update',[AdminController::class,"updatePassword"])->name('profile.password.update');
+    });
 });
 
 

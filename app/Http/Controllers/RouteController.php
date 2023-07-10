@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\User;
-use App\Models\Admin;
 use App\Models\Order;
+
 use App\Models\Brands;
+use App\Models\Rating;
+use App\Models\Review;
 use App\Models\Category;
 use App\Models\Products;
 use App\Models\OrderList;
@@ -60,7 +62,7 @@ class RouteController extends Controller
                 return redirect('/');
             }
         } else {
-            return redirect()->back()->with('error', 'Invalid credentials. Please try again.');
+            return redirect()->back()->with('error', 'Invalid Email or password. Please try again.!');
         }
     }
 
@@ -144,10 +146,36 @@ class RouteController extends Controller
 
 
     //productDetail
-    public function productDetail($id){
+    public function productDetail($id)
+    {
         $product = Products::find($id);
-        return view('templates.pages.product-detail',compact('product'));
+        $reviews = Rating::where('product_id', $id)
+            ->leftJoin('users', 'users.id', '=', 'ratings.user_id')
+            ->select('users.first_name as firstName', 'users.last_name','ratings.*')
+            ->orderBy('created_at','desc')
+            ->paginate(10);
+
+        $reviewCount = $reviews->count();
+        $total_star  = $reviews->count() * 5;
+        $totalRating = 0;
+        foreach($reviews as $review){
+            $totalRating += $review->rating_status;
+        }
+
+        foreach ($reviews as $review) {
+            $totalRating += $review->rating;
+        }
+
+        $averageRating = $reviewCount > 0 ? $totalRating / $reviewCount : 0;
+        $product = Products::find($id);
+        $product->rating = $averageRating;
+        $product->save();
+
+        return view('templates.pages.product-detail', compact('product', 'reviews','averageRating'));
+
     }
+
+
 
     //checkout
     public function checkout(){
@@ -165,7 +193,6 @@ class RouteController extends Controller
         try {
             DB::beginTransaction();
             $validatedData = $request->validate([
-                'note' => 'string',
                 'payment_img' => 'image|mimes:jpeg,png,jpg,gif,svg,webp'
             ]);
 
@@ -206,8 +233,8 @@ class RouteController extends Controller
                 $orderList->total_price = $price;
                 $orderList->order_code = $request->order_code;
                 $orderList->save();
+                $cart->delete();
             }
-            $carts->delete();
 
             // Commit the transaction
             DB::commit();
@@ -215,12 +242,49 @@ class RouteController extends Controller
             // Additional logic after the transaction is successful
 
             return response()->json(['message' => 'Order submitted successfully']);
+
         } catch (\Exception $e) {
             DB::rollBack();
 
             // Handle the error or return an error response
-            return response()->json(['error' => $e->getMessage()], 500);
+            return back()->with('error', $e->getMessage());
+            // return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
+    //resetPassword
+    public function resetPassword(){
+        return view('templates.pages.reset-password');
+    }
+
+
+    //customerUpdatePassword
+    public function customerUpdatePassword(Request $request){
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+            'password_confirmation' => 'required|min:8'
+        ]);
+        $user = User::where('email',$validatedData['email'])->first();
+        $user->password = Hash::make($validatedData['password']);
+        $user->save();
+        return redirect()->back()->with('success', 'Password updated successfully!');
+    }
+
+    //submitReview
+    public function submitReview(Request $request){
+        $rating = new Rating();
+        $rating->title = $request->data['title'];
+        $rating->message = $request->data['message'];
+        $rating->rating_status  = $request->data['rating'];
+        $rating->product_id = $request->data['product_id'];
+        $rating->user_id = $request->data['user_id'];
+        $rating->save();
+        return response()->json(['message' => 'Review submitted successfully']);
+    }
+
+    //orderSuccess
+    public function orderSuccess(){
+        return view('templates.pages.order-success');
+    }
 }

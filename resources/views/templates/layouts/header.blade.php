@@ -19,26 +19,26 @@
                 Logo
             </a>
             <div class="order-last order-lg-first d-flex gap-3 d-lg-none">
-                <a href="#">
+                <a href="{{ route('customer.login') }}">
                     <i class="bi bi-person fs-1"></i>
                 </a>
                 <a class="text-decoration-none text-dark" aria-current="page" href="#" type="button"
                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <i class="bi bi-cart fs-1"></i>
-                    <span class="cart-count"> 0 </span>
+                    <span  class="cart-count"> 0 </span>
                 </a>
             </div>
             <!-- <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navBarMobile"
-          aria-controls="navBarMobile"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button> -->
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navBarMobile"
+            aria-controls="navBarMobile"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            >
+            <span class="navbar-toggler-icon"></span>
+            </button> -->
 
             <button class="hamburger navbar-toggler" type="button">
                 <i class="menuIcon material-icons"><i class="bi bi-list fs-2"></i></i>
@@ -51,7 +51,7 @@
                         placeholder="Search for vapes, pods, kits and more..." aria-label="Search" />
                 </form>
                 <ul class="navbar-nav ms-auto d-flex flex-wrap align-items-center mb-2 mb-lg-0">
-                    <i class="bi bi-person fs-5"></i>
+                    <i class="bi bi-person fs-5 me-2"></i>
                     @if (Auth::check())
                         @if (Auth::user()->role !== 'user')
                             <li class="nav-item border-end border-1 border-dark sign-in-btn">
@@ -62,6 +62,11 @@
                                     href="{{ route('customer.register') }}">Register</a>
                             </li>
                         @else
+                            <li class="nav-item border-end border-1 ">
+                                <a href="{{ route('user.profile') }}">
+                                    My Account
+                                </a>
+                            </li>
                             <li class="nav-item border-end border-1 sign-in-btn">
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
@@ -157,10 +162,9 @@
     <!-- end offcanvas -->
     <div class="container">
         <ul class="menu">
-            <li><a class="menuItem" href="#">Home</a></li>
-            <li><a class="menuItem" href="#">Profile</a></li>
-            <li><a class="menuItem" href="#">About</a></li>
-            <li><a class="menuItem" href="#">Contacts</a></li>
+            @foreach (App\Models\Category::get() as $category)
+                <li><a class="menuItem" href="{{ route('product.slugProducts', $category->slug) }}">{{ $category->name }}</a></li>
+            @endforeach
         </ul>
         <div class="d-flex flex-wrap d-none d-lg-flex">
             @foreach (App\Models\Category::get() as $category)
@@ -187,7 +191,7 @@
                                             @foreach ($sub->products as $key=>$pd)
                                                 @if($key <= 5)
                                                     <li>
-                                                        <a class="" href="#">{{ $pd->name }}</a>
+                                                        <a class="" href="{{ route('product.detail',$pd->id) }}">{{ $pd->name }}</a>
                                                     </li>
                                                 @endif
                                             @endforeach

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->string('image');
             $table->string('color',200);
+            $table->float('rating')->default(0);
             $table->timestamps();
         });
     }

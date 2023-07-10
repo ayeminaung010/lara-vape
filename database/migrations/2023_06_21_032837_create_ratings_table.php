@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('rating_status');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
+            $table->string('title',200);
             $table->longText('message')->nullable();
             $table->timestamps();
         });

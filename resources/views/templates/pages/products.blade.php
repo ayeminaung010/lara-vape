@@ -15,11 +15,10 @@
                     <li class="breadcrumb-item">
                         <a href="{{ url('/') }}"><small>Home</small></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">
+                    <li class="breadcrumb-item " aria-current="page">
                         <small>{{ $breadCrumbName }}</small>
                     </li>
                 </ol>
-
             </nav>
         </section>
 
@@ -148,13 +147,24 @@
                                     </div>
                                     <div class="rating">
                                         <span class="fs-5">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-half"></i>
+                                            @php
+                                                $filledStars = floor($product->rating);
+                                                $halfStar = ($product->rating - $filledStars) >= 0.5;
+                                                $emptyStars = 5 - $filledStars - ($halfStar ? 1 : 0);
+                                            @endphp
+
+                                            @for ($i = 0; $i < $filledStars; $i++)
+                                                <i class="bi bi-star-fill"></i>
+                                            @endfor
+
+                                            @if ($halfStar)
+                                                <i class="bi bi-star-half"></i>
+                                            @endif
+
+                                            @for ($i = 0; $i < $emptyStars; $i++)
+                                                <i class="bi bi-star"></i>
+                                            @endfor
                                         </span>
-                                        <span>1 Review</span>
                                     </div>
                                 </div>
                                 <div class="addToCartContainer bg-white pt-4">
@@ -202,7 +212,6 @@
                                     </a>
                                 </div>
                             @endforeach
-
                         </div>
                     </section>
                 </div>

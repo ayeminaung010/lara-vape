@@ -84,23 +84,9 @@
     </div>
     <hr />
     <div class="container my-4">
-      <div class="d-flex flex-wrap justify-content-between">
-        <div class="d-flex flex-wrap gap-3">
-          <a href="#">
-            <small>Privacy Policy</small>
-          </a>
-          <a href="#">
-            <small>Terms & Conditions</small>
-          </a>
-          <a href="#">
-            <small>Return & Refund Policy</small>
-          </a>
-          <a href="#">
-            <small>Review Guidelines</small>
-          </a>
-        </div>
+      <div class="d-flex flex-wrap justify-content-center">
         <div class="">
-            <span>Copyright © 2023 Vape Vibe. Powered by Yolo Digital Myanmar.</span>
+            <span>Copyright © 2023 Vape Vibe. Powered by <a href="https://yolodigitalmyanmar.com/" target="_blink">Yolo Digital Myanmar</a>.</span>
         </div>
       </div>
     </div>

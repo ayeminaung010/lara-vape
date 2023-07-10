@@ -1,10 +1,10 @@
 <!-- subscribe section -->
 <section id="subscribe" class="">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-6 bg-black text-white py-6">
+        <div class="row justify-content-center">
+            <div class="col-lg-6  bg-black text-white py-6">
                 <div class="row justify-content-center">
-                    <div class="col-8">
+                    <div class="col-lg-8 col-md-7">
                         <h4>Get 10% off your first order!</h4>
                         <p>
                             Plus, be the first to know about exclusive promotions, Black
@@ -17,7 +17,7 @@
                                 <div class="d-flex gap-3">
                                     <div class="input-group">
                                         <input type="text" name="first_name" class="form-control rounded-0"
-                                            placeholder="First Name" />
+                                            placeholder="First Name" required />
                                     </div>
                                     <div class="input-group">
                                         <input type="text" name="last_name" class="form-control rounded-0"
@@ -26,11 +26,11 @@
                                 </div>
                                 <div class="input-group mt-3">
                                     <input type="email" name="email" class="form-control rounded-0"
-                                        placeholder="Email Address" />
+                                        placeholder="Email Address" required />
                                 </div>
                                 <div class="input-group mt-3">
                                     <input type="number" name="phone" class="form-control rounded-0"
-                                        placeholder="Phone Number" />
+                                        placeholder="Phone Number" required />
                                 </div>
                             </div>
                             <small class="my-2">
@@ -51,7 +51,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 bg-body-tertiary py-6">
+            <div class="col-lg-6 bg-body-tertiary  col-md-6 py-6">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <h4 class="fw-bold">Prescription</h4>

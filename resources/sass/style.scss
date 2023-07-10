@@ -184,6 +184,11 @@
     cursor: pointer;
     transition: transform 0.5s ease-in-out;
   }
+  
+  .recomProductImage{
+    width: 300px;
+    height: 200px;
+  }
 
   //review section carousel
   @media (max-width: 769px) {

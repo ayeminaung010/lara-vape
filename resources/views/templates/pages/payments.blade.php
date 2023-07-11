@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 order-md-first">
+            <div class="col-lg-6 order-first mt-3">
                 <h4 class=" fw-bold">Please Follow the instruction below</h4>
                 <div class=" mt-3">
                     <h5 class=" text-warning">*Please Send to below Payoneer Account*</h5>

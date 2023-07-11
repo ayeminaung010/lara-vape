@@ -94,56 +94,94 @@ class RouteController extends Controller
     //products
     public function products(Request $request)
     {
+        $categories = Category::all();
+        $subCategories = SubCategory::all();
+        $brands = Brands::all();
+        $productColors = ProductColor::all();
+
         $sort = $request->input('sort'); // Get the selected sorting option from the request
 
         $productsQuery = Products::query();
 
-        // Apply sorting
-        if ($sort) {
-            if ($sort === 'name') {
-                $productsQuery->orderBy('name');
-            } elseif ($sort === 'price') {
-                $productsQuery->orderBy('price');
-            } elseif ($sort === 'created_at') {
-                $productsQuery->orderBy('created_at');
-            }
-        }
-
         // Apply category filtering
-        $filterCategories = $request->query('fliterCategory');
+        $filterCategories = $request->input('category');
         if ($filterCategories) {
-            $subCategories = SubCategory::whereIn('category_id', $filterCategories)->get();
-            $subCategoryIds = $subCategories->pluck('id')->toArray();
-            $productsQuery->whereIn('sub_category_id', $subCategoryIds);
+            $productsQuery->whereIn('sub_category_id', $filterCategories);
         }
 
-        // Apply brand filtering
-        $filterBrands = $request->input('filterBrand');
+        $filterBrands = $request->input('brand');
         if ($filterBrands) {
             $productsQuery->whereIn('brand_id', $filterBrands);
         }
 
-        $products = $productsQuery->get();
-        $categories = Category::get();
-        $subCategories = SubCategory::get();
-        $brands = Brands::get();
-        $productColors = ProductColor::get();
-        return view('templates.pages.products', compact('products', 'categories', 'brands', 'subCategories','productColors'));
+        $filterColors= $request->input('color');
+        if ($filterColors) {
+            $productsQuery->where(function ($query) use ($filterColors) {
+                foreach ($filterColors as $color) {
+                    $query->orWhereJsonContains('color', $color);
+                }
+            });
+        }
+        $products = $productsQuery->paginate('9');
+
+        return view('templates.pages.products', compact('products', 'categories', 'brands', 'subCategories', 'productColors'));
     }
+
+
+    // slugProducts old code
+    // public function slugProducts($slug){
+    //     $category = Category::where('slug',$slug)->first();
+    //     $subCategories = SubCategory::where('category_id',$category->id)->get();
+    //     $subCategoryIds = $subCategories->pluck('id')->toArray();
+    //     $products = Products::whereIn('sub_category_id',$subCategoryIds)->get();
+
+    //     $categories = Category::get();
+    //     $subCategories = SubCategory::get();
+    //     $productColors = ProductColor::get();
+    //     $brands = Brands::get();
+    //     return view('templates.pages.products',compact('products','categories','brands','subCategories','productColors'));
+    // }
 
     // slugProducts
-    public function slugProducts($slug){
-        $category = Category::where('slug',$slug)->first();
-        $subCategories = SubCategory::where('category_id',$category->id)->get();
+    public function slugProducts($slug,Request $request)
+    {
+        $category = Category::where('slug', $slug)->first();
+        $subCategories = SubCategory::where('category_id', $category->id)->get();
         $subCategoryIds = $subCategories->pluck('id')->toArray();
-        $products = Products::whereIn('sub_category_id',$subCategoryIds)->get();
+
+        $sort = $request->input('sort'); // Get the selected sorting option from the request
+
+        $productsQuery = Products::whereIn('sub_category_id', $subCategoryIds);
+
+        // Apply category filtering
+        $filterCategories = $request->input('category');
+        if ($filterCategories) {
+            $productsQuery->whereIn('sub_category_id', $filterCategories);
+        }
+
+        $filterBrands = $request->input('brand');
+        if ($filterBrands) {
+            $productsQuery->whereIn('brand_id', $filterBrands);
+        }
+
+        $filterColors = $request->input('color');
+        if ($filterColors) {
+            $productsQuery->where(function ($query) use ($filterColors) {
+                foreach ($filterColors as $color) {
+                    $query->orWhereJsonContains('color', $color);
+                }
+            });
+        }
+
+        $products = $productsQuery->paginate('9');
 
         $categories = Category::get();
-        $subCategories = SubCategory::get();
         $productColors = ProductColor::get();
         $brands = Brands::get();
-        return view('templates.pages.products',compact('products','categories','brands','subCategories','productColors'));
+
+        return view('templates.pages.products', compact('products', 'categories', 'brands', 'subCategories', 'productColors'));
     }
+
 
 
     //productDetail

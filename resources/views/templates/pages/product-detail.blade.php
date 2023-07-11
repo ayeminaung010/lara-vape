@@ -92,7 +92,7 @@
                             @for ($i = 0; $i < $emptyStars; $i++)
                                 <i class="bi bi-star"></i>
                             @endfor
-                            
+
                         </span>
                     </div>
                     <div class="">
@@ -213,7 +213,7 @@
                 <div class="tab-pane fade" id="message_tab" role="tabpanel" aria-labelledby="write-review-tab" tabindex="0">
                     <div class="mt-5">
                         <div class="row justify-content-center">
-                            <div class="col-4">
+                            <div class=" col-lg-5  col-md-7 col-10">
                                 <div class="rating">
                                     <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
                                     <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>

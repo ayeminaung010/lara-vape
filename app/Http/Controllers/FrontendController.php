@@ -33,7 +33,7 @@ class FrontendController extends Controller
         $frontend = Frontend::first();
         if($request->hasFile('logo')){
             $oldImg  = public_path('dbImg/logo/'.$frontend->logo);
-            if(file_exists($oldImg)){
+        if(file_exists($oldImg) && !empty($frontend->logo)){
                 unlink($oldImg);
             }
         $image = $request->file('logo');

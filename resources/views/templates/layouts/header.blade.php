@@ -15,8 +15,7 @@
     <nav class="navbar navbar-expand-lg py-4">
         <div class="container">
             <a class="navbar-brand order-last order-lg-first" href="{{ url('/') }}">
-                <!-- <img src="" loading="lazy" class="" alt=""> -->
-                Logo
+                <img src="{{ asset('dbImg/logo/'.$frontend->logo) }}" loading="lazy" class="" alt="">
             </a>
             <div class="order-last order-lg-first d-flex gap-3 d-lg-none">
                 <a href="{{ route('customer.login') }}">
@@ -86,7 +85,7 @@
                         <a class="text-decoration-none text-dark" aria-current="page" href="#" type="button"
                             data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <i class="bi bi-cart fs-5"></i>
-                            My Bag
+                            My Cart
                             <span id="cartCount" class="cart-count animate__animated ">0</span>
                         </a>
                     </li>

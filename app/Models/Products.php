@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Brands;
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\ProductColor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,4 +30,8 @@ class Products extends Model
         return $this->belongsTo(Brands::class);
     }
 
+    public function color()
+    {
+        return $this->belongsTo(ProductColor::class);
+    }
 }

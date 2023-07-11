@@ -36,7 +36,7 @@
 
                             <div class=" d-flex justify-content-between">
                                 <small class=" text-decoration-underline">
-                                    <a href="route('customer.login')">
+                                    <a href="{{ route('customer.login') }}">
                                         Back to login
                                     </a>
                                 </small>

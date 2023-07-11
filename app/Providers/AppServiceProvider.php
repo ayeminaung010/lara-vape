@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\SEO;
 use App\Models\Cart;
 use App\Models\Brands;
 use App\Models\Review;
+use App\Models\Frontend;
 use App\Models\ProductType;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
@@ -31,9 +33,11 @@ class AppServiceProvider extends ServiceProvider
             $productsTypes = ProductType::get();
             $brands = Brands::get();
             $reviews = Review::get();
+            // $seo = SEO::first();
             $view->with('productTypes', $productsTypes);
             $view->with('brands', $brands);
             $view->with('reviews', $reviews);
+            // $view->with('seo', $seo);
             if (Auth::check()) {
                 $user = Auth::user();
                 $cartData = Cart::where('user_id', $user->id)->get();
@@ -41,6 +45,15 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
+        view()->composer('templates.layouts.seo', function ($view) {
+            $seo = SEO::first();
+            $view->with('seo', $seo);
+        });
+
+        view()->composer('templates.layouts.app', function ($view) {
+            $frontend = Frontend::first();
+            $view->with('frontend', $frontend);
+        });
 
     }
 }

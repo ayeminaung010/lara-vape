@@ -8,16 +8,16 @@
                     <div class="col-lg-3 ">
                         <ul class=" list-unstyled p-4">
                             <a href="{{ route('user.profile') }}">
-                                <li class=" bg-body-tertiary @if(Route::currentRouteName() == 'user.profile') active @endif text-uppercase  py-3 px-4">My Profile</li>
+                                <li class=" bg-body-tertiary @if(Route::currentRouteName() == 'user.profile') user_active @endif text-uppercase  py-3 px-4">My Profile</li>
                             </a>
                             <a href="{{ route('user.passwordChange') }}">
-                                <li class=" bg-body-tertiary text-uppercase @if(Route::currentRouteName() == 'user.passwordChange') active @endif py-3 px-4">Password Change</li>
+                                <li class=" bg-body-tertiary text-uppercase @if(Route::currentRouteName() == 'user.passwordChange') user_active @endif py-3 px-4">Password Change</li>
                             </a>
                             <a href="{{ route('user.orderLists') }}">
-                                <li class=" bg-body-tertiary text-uppercase @if(Route::currentRouteName() == 'user.orderLists') active @endif  py-3 px-4">My Orders</li>
+                                <li class=" bg-body-tertiary text-uppercase @if(Route::currentRouteName() == 'user.orderLists') user_active @endif  py-3 px-4">My Orders</li>
                             </a>
                             <a href="{{ route('user.history') }}">
-                                <li class=" bg-body-tertiary text-uppercase @if(Route::currentRouteName() == 'user.history') active @endif  py-3 px-4">My History</li>
+                                <li class=" bg-body-tertiary text-uppercase @if(Route::currentRouteName() == 'user.history') user_active @endif  py-3 px-4">My History</li>
                             </a>
                             <a href="#">
                                 <li class=" bg-body-tertiary text-uppercase  py-3 px-4">My Favourites</li>

@@ -4,14 +4,13 @@
       <div class="row">
         <div class="col-lg-5 ">
           <div class="">
-            <!-- <img src="" alt=""> -->
-            Logo
+            <img src="{{ asset('dbImg/logo/'.$frontend->logo) }}" alt="">
           </div>
-          <div class="d-flex gap-3">
-            <a href="#" class="fs-4">
+          <div class="d-flex flex-wrap gap-3">
+            <a href="{{ $frontend->facebook_url }}" class="fs-4">
               <i class="bi bi-facebook"></i>
             </a>
-            <a href="#" class="fs-4">
+            <a href="{{ $frontend->instagram_url }}" class="fs-4">
               <i class="bi bi-instagram"></i>
             </a>
           </div>

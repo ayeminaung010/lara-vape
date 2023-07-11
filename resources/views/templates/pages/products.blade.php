@@ -45,7 +45,7 @@
                             <h6>Sort</h6>
                             <div class="">
                                 <button type="submit" class="btn btn-info">Fliter</button>
-                                <button class="btn btn-secondary">Reset</button>
+                                <a href="{{ url()->current() }}" class="btn btn-secondary">Reset</a>
                             </div>
                         </div>
                         <hr />
@@ -62,8 +62,9 @@
                             @foreach ($subCategories as $subCategory)
                                 <div class="d-flex align-items-center my-2  justify-content-between">
                                     <small>{{ $subCategory->name }} ({{ $subCategory->productsCount() }}) </small>
-                                    <input type="checkbox" id="" name="filterCategory[]"
-                                        value="{{ $subCategory->id }}" class=" form-check-input" {{-- @if (in_array($category->id)) checked @endif --}}>
+                                    <input type="checkbox" id="" name="category[]"
+                                        value="{{ $subCategory->id }}" class=" form-check-input"
+                                        {{ in_array($subCategory->id, request()->input('category', [])) ? 'checked' : '' }}>
                                 </div>
                             @endforeach
                         </div>
@@ -80,8 +81,9 @@
                             @foreach ($productColors as $color)
                                 <div class="d-flex align-items-center my-2  justify-content-between">
                                     <small>{{ $color->name }} </small>
-                                    <input type="checkbox" id="" name="filterColor[]" value="{{ $color->id }}"
-                                        class=" form-check-input" {{-- @if (in_array($category->id)) checked @endif --}}>
+                                    <input type="checkbox" id="" name="color[]" value="{{ $color->name }}"
+                                        class=" form-check-input"
+                                        {{ in_array($color->name, request()->input('color', [])) ? 'checked' : '' }}>
                                 </div>
                             @endforeach
                         </div>
@@ -98,8 +100,9 @@
                             @foreach ($brands as $brand)
                                 <div class="d-flex align-items-center my-2  justify-content-between">
                                     <small>{{ $brand->name }} </small>
-                                    <input type="checkbox" id="" name="filterBrand[]" value="{{ $brand->id }}"
-                                        class=" form-check-input" {{-- @if (old('filterBrand') == $brand->id) checked @endif --}}>
+                                    <input type="checkbox" id="" name="brand[]" value="{{ $brand->id }}"
+                                        class=" form-check-input"
+                                        {{ in_array($brand->id,request()->input('brand', [])) ? 'checked' : '' }}>
                                 </div>
                             @endforeach
                         </div>
@@ -109,9 +112,6 @@
                 <div class="col-lg-10">
                     <div class="d-flex flex-wrap justify-content-between px-3">
                         <h6>{{ count($products) }} products found</h6>
-                        <select name="" class="w-25 form-control rounded-0" id="">
-                            <option value="">Position</option>
-                        </select>
                     </div>
                     <div class="d-flex flex-wrap gap-3">
                         @foreach ($products as $product)
@@ -182,6 +182,12 @@
                                 </div>
                             </div>
                         @endforeach
+                    </div>
+
+                    <div class="">
+                        <hr>
+                        {{ $products->links() }}
+                        <hr>
                     </div>
 
                     <!-- discover products start  -->

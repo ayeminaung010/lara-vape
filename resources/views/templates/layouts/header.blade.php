@@ -18,9 +18,21 @@
                 <img src="{{ asset('dbImg/logo/'.$frontend->logo) }}" loading="lazy" class="" alt="">
             </a>
             <div class="order-last order-lg-first d-flex gap-3 d-lg-none">
+                @if (Auth::check())
+                    @if (Auth::user()->role !== 'user')
+                        <a href="{{ route('customer.login') }}">
+                            <i class="bi bi-person fs-1"></i>
+                        </a>
+                    @else
+                        <a href="{{ route('user.profile') }}">
+                            <i class="bi bi-person fs-1"></i>
+                        </a>
+                    @endif
+                @else
                 <a href="{{ route('customer.login') }}">
                     <i class="bi bi-person fs-1"></i>
                 </a>
+                @endif
                 <a class="text-decoration-none text-dark" aria-current="page" href="#" type="button"
                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <i class="bi bi-cart fs-1"></i>
@@ -45,8 +57,11 @@
             </button>
 
             <div class="collapse navbar-collapse">
-                <form class="d-flex ms-auto w-50" role="search">
-                    <input class="form-control me-2 search-box py-3 px-4 rounded-0" type="search"
+                @php
+                    $request = request();
+                @endphp
+                <form action="{{ route('search') }}" class="d-flex ms-auto w-50" role="search" method="GET">
+                    <input class="form-control me-2 search-box py-3 px-4 rounded-0" name="search" value="{{ $request->input('search') }}" type="search"
                         placeholder="Search for vapes, pods, kits and more..." aria-label="Search" />
                 </form>
                 <ul class="navbar-nav ms-auto d-flex flex-wrap align-items-center mb-2 mb-lg-0">
@@ -83,7 +98,12 @@
                     @endif
                     <li class="nav-item ms-4">
                         <a class="text-decoration-none text-dark" aria-current="page" href="#" type="button"
-                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                           @if (Route::currentRouteName() == 'user.checkout' || Route::currentRouteName() == 'user.payments')
+                           data-bs-toggle="offcanvas"
+                           @else
+                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                           @endif
+                             aria-controls="offcanvasRight">
                             <i class="bi bi-cart fs-5"></i>
                             My Cart
                             <span id="cartCount" class="cart-count animate__animated ">0</span>

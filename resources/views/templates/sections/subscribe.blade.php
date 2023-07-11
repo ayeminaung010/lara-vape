@@ -10,9 +10,8 @@
                             Plus, be the first to know about exclusive promotions, Black
                             Friday deals, discounts and more.
                         </p>
-                        <form action="{{ route('subscribe.store') }}" class="d-flex flex-column gap-2" id="subscribe--form"
-                            method="POST">
-                            @csrf
+                        <form  class="d-flex flex-column gap-2" id="subscribe--form"
+                            >
                             <div class="d-flex flex-column">
                                 <div class="d-flex gap-3">
                                     <div class="input-group">
@@ -44,7 +43,7 @@
                                 <a href="#" class="text-decoration-none text-info">Privacy Policy &
                                     Terms.</a>
                             </small>
-                            <button class="btn btn--white rounded-0 text-uppercase fw-bold" type="submit">
+                            <button class="btn btn--white rounded-0 text-uppercase fw-bold subscribeBtn" >
                                 Subscribe
                             </button>
                         </form>

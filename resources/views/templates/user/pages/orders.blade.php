@@ -19,8 +19,8 @@
                             <a href="{{ route('user.history') }}">
                                 <li class=" bg-body-tertiary text-uppercase @if(Route::currentRouteName() == 'user.history') user_active @endif  py-3 px-4">My History</li>
                             </a>
-                            <a href="#">
-                                <li class=" bg-body-tertiary text-uppercase  py-3 px-4">My Favourites</li>
+                            <a href="{{ route('getFav') }}">
+                                <li class=" bg-body-tertiary text-uppercase @if(Route::currentRouteName() == 'getFav') user_active @endif py-3 px-4">My Favourites</li>
                             </a>
                             <hr>
                             <form action="{{ route('logout') }}" class="" method="POST">

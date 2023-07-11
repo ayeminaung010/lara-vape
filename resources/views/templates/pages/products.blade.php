@@ -116,9 +116,6 @@
                     <div class="d-flex flex-wrap gap-3">
                         @foreach ($products as $product)
                             <div class="own-card overflow-hidden border-0 position-relative">
-                                <a href="" class="position-absolute end-0  z-3" style="top: 50px;">
-                                    <i class="bi bi-heart fs-5"></i>
-                                </a>
                                 <input type="hidden" name="product_id" class="productId" value="{{ $product->id }}">
                                 <div class="image overflow-hidden">
                                     <a href="{{ route('product.detail', $product->id) }}">
@@ -128,7 +125,7 @@
                                 </div>
                                 <input type="hidden" value="{{ $product->stock }}" class="productStock">
                                 <div class="card-body">
-                                    <em class="text-danger">New</em>
+                                    {{-- <em class="text-danger">New</em> --}}
                                     <div class="d-flex align-items-center gap-4 justify-content-between">
                                         <h6 class="product-name fw-bold">
                                             {{ $product->name }}
@@ -183,11 +180,9 @@
                             </div>
                         @endforeach
                     </div>
-
                     <div class="">
                         <hr>
                         {{ $products->links() }}
-                        <hr>
                     </div>
 
                     <!-- discover products start  -->
@@ -196,7 +191,7 @@
                             <h5>Discover products recommended just for you!</h5>
                         </div>
                         <div class=" d-flex flex-wrap  gap-4">
-                            @foreach (App\Models\Products::paginate('5') as $product)
+                            @foreach (App\Models\Products::paginate('4') as $product)
                                 <div class="own--small--card">
                                     <a href="{{ route('product.detail', $product->id) }}">
                                         <img src="{{ asset('dbImg/products/' . $product->image) }}" height="200"

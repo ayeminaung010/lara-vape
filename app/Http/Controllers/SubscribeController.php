@@ -32,12 +32,12 @@ class SubscribeController extends Controller
     public function store(Request $request)
     {
         $subscribe = new Subscribe();
-        $subscribe->first_name = $request->first_name;
-        $subscribe->last_name = $request->last_name;
-        $subscribe->phone = $request->phone;
-        $subscribe->email = $request->email;
+        $subscribe->first_name = $request->data['first_name'];
+        $subscribe->last_name = $request->data['last_name'];
+        $subscribe->phone = $request->data['phone'];
+        $subscribe->email = $request->data['email'];
         $subscribe->save();
-        return redirect()->back();
+        return response()->json(['status' => 'success' ,'message' => 'Subscribe successfully , Thank you!'], 200);
     }
 
     /**

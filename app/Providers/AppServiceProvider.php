@@ -55,5 +55,10 @@ class AppServiceProvider extends ServiceProvider
             $view->with('frontend', $frontend);
         });
 
+        view()->composer('templates.sections.banner', function ($view) {
+            $frontend = Frontend::first();
+            $view->with('frontend', $frontend);
+        });
+
     }
 }

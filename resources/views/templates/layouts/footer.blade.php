@@ -1,27 +1,27 @@
 <!-- footer section  -->
 <footer>
     <div class="container py-6">
-      <div class="row">
-        <div class="col-lg-5 ">
+      <div class="row gap-3 justify-content-center">
+        <div class="col-lg-4 ">
           <div class="">
             <img src="{{ asset('dbImg/logo/'.$frontend->logo) }}" alt="">
           </div>
-          <div class="d-flex flex-wrap gap-3">
+          <div class="d-flex flex-wrap gap-3 ms-3">
             <a href="{{ $frontend->facebook_url }}" class="fs-4">
-              <i class="bi bi-facebook"></i>
+              <i class="bi bi-facebook text-info"></i>
             </a>
             <a href="{{ $frontend->instagram_url }}" class="fs-4">
-              <i class="bi bi-instagram"></i>
+              <i class="bi bi-instagram text-danger"></i>
             </a>
           </div>
         </div>
-        <div class="col-lg-7 ">
+        <div class="col-lg-6 ">
           <div class="d-flex flex-wrap gap-7">
             <div class="">
               <h6 class="fw-bold">CONTACT US</h6>
               <ul class="list-unstyled">
                 <li>
-                  <a href="#">Help Centre</a>
+                  <a href="#">About Us</a>
                 </li>
                 <li>
                   <a href="#">Contact Us</a>
@@ -29,52 +29,24 @@
               </ul>
             </div>
             <div class="">
-              <h6 class="fw-bold">VAPO CLUB</h6>
+              <h6 class="fw-bold">Useful Links</h6>
               <ul class="list-unstyled">
-                <li>
-                  <a href="#">VAPO Club</a>
-                </li>
-                <li>
-                  <a href="#">VAPO Club FAQ</a>
-                </li>
-              </ul>
-            </div>
-            <div class="">
-              <h6 class="fw-bold">INFORMATION</h6>
-              <ul class="list-unstyled">
-                <li>
-                  <a href="#">Shipping & Delivery</a>
-                </li>
-                <li>
-                  <a href="#">Returns Policy & Process</a>
-                </li>
-                <li>
-                  <a href="#">Terms & Conditions</a>
-                </li>
-                <li>
-                  <a href="#">Privacy Policy</a>
-                </li>
+                @foreach (App\Models\Category::get() as $category)
+                    <li>
+                    <a href="{{ route('product.slugProducts', $category->slug) }}">{{ $category->name }}</a>
+                  </li>
+                @endforeach
               </ul>
             </div>
 
             <div class="">
               <h6 class="fw-bold">BRANDS</h6>
               <ul class="list-unstyled">
-                <li>
-                  <a href="#">alt.</a>
-                </li>
-                <li>
-                  <a href="#">VEX</a>
-                </li>
-                <li>
-                  <a href="#">solo</a>
-                </li>
-                <li>
-                  <a href="#">HAIZ</a>
-                </li>
-                <li>
-                  <a href="#">V-Liquid</a>
-                </li>
+                @foreach (App\Models\Brands::take(5)->get() as $brand)
+                    <li>
+                    <a href="">{{ $brand->name }}</a>
+                  </li>
+                @endforeach
               </ul>
             </div>
           </div>

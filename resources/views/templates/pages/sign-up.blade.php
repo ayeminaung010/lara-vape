@@ -15,12 +15,12 @@
                         @endif
                         <div class="d-flex flex-column gap-3">
                             <h2 class=" fw-bold">Create an account</h2>
-                            <div class=" d-flex justify-content-start">
+                            {{-- <div class=" d-flex justify-content-start">
                                 <button class="d-flex gap-3 btn btn-outline-dark justify-content-center ">
                                     <i class="bi bi-google"></i>
                                     <span>Sign in with Google</span>
                                 </button>
-                            </div>
+                            </div> --}}
 
                             <form action="{{ route('customer.register') }}" method="POST">
                                 @csrf

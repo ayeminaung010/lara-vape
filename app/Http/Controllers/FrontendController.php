@@ -44,7 +44,7 @@ class FrontendController extends Controller
 
         if($request->hasFile('banner_image')){
             $oldImg  = public_path('dbImg/banner/'.$frontend->banner_image);
-            if(file_exists($oldImg)){
+            if(file_exists($oldImg) && !empty($frontend->banner_image)){
                 unlink($oldImg);
             }
             $image = $request->file('banner_image');

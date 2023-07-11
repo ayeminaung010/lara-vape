@@ -51,15 +51,15 @@
                                     </small>
                             </div>
 
-                            <a href="#" class=" btn btn-outline-dark text-uppercase rounded-0 py-3">Create An
+                            <a href="{{ route('customer.register') }}" class=" btn btn-outline-dark text-uppercase rounded-0 py-3">Create An
                                 Account</a>
 
-                            <div class=" d-flex justify-content-center">
+                            {{-- <div class=" d-flex justify-content-center">
                                 <button class="d-flex gap-3 btn btn-outline-dark justify-content-center ">
                                     <i class="bi bi-google"></i>
                                     <span>Sign in with Google</span>
                                 </button>
-                            </div>
+                            </div> --}}
 
                         </div>
                     </div>

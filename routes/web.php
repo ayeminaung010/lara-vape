@@ -14,6 +14,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SubscribeController;
+use App\Http\Controllers\FavProductController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UserPaymentController;
@@ -52,6 +53,8 @@ Route::prefix('products')->group(function () {
     Route::get('/{slug}',[RouteController::class,"slugProducts"])->name('product.slugProducts');
     Route::get('/detail/{id}',[RouteController::class,"productDetail"])->name('product.detail');
 });
+Route::get('/search',[RouteController::class,"search"])->name('search');
+
 Route::post('/subscribe',[SubscribeController::class,"store"])->name('subscribe.store');
 
 //api
@@ -71,7 +74,8 @@ Route::prefix('customer')->group(function () {
     Route::post('/reset-password',[RouteController::class,"customerUpdatePassword"])->name('customer.password.update');
 });
 
-Route::prefix('user')->group(function () {
+//user auth routes
+Route::prefix('user')->middleware('user_auth')->group(function () {
     Route::get('/checkout',[RouteController::class,"checkout"])->name('user.checkout');
     Route::get('/payments',[RouteController::class,"payments"])->name('user.payments');
     Route::post('/submit/order',[RouteController::class,"submitOrder"])->name('user.submitOrder');
@@ -85,6 +89,10 @@ Route::prefix('user')->group(function () {
 
     Route::get('/order-lists',[UserController::class,"orderLists"])->name('user.orderLists');
     Route::get('/history',[UserController::class,"history"])->name('user.history');
+
+    Route::post('/addToFav',[FavProductController::class,'store'])->name('addToFav');
+    Route::get('/getFav',[FavProductController::class,'getFav'])->name('getFav');
+    Route::post('/removeFav',[FavProductController::class,'destroy'])->name('removeFav');
 });
 
 //admin views

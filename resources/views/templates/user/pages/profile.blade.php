@@ -19,8 +19,8 @@
                             <a href="{{ route('user.history') }}">
                                 <li class=" bg-body-tertiary text-uppercase @if(Route::currentRouteName() == 'user.history') user_active @endif  py-3 px-4">My History</li>
                             </a>
-                            <a href="#">
-                                <li class=" bg-body-tertiary text-uppercase  py-3 px-4">My Favourites</li>
+                            <a href="{{ route('getFav') }}">
+                                <li class=" bg-body-tertiary text-uppercase @if(Route::currentRouteName() == 'getFav') user_active @endif py-3 px-4">My Favourites</li>
                             </a>
                             <hr>
                             <form action="{{ route('logout') }}" class="" method="POST">
@@ -91,7 +91,7 @@
                                 @enderror
                             </div>
                             <div class="row justify-content-center">
-                                <div class="col-3">
+                                <div class="col-lg-3">
                                     <button class="btn btn-dark rounded-0 w-100">
                                         Save
                                     </button>

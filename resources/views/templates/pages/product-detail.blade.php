@@ -50,13 +50,10 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#"><small>Home</small></a>
+                    <a href="{{ url('/') }}"><small>Home</small></a>
                 </li>
                 <li class="breadcrumb-item" aria-current="page">
-                    <small>New Products</small>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    <small>Product item</small>
+                    <small>{{ $product->name }}</small>
                 </li>
             </ol>
         </nav>
@@ -73,7 +70,6 @@
                 <div class="d-flex flex-column gap-3">
                     <div class="d-flex flex-column">
                         <h3 class="fw-bold " >{{ $product->name }}</h3>
-
                         <span class="fs-5">
                             @php
                                 $filledStars = floor($averageRating);
@@ -92,11 +88,11 @@
                             @for ($i = 0; $i < $emptyStars; $i++)
                                 <i class="bi bi-star"></i>
                             @endfor
-
                         </span>
+                        <span>{{ '(' . count($reviews)." " .'reviews' .')' }}</span>
                     </div>
                     <div class="">
-                       @if ($product->color != null)
+                       @if ($product->color != "null")
                         <select name="product_color" class="form-control mt-4 w-75 " id="product_color">
                                 <option value="" selected disabled>Choose an color</option>
                                 @foreach (json_decode($product->color) as $color)
@@ -126,17 +122,23 @@
                             </button>
                         </div>
                         <div class="col-lg-3">
-                            <a href="#" class="btn btn-outline-dark rounded-0 p-3">
+                            @if ($favProduct == null)
+                            <a href="#" class="btn btn-outline-dark rounded-0 p-3 addToFavBtn">
                                 <i class="bi bi-heart"></i>
                             </a>
+                            @else
+                            <a href="#" class="btn btn-outline-dark rounded-0 p-3 removeFavBtn">
+                                <i class="bi bi-heart-fill"></i>
+                            </a>
+                            @endif
                         </div>
                     </div>
                     <div class="mt-3">
                         <h6 class="fw-bold text-uppercase">Product Description</h6>
                         <p>
-                            {{ $product->description }}
+                            <p>{{ Str::substr($product->description, 0, 50) }}<span id="dots">...</span><span id="more">{{ Str::substr($product->description, 50) }}</span></p>
                         </p>
-                        <span class="text-decoration-underline">Read more</span>
+                        <span class="text-decoration-underline cursor-pointer" id="myBtn" onclick="myFunction()">Read more</span>
                     </div>
                 </div>
             </div>
@@ -237,7 +239,10 @@
                                     @else
                                         <a href="{{ route('customer.login') }}" class="btn btn-dark rounded-0">Login to submit review</a>
                                     @endif
+                                @else
+                                    <a href="{{ route('customer.login') }}" class="btn btn-dark rounded-0">Login to submit review</a>
                                 @endif
+
                             </div>
                         </div>
                     </div>
@@ -261,81 +266,36 @@
                 <!-- Additional required wrapper -->
                 <div class="swiper-wrapper">
                     <!-- Slides -->
+                    @foreach ($topRateProducts as $product)
                     <div class="swiper-slide">
-                        <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                            class="w-100" alt="" />
-                        <div class="mt-3">
-                            <h6 class="product-name">UWELL Caliburn A3 Pod Kit</h6>
-                            <span class="fs-6">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
-                            </span>
-                            (2000)
-                        </div>
+                        <a href="{{ route('product.detail', $product->id) }}">
+                            <img src="{{ asset('dbImg/products/'.$product->image) }}"
+                                class="w-75" alt="" />
+                            <div class="mt-3">
+                                <h6 class="product-name">{{ $product->name }}</h6>
+                                <span class="fs-5">
+                                    @php
+                                        $filledStars = floor($averageRating);
+                                        $halfStar = ($averageRating - $filledStars) >= 0.5;
+                                        $emptyStars = 5 - $filledStars - ($halfStar ? 1 : 0);
+                                    @endphp
+
+                                    @for ($i = 0; $i < $filledStars; $i++)
+                                        <i class="bi bi-star-fill"></i>
+                                    @endfor
+
+                                    @if ($halfStar)
+                                        <i class="bi bi-star-half"></i>
+                                    @endif
+
+                                    @for ($i = 0; $i < $emptyStars; $i++)
+                                        <i class="bi bi-star"></i>
+                                    @endfor
+                                </span>
+                            </div>
+                        </a>
                     </div>
-                    <div class="swiper-slide">
-                        <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                            class="w-100" alt="" />
-                        <div class="mt-3">
-                            <h6 class="product-name">UWELL Caliburn A3 Pod Kit</h6>
-                            <span class="fs-6">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
-                            </span>
-                            (2000)
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                            class="w-100" alt="" />
-                        <div class="mt-3">
-                            <h6 class="product-name">UWELL Caliburn A3 Pod Kit</h6>
-                            <span class="fs-6">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
-                            </span>
-                            (2000)
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                            class="w-100" alt="" />
-                        <div class="mt-3">
-                            <h6 class="product-name">UWELL Caliburn A3 Pod Kit</h6>
-                            <span class="fs-6">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
-                            </span>
-                            (2000)
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                            class="w-100" alt="" />
-                        <div class="mt-3">
-                            <h6 class="product-name">UWELL Caliburn A3 Pod Kit</h6>
-                            <span class="fs-6">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
-                            </span>
-                            (2000)
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 <!-- If we need pagination -->
                 <div class="swiper-pagination"></div>
@@ -360,61 +320,20 @@
                 <!-- Additional required wrapper -->
                 <div class="swiper-wrapper">
                     <!-- Slides -->
+                    @foreach ($similarProducts as $product)
                     <div class="swiper-slide">
-                        <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                            class="w-100" alt="" />
-                        <div class="d-flex justify-content-between mt-3">
-                            <h6 class="brand-name">UWELL</h6>
-                            <p>$39.99</p>
-                        </div>
-                        <div class="">
-                            <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
-                        </div>
+                        <a href="{{ route('product.detail', $product->id) }}">
+                            <img src="{{ asset('dbImg/products/'.$product->image) }}"
+                                class="w-75" alt="" />
+                            <div class="mt-3">
+                                <div class="d-flex flex-wrap gap-5">
+                                    <h6 class="product-name">{{ $product->name }}</h6>
+                                    <span>{{ $product->dicount_price ? $product->dicount_price : $product->original_price . " MMK"}}</span>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <div class="swiper-slide">
-                        <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                            class="w-100" alt="" />
-                        <div class="d-flex justify-content-between mt-3">
-                            <h6 class="brand-name">UWELL</h6>
-                            <p>$39.99</p>
-                        </div>
-                        <div class="">
-                            <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                            class="w-100" alt="" />
-                        <div class="d-flex justify-content-between mt-3">
-                            <h6 class="brand-name">UWELL</h6>
-                            <p>$39.99</p>
-                        </div>
-                        <div class="">
-                            <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                            class="w-100" alt="" />
-                        <div class="d-flex justify-content-between mt-3">
-                            <h6 class="brand-name">UWELL</h6>
-                            <p>$39.99</p>
-                        </div>
-                        <div class="">
-                            <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej-1280x720.png"
-                            class="w-100" alt="" />
-                        <div class="d-flex justify-content-between mt-3">
-                            <h6 class="brand-name">UWELL</h6>
-                            <p>$39.99</p>
-                        </div>
-                        <div class="">
-                            <h5 class="product-name">UWELL Caliburn A3 Pod Kit</h5>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 <!-- If we need pagination -->
                 <div class="swiper-pagination"></div>
@@ -437,6 +356,8 @@
     const removeQty = document.querySelector('#removeQty');
     const addQty = document.querySelector('#addQty');
     const addToCart = document.querySelector('.addToCart');
+    const addToFavBtn = document.querySelector('.addToFavBtn');
+    const removeFavBtn = document.querySelector('.removeFavBtn');
     const quantityNo = parseInt(quantity.value);
     let count = quantityNo;
 
@@ -484,6 +405,48 @@
         }
         RemoveEmptyInCart();
         createItemInCart(cartData);
+    })
+
+    addToFavBtn?.addEventListener('click',function(){
+        const data = {
+            'product_id': {{ $product->id }},
+            'user_id': document.querySelector('.user_id').value,
+        }
+        axios.post('/user/addToFav', {
+                data
+            })
+            .then(function(response) {
+                if(response?.data?.status == 'false'){
+                   Swal.fire(
+                      'Good job!',
+                      'Already added to favourite',
+                      'success'
+                    )
+                }else if(response?.data){
+                    location.reload();
+                }
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    })
+
+    removeFavBtn?.addEventListener('click',function(){
+        const data = {
+            'product_id': {{ $product->id }},
+            'user_id': document.querySelector('.user_id').value,
+        }
+        axios.post('/user/removeFav', {
+                data
+            })
+            .then(function(response) {
+                if(response?.data?.status == 'true'){
+                    location.reload();
+                }
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
     })
 
 
@@ -544,6 +507,21 @@
         return isValid;
     }
 
+    function myFunction() {
+      var dots = document.getElementById("dots");
+      var moreText = document.getElementById("more");
+      var btnText = document.getElementById("myBtn");
+
+      if (dots.style.display === "none") {
+        dots.style.display = "inline";
+        btnText.innerHTML = "Read more";
+        moreText.style.display = "none";
+      } else {
+        dots.style.display = "none";
+        btnText.innerHTML = "Read less";
+        moreText.style.display = "inline";
+      }
+    }
 </script>
 
 @endsection

@@ -141,7 +141,25 @@ cardImage.forEach((el) => {
   });
 });
 
-
+const searchCard = document.querySelectorAll(".search-own-card");
+searchCard.forEach((el) => {
+    el.addEventListener("mouseover", (e) => {
+      const parent = e.target.closest(".own-card");
+      const button = parent.querySelector(".addToCartContainer");
+      if(!button.classList.contains("hideBtn")){
+        button.classList.add("showBtn");
+      }
+      button.classList.remove("hideBtn");
+    });
+    el.addEventListener("mouseleave", (e) => {
+      const parent = e.target.closest(".own-card");
+      const button = parent.querySelector(".addToCartContainer");
+      if(button.classList.contains("showBtn")){
+        button.classList.remove("showBtn");
+        button.classList.add("hideBtn");
+      }
+    });
+  });
 
 // hamburger menu
 const menu = document.querySelector(".menu");

@@ -133,6 +133,29 @@
     transition: transform 0.5s ease-in-out;
   }
 
+  //fav card
+  .own--fav--card{
+    width: 260px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .own--fav--card:hover .own-card-image{
+    transform: scale(1.1);
+    transition: transform 0.5s ease-in-out;
+  }
+
+  //search card
+  .search-own-card{
+    width: 300px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .search-own-card:hover .own-card-image{
+    transform: scale(1.1);
+    transition: transform 0.5s ease-in-out;
+  }
+
   .showBtn{
     display: block;
     transform: translateY(-90px);
@@ -179,12 +202,16 @@
     font-size: 14px;
   }
 
+  .similarProducts{
+    width: 200px;
+  }
+
   .swiper-slide:hover {
     transform: translateY(-20px);
     cursor: pointer;
     transition: transform 0.5s ease-in-out;
   }
-  
+
   .recomProductImage{
     width: 300px;
     height: 200px;
@@ -321,4 +348,6 @@
     transform: translateY(0);
   }
 
+  //see more btn
+  #more {display: none;}
 

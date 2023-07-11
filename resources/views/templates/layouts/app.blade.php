@@ -27,6 +27,7 @@
     const user_id = document.querySelector('.user_id')?.value;
     const cartBox = document.querySelector('.cartBox');
     const offCanvas = document.querySelector('.offcanvas-body');
+    // const addToFavBtn = document.querySelectorAll('.addToFavBtn');
     const data = {
         'user_id' : user_id
     }
@@ -218,6 +219,7 @@
             document.querySelector('#cartCount').innerHTML = cartCount;
             console.log(document.querySelector('#cartCount').innerHTML);
         }
+
     })
 
     function addAnimate() {
@@ -382,5 +384,45 @@
         cartBox.append(div)
         updateTotalCost();
     }
+
+    const subscribeBtn = document.querySelector('.subscribeBtn');
+    subscribeBtn.addEventListener('click',function(){
+        const subscribeForm = document.querySelector('#subscribe--form');
+        const firstName = subscribeForm.querySelector('input[name="first_name"]').value;
+        const lastName = subscribeForm.querySelector('input[name="last_name"]').value;
+        const email = subscribeForm.querySelector('input[name="email"]').value;
+        const phone = subscribeForm.querySelector('input[name="phone"]').value;
+
+        const data = {
+            'first_name' : firstName,
+            'last_name' : lastName,
+            'email' :  email,
+            'phone' : phone,
+        }
+        axios.post('/subscribe', {
+            data
+        })
+        .then(function(response) {
+            if(response?.data?.status == 'success'){
+                Swal.fire({
+                    title: 'Success',
+                    text: 'You have successfully subscribed!',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                      confirmButton: 'btn btn-primary'
+                    }
+                });
+                firstName = '';
+                lastName = '';
+                email = '';
+                phone = '';
+            }
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+
+    })
 </script>
 </html>

@@ -62,6 +62,16 @@
                 transform: rotate(-6deg);
             }
         }
+
+        .homeBtn{
+            position: absolute;
+            left: 50%;
+            top: 90%;
+            background-color: white;
+            border: 2px solid white;
+            padding: 10px 20px;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -705,6 +715,8 @@
             </div>
         </div>
     </a>
+
+    <a href="{{ url('/') }}" class="homeBtn" >GO TO HOME</a>
 
 </body>
 <script>

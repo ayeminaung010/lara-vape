@@ -6,8 +6,8 @@
             aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0"
             target="_blank">
-            <img src="{{ asset('admin/assets/img/logo-ct.png') }}" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-1 font-weight-bold text-white">Vape Dashboard</span>
+            <img src="{{ asset('dbImg/logo/64ac26f2165c3.Vape-Vibe-PNG-1-100x100.png') }}"  class="navbar-brand-img h-100" alt="main_logo">
+            <span class="ms-1 font-weight-bold text-white">Vape Vibe Dashboard</span>
         </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -123,14 +123,7 @@
                     <span class="nav-link-text ms-1">Orders</span>
                 </a>
             </li>
-            {{-- <li class="nav-item">
-                <a href="{{ route('payments.index') }}" class="nav-link text-white @if(Route::currentRouteName() == 'payments.index') bg-gradient-primary @endif" >
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">paid</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Payments</span>
-                </a>
-            </li> --}}
+
             <li class="nav-item">
                 <a  class="nav-link text-white " data-bs-toggle="collapse" href="#paymentCollapse" role="button"
                     aria-expanded="false" aria-controls="paymentCollapse">
@@ -222,6 +215,14 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="{{ route('optimize') }}" class="nav-link text-white " >
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">cleaning_services</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Clear Cache</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <div class=" d-flex justify-content-center">
@@ -236,11 +237,11 @@
             </li>
         </ul>
     </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
+    {{-- <div class="sidenav-footer position-absolute w-100 bottom-0 ">
         <div class="mx-3">
             <a class="btn btn-outline-primary mt-4 w-100"
                 href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-dashboard?ref=sidebarfree"
                 type="button">Documentation</a>
         </div>
-    </div>
+    </div> --}}
 </aside>

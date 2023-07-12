@@ -73,6 +73,10 @@ class UserPaymentController extends Controller
         $payment = UserPayment::find($id);
         $payment->status = 1;
         $payment->save();
+
+        $order = Order::where('user_payment_id',$id)->first();
+        $order->status = 1;
+        $order->save();
         return redirect()->back()->with('success','Payment Approved');
     }
 
@@ -82,6 +86,10 @@ class UserPaymentController extends Controller
         $payment = UserPayment::find($id);
         $payment->status = 2;
         $payment->save();
+
+        $order = Order::where('user_payment_id',$id)->first();
+        $order->status = 2;
+        $order->save();
         return redirect()->back()->with('success','Payment Rejected');
     }
 

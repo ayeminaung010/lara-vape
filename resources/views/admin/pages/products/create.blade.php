@@ -144,6 +144,7 @@
                             @enderror
                         </div>
                     </div>
+                    <textarea class="form-control my-4" name="information" rows="5" placeholder="Say a few words about product information" spellcheck="false">{{ old('information') }}</textarea>
                     <button type="submit" class=" btn btn-behance">
                         Create
                     </button>
@@ -152,4 +153,14 @@
 
         </div>
     </div>
+@endsection
+
+@section('js')
+<script>
+    $('#summernote').summernote({
+      placeholder: 'Hello Bootstrap 5',
+      tabsize: 2,
+      height: 100
+    });
+  </script>
 @endsection

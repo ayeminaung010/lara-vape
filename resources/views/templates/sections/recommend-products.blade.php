@@ -14,7 +14,7 @@
                     <a href="{{ route('product.detail',$product->id) }}">
                         <div class=" p-3 " >
                             <img src="{{ asset('dbImg/products/' . $product->image) }}"
-                                class=" recomProductImage"   alt="{{ $product->name }}" />
+                                class=" recomProductImage object-fit-cover"   alt="{{ $product->name }}" />
                             <div class="d-flex justify-content-between mt-3">
                                 <h6 class="brand-name">{{ $product->brand->name }}</h6>
                                 <p>{{ $product->discount_price ? $product->discount_price : $product->original_price }}Kyats</p>

@@ -17,7 +17,11 @@
             <a class="navbar-brand order-last order-lg-first" href="{{ url('/') }}">
                 <img src="{{ asset('dbImg/logo/'.$frontend->logo) }}" loading="lazy" class="" alt="">
             </a>
-            <div class="order-last order-lg-first d-flex gap-3 d-lg-none">
+            <div class="order-last order-lg-first d-flex align-items-center gap-3 d-lg-none ">
+                <a href="{{ route('products') }}" class=" me-3">
+                    <i class="bi bi-shop fs-5"></i>
+                    Store
+                </a>
                 @if (Auth::check())
                     @if (Auth::user()->role !== 'user')
                         <a href="{{ route('customer.login') }}">
@@ -36,7 +40,7 @@
                 <a class="text-decoration-none text-dark" aria-current="page" href="#" type="button"
                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <i class="bi bi-cart fs-1"></i>
-                    <span  class="cart-count"> 0 </span>
+                    {{-- <span  class="cart-count" id="mobileCartCount">0</span> --}}
                 </a>
             </div>
             <!-- <button
@@ -65,6 +69,10 @@
                         placeholder="Search for vapes, pods, kits and more..." aria-label="Search" />
                 </form>
                 <ul class="navbar-nav ms-auto d-flex flex-wrap align-items-center mb-2 mb-lg-0">
+                    <a href="{{ route('products') }}" class=" me-3">
+                        <i class="bi bi-shop fs-5"></i>
+                        Store
+                    </a>
                     <i class="bi bi-person fs-5 me-2"></i>
                     @if (Auth::check())
                         @if (Auth::user()->role !== 'user')
@@ -76,7 +84,7 @@
                                     href="{{ route('customer.register') }}">Register</a>
                             </li>
                         @else
-                            <li class="nav-item border-end border-1 ">
+                            <li class="nav-item border-end border-1 pe-3">
                                 <a href="{{ route('user.profile') }}">
                                     My Account
                                 </a>

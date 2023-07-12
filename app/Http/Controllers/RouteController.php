@@ -29,6 +29,15 @@ class RouteController extends Controller
         return view('templates.pages.home');
     }
 
+    //contact
+    public function contact(){
+        return view('templates.pages.contact-us');
+    }
+
+    //about
+    public function about(){
+        return view('templates.pages.about');
+    }
     //signIn
     public function SignIn(){
         return view('templates.pages.sign-in');
@@ -41,6 +50,13 @@ class RouteController extends Controller
 
     //dashboard
     public function dashboard(){
+        $categories = Category::all();
+        $products = Products::all();
+        $brands = Brands::all();
+        $subCategories = SubCategory::all();
+        $reviews = Review::all();
+        $ratings = Rating::all();
+        
         return view('admin.dashboard.index');
     }
 
@@ -196,8 +212,14 @@ class RouteController extends Controller
         $topRateProducts = Products::where('rating','>=',4)->take(10)->get();
         $similarProducts = Products::where('sub_category_id',$product->sub_category_id)->take(10)->get();
 
-        $favProduct  = FavProduct::where('user_id',Auth::user()->id)->where('product_id',$id)->first();
-        return view('templates.pages.product-detail', compact('product', 'reviews','averageRating','topRateProducts','similarProducts','favProduct'));
+        if(Auth::check()){
+            if(Auth::user()->role == 'user'){
+                $favProduct  = FavProduct::where('user_id',Auth::user()->id)->where('product_id',$id)->first();
+                return view('templates.pages.product-detail', compact('product', 'reviews','averageRating','topRateProducts','similarProducts','favProduct'));
+            }
+        }
+        return view('templates.pages.product-detail', compact('product', 'reviews','averageRating','topRateProducts','similarProducts'));
+
     }
 
 
@@ -258,6 +280,10 @@ class RouteController extends Controller
             $deliveryDetail->save();
 
             foreach($carts as $cart){
+                $products = Products::find($cart->product_id);
+                $products->stock = $products->stock - $cart->quantity;
+                $products->save();
+
                 $price = $cart->discount_price ? $cart->discountPrice : $cart->originalPrice * $cart->quantity;
                 $orderList = new OrderList();
                 $orderList->user_id = Auth::user()->id;

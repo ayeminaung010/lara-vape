@@ -70,7 +70,7 @@ class BrandsController extends Controller
         $brand->name = $request->name;
         if($request->hasFile('image')){
             $oldImg  = public_path('dbImg/brands/'.$brand->image);
-            if(file_exists($oldImg)){
+            if(file_exists($oldImg) &&  $brand->image !== null){
                 unlink($oldImg);
             }
             $image = $request->file('image');

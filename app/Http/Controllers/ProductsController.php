@@ -53,6 +53,7 @@ class ProductsController extends Controller
         $product->discount_price = $request->discount_price;
         $product->stock = $request->stock;
         $product->color = json_encode($request->color);
+        $product->information = $request->information;
         if($request->hasFile('image')){
             $image = $request->file('image');
             $imageName = uniqid().'.'.$image->getClientOriginalName();
@@ -101,9 +102,10 @@ class ProductsController extends Controller
         $product->discount_price = $request->discount_price;
         $product->stock = $request->stock;
         $product->color = json_encode($request->color);
+        $product->information = $request->information;
         if($request->hasFile('image')){
             $oldImg = public_path('dbImg/products/'.$product->image);
-            if(file_exists($oldImg)){
+            if(file_exists($oldImg) && $product->image !== null){
                 unlink($oldImg);
             }
             $image = $request->file('image');

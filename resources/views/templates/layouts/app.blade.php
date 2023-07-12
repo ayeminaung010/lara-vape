@@ -61,7 +61,7 @@
         }else{
             const random = Math.floor(Math.random() * 10000000000);
             const orderList = [];
-            const orderCode = 'VB'+'_' + random + '_VAPE';
+            const orderCode = 'VB'+'_' + random ;
             const cart = document.querySelectorAll('.item-in-cart');
             const totalQty = document.querySelector('#cartCount').innerText;
             cart.forEach(function(row) {
@@ -89,6 +89,11 @@
             return preV + parseFloat(curV.value);
         },0);
         document.querySelector('#cartCount').innerHTML = total;
+        // document.querySelector('#mobileCartCount').innerHTML = total;
+        // document.querySelectorAll('.cart-count').forEach((el) => {
+        //     console.log(el);
+        //     el.innerText = total;
+        // })
     }
 
     const updateTotalCost = () =>{
@@ -127,11 +132,11 @@
                                 <div class="row d-flex justify-content-between align-items-center">
                                     <div class=" col-5">
                                         <div class=" cart-item-quantity input-group input-group-sm">
-                                            <button class="btn btn-primary" onclick='dec(event,${data[i]?.discount_price ? data[i]?.discount_price : data[i]?.original_price})'>
+                                            <button class="btn btn-dark" onclick='dec(event,${data[i]?.discount_price ? data[i]?.discount_price : data[i]?.original_price})'>
                                                 <i class=" bi bi-dash pe-none"></i>
                                             </button>
                                             <input type="number" data-quantity="quantity" class="cart-quantity form-control text-center" value="${data[i]?.quantity}" max="${data[i]?.stock}">
-                                            <button class="btn btn-primary" onclick='inc(event,${data[i]?.discount_price ? data[i]?.discount_price : data[i]?.original_price})'>
+                                            <button class="btn btn-dark" onclick='inc(event,${data[i]?.discount_price ? data[i]?.discount_price : data[i]?.original_price})'>
                                                 <i class=" bi bi-plus pe-none"></i>
                                             </button>
                                         </div>
@@ -193,6 +198,7 @@
                 'title': productName,
                 'price': product_price,
                 'image': product_image,
+                'quantity' : quantity,
                 'color' : product_color ? product_color : ''
             }
             if (user_id !== undefined) {
@@ -217,7 +223,50 @@
             cartCount++;
             addAnimate();
             document.querySelector('#cartCount').innerHTML = cartCount;
-            console.log(document.querySelector('#cartCount').innerHTML);
+        }
+
+        if (e.target.matches('.addToFavBtn')) {
+            const container = e.target.closest('.own-card');
+            const product_id = container.querySelector('.productId')?.value;
+            const user_id = document.querySelector('.user_id')?.value;
+
+            const data = {
+                'product_id': product_id,
+                'user_id': user_id,
+            }
+            axios.post('/user/addToFav', {
+                data
+            })
+            .then(function(response) {
+                if(response?.data){
+                    location.reload();
+                }
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
+
+        if (e.target.matches('.removeFavBtn')) {
+            const container = e.target.closest('.own-card');
+            const product_id = container.querySelector('.productId')?.value;
+            const user_id = document.querySelector('.user_id')?.value;
+
+            const data = {
+                'product_id': product_id,
+                'user_id': user_id,
+            }
+            axios.post('/user/removeFav', {
+                data
+            })
+            .then(function(response) {
+                if(response?.data?.status == 'true'){
+                    location.reload();
+                }
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
         }
 
     })
@@ -344,6 +393,7 @@
         title,
         price,
         image,
+        quantity,
         color
     }) => {
         const div = document.createElement('div');
@@ -361,11 +411,11 @@
                     <div class="row d-flex justify-content-between align-items-center">
                         <div class=" col-5">
                             <div class=" cart-item-quantity input-group input-group-sm">
-                                <button class="btn btn-primary" onclick='dec(event,${price})'>
+                                <button class="btn btn-dark" onclick='dec(event,${price})'>
                                     <i class=" bi bi-dash pe-none"></i>
                                 </button>
-                                <input type="number" data-quantity="quantity"  class="cart-quantity form-control text-center" value="1">
-                                <button class="btn btn-primary" onclick='inc(event,${price})'>
+                                <input type="number" data-quantity="quantity"  class="cart-quantity form-control text-center" value="${quantity}">
+                                <button class="btn btn-dark" onclick='inc(event,${price})'>
                                     <i class=" bi bi-plus pe-none"></i>
                                 </button>
                             </div>
@@ -386,7 +436,7 @@
     }
 
     const subscribeBtn = document.querySelector('.subscribeBtn');
-    subscribeBtn.addEventListener('click',function(){
+    subscribeBtn?.addEventListener('click',function(){
         const subscribeForm = document.querySelector('#subscribe--form');
         const firstName = subscribeForm.querySelector('input[name="first_name"]').value;
         const lastName = subscribeForm.querySelector('input[name="last_name"]').value;

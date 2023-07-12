@@ -112,7 +112,7 @@
                     </div>
                     <div class="d-flex gap-2 flex-wrap">
                         <button class="btn btn-dark rounded-0" id="removeQty" >-</button>
-                        <input type="number" class="form-control" id="quantity" style="width: 100px" max="{{ $product->stock }}" min="1" value="1" />
+                        <input type="number" class="form-control" id="quantity" style="width: 100px" max="{{ $product->stock }}" min="1" value="{{ $product->stock  == 0 ? 0 : 1}}" />
                         <button class="btn btn-dark rounded-0" id="addQty">+</button>
                     </div>
                     <div class="d-flex flex-wrap gap-3">
@@ -122,14 +122,16 @@
                             </button>
                         </div>
                         <div class="col-lg-3">
-                            @if ($favProduct == null)
-                            <a href="#" class="btn btn-outline-dark rounded-0 p-3 addToFavBtn">
-                                <i class="bi bi-heart"></i>
-                            </a>
-                            @else
-                            <a href="#" class="btn btn-outline-dark rounded-0 p-3 removeFavBtn">
-                                <i class="bi bi-heart-fill"></i>
-                            </a>
+                            @if(isset($favProduct))
+                                @if ($favProduct == null)
+                                <a href="#" class="btn btn-outline-dark rounded-0 p-3 addToFavBtn">
+                                    <i class="bi bi-heart"></i>
+                                </a>
+                                @else
+                                <a href="#" class="btn btn-outline-dark rounded-0 p-3 removeFavBtn">
+                                    <i class="bi bi-heart-fill"></i>
+                                </a>
+                                @endif
                             @endif
                         </div>
                     </div>
@@ -383,6 +385,7 @@
             'title': '{{ $product->name }}',
             'price': {{ $product->discount_price ? $product->discount_price : $product->original_price }},
             'image': document.querySelector('.product_img').src,
+            'quantity' : quantity?.value,
             'color' : document.querySelector('#product_color') ? document.querySelector('#product_color')?.value : '',
         }
         if (user_id !== undefined) {
@@ -392,18 +395,24 @@
                 'user_id': document.querySelector('.user_id').value,
                 'color' : document.querySelector('#product_color') ? document.querySelector('#product_color')?.value : ''
             }
-            console.log(data);
             axios.post('/addToCart', {
                     data
                 })
                 .then(function(response) {
                     console.log(response);
+
                 })
                 .catch(function(error) {
                     console.log(error);
                 });
         }
+        Swal.fire(
+          'Good job!',
+          'Added to Cart',
+          'success'
+        )
         RemoveEmptyInCart();
+        updateTotalQuantity();
         createItemInCart(cartData);
     })
 
@@ -452,7 +461,7 @@
 
     //review
     const ReviewBtn = document.querySelector('.ReviewBtn');
-    ReviewBtn.addEventListener('click',function(){
+    ReviewBtn?.addEventListener('click',function(){
         validateReviewForm();
         const data = {
             'product_id': {{ $product->id }},

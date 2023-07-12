@@ -58,6 +58,12 @@
     width: 100vw;
   }
 
+  .dropdown--btn:hover{
+    .dropdown-menu {
+        width: 100vw;
+      }
+  }
+
   .dropdown--btn {
     position: relative;
   }
@@ -302,7 +308,7 @@
   .menuItem {
     display: block;
     margin: 2rem 4rem;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: white;
     text-decoration: none;
   }

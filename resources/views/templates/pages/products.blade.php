@@ -41,10 +41,10 @@
             <div class="row">
                 <div class="col-lg-2">
                     <form action="{{ URL::current() }}" method="GET">
-                        <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex gap-3 align-items-center justify-content-between">
                             <h6>Sort</h6>
                             <div class="">
-                                <button type="submit" class="btn btn-info">Fliter</button>
+                                <button type="submit" class="btn btn-info my-2">Fliter</button>
                                 <a href="{{ url()->current() }}" class="btn btn-secondary">Reset</a>
                             </div>
                         </div>
@@ -176,6 +176,24 @@
                                         To
                                         Cart
                                     </button>
+                                    @if (Auth::check())
+                                        @if (Auth::user()->role == 'user')
+                                            @php
+                                                $favProduct = App\Models\FavProduct::where('product_id',$product->id)->where('user_id',Auth::user()->id)->first();
+                                            @endphp
+                                            @if ($favProduct == null)
+                                            <button class=" btn btn-dark rounded-0 text-uppercase w-100 mt-2 py-3 addToFavBtn">Add
+                                                To
+                                                Favourite
+                                            </button>
+                                            @else
+                                                <button class=" btn btn-dark rounded-0 text-uppercase w-100 mt-2 py-3 removeFavBtn">
+                                                    Remove from Favourite
+                                                </button>
+                                            @endif
+                                        @endif
+                                    @endif
+
                                 </div>
                             </div>
                         @endforeach

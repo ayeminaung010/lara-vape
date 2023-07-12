@@ -161,6 +161,8 @@
                             @enderror
                         </div>
                     </div>
+                    <textarea class="form-control my-4" name="information" rows="5" placeholder="Say a few words about product information" spellcheck="false">{{ old('information',$product->information) }}</textarea>
+
                     <button type="submit" class=" btn btn-behance">
                         Save
                     </button>

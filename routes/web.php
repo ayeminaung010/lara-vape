@@ -48,6 +48,8 @@ Route::middleware([
 
 //all views
 Route::get('/',[RouteController::class,"home"]);
+Route::get('/about',[RouteController::class,"about"]);
+Route::get('/contact',[RouteController::class,"contact"]);
 Route::prefix('products')->group(function () {
     Route::get('/',[RouteController::class,"products"])->name('products');
     Route::get('/{slug}',[RouteController::class,"slugProducts"])->name('product.slugProducts');
@@ -89,6 +91,7 @@ Route::prefix('user')->middleware('user_auth')->group(function () {
 
     Route::get('/order-lists',[UserController::class,"orderLists"])->name('user.orderLists');
     Route::get('/history',[UserController::class,"history"])->name('user.history');
+    Route::get('/order-detail/{code}',[UserController::class,"orderDetail"])->name('user.orderDetail');
 
     Route::post('/addToFav',[FavProductController::class,'store'])->name('addToFav');
     Route::get('/getFav',[FavProductController::class,'getFav'])->name('getFav');
@@ -212,6 +215,11 @@ Route::prefix('admin')->middleware('admin_auth')->group(function () {
         Route::get('/password',[AdminController::class,"password"])->name('profile.password');
         Route::post('/password/update',[AdminController::class,"updatePassword"])->name('profile.password.update');
     });
+
+    Route::get('/optimize',function(){
+        $exitCode = Artisan::call('optimize:clear');
+        return redirect()->back();
+    })->name('optimize');
 });
 
 

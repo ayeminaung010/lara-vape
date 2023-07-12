@@ -4,6 +4,8 @@
  <script src="{{ asset('admin/assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
  <script src="{{ asset('admin/assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
  <script src="{{ asset('admin/assets/js/plugins/chartjs.min.js') }}"></script>
+ <script src="{{ asset('user/vendor/js/jquery.min.js') }}"></script>
+
  <script>
    var ctx = document.getElementById("chart-bars").getContext("2d");
 

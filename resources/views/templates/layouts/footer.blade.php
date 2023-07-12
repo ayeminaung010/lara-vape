@@ -1,8 +1,8 @@
 <!-- footer section  -->
 <footer>
     <div class="container py-6">
-      <div class="row gap-3 justify-content-center">
-        <div class="col-lg-4 ">
+      <div class="row gap-3  justify-content-center">
+        <div class="col-lg-4 col-md-3">
           <div class="">
             <img src="{{ asset('dbImg/logo/'.$frontend->logo) }}" alt="">
           </div>
@@ -15,16 +15,16 @@
             </a>
           </div>
         </div>
-        <div class="col-lg-6 ">
+        <div class="col-lg-6  col-md-8">
           <div class="d-flex flex-wrap gap-7">
             <div class="">
-              <h6 class="fw-bold">CONTACT US</h6>
+              <h6 class="fw-bold">Vape Vibe</h6>
               <ul class="list-unstyled">
                 <li>
-                  <a href="#">About Us</a>
+                  <a href="{{ url('/about') }}">About Us</a>
                 </li>
                 <li>
-                  <a href="#">Contact Us</a>
+                  <a href="{{ url('/contact') }}">Contact Us</a>
                 </li>
               </ul>
             </div>

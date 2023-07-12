@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Order;
+use App\Models\OrderList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -91,9 +92,17 @@ class UserController extends Controller
 
     //history
     public function history(){
-        $orders = Order::where('user_id',Auth::user()->id)->where('status', '1')->where('status', '2')->paginate(10);
+        $orders = Order::where('user_id',Auth::user()->id)
+        ->whereIn('status', [1, 2])
+        ->paginate(10);
         return view('templates.user.pages.history',compact('orders'));
     }
 
-    
+    //orderDetail
+    public function orderDetail($code){
+        $orderDetails = OrderList::where('order_code',$code)
+            ->leftJoin('products', 'order_lists.product_id', '=', 'products.id')
+            ->paginate(10);
+        return view('templates.user.pages.order-products',compact('orderDetails'));
+    }
 }

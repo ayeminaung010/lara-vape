@@ -14,7 +14,7 @@ dropDownBtns.forEach((btn) => {
     }
     const dropDown = e.target.closest(".dropdown");
     const dropDownMenu = dropDown.querySelector(".dropdown-menu");
-    if (!dropDownMenu.classList.contains("show")) {
+    if (!dropDownMenu?.classList.contains("show")) {
       dropDownMenu.classList.add("show");
     }
     dropDownMenu.addEventListener("mouseover", (e) => {
@@ -125,7 +125,7 @@ const cardImage = document.querySelectorAll(".own-card-image");
 cardImage.forEach((el) => {
   el.addEventListener("mouseover", (e) => {
     const parent = e.target.closest(".own-card");
-    const button = parent.querySelector(".addToCartContainer");
+    const button = parent?.querySelector(".addToCartContainer");
     if(!button.classList.contains("hideBtn")){
       button.classList.add("showBtn");
     }
@@ -133,8 +133,8 @@ cardImage.forEach((el) => {
   });
   el.addEventListener("mouseleave", (e) => {
     const parent = e.target.closest(".own-card");
-    const button = parent.querySelector(".addToCartContainer");
-    if(button.classList.contains("showBtn")){
+    const button = parent?.querySelector(".addToCartContainer");
+    if(button?.classList.contains("showBtn")){
       button.classList.remove("showBtn");
       button.classList.add("hideBtn");
     }
@@ -145,7 +145,7 @@ const searchCard = document.querySelectorAll(".search-own-card");
 searchCard.forEach((el) => {
     el.addEventListener("mouseover", (e) => {
       const parent = e.target.closest(".own-card");
-      const button = parent.querySelector(".addToCartContainer");
+      const button = parent?.querySelector(".addToCartContainer");
       if(!button.classList.contains("hideBtn")){
         button.classList.add("showBtn");
       }
@@ -153,7 +153,7 @@ searchCard.forEach((el) => {
     });
     el.addEventListener("mouseleave", (e) => {
       const parent = e.target.closest(".own-card");
-      const button = parent.querySelector(".addToCartContainer");
+      const button = parent?.querySelector(".addToCartContainer");
       if(button.classList.contains("showBtn")){
         button.classList.remove("showBtn");
         button.classList.add("hideBtn");

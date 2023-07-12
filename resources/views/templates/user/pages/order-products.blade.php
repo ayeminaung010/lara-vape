@@ -30,39 +30,35 @@
                         </ul>
                     </div>
                     <div class="col-lg-7 p-5">
-                        @if (count($orders) !== 0)
-                            <table class="table table-light table-borderless table-hover text-center mb-0" id="dataTable">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Order ID</th>
-                                        <th>Total Price</th>
-                                        <th>Status</th>
-                                    </tr>
+                        @if (count($orderDetails) !== 0)
+                            <table>
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Color</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total Price</th>
+                                  </tr>
                                 </thead>
-                                <tbody class="align-middle">
-                                    @foreach ($orders as $o )
-                                        <tr>
-                                            <td class="align-middle" > {{ $o->created_at->format('d-M-Y')}} </td>
-                                            <td class="align-middle" >
-                                                <a href="{{ route('user.orderDetail',$o->order_code) }}" class=" btn btn-dark rounded-0">{{ $o->order_code}} </a>
-                                            </td>
-                                            <td class="align-middle" > {{ $o->total_price}} Kyats</td>
-                                            <td class="align-middle" >
-                                                @if ( $o->status == 0 )
-                                                    <span class="text-warning"> <i class="bi bi-arrow-clockwise"></i> Pending..</span>
-                                                @elseif($o->status == 1)
-                                                    <span class="text-success"> <i class="bi bi-check-circle"></i> Success</span>
-                                                @elseif($o->status == 2)
-                                                    <span class="text-danger"> <i class="bi bi-cart-x"></i> Reject</span>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                <tbody>
+                                @foreach ($orderDetails as $o )
+                                  <tr>
+                                    <td data-label="Item">{{ $o->name}}</td>
+                                    <td data-label="Image">
+                                        <a href="{{ route('product.detail',$o->product_id) }}" class=" btn btn-dark rounded-0">
+                                            <img src="{{ asset('dbImg/products/'.$o->image) }}" width="100" height="100" alt="">
+                                        </a>
+                                    </td>
+                                    <td data-label="Color">{{ $o->product_color }}</td>
+                                    <td data-label="Quantity">{{ $o->quantity }}</td>
+                                    <td data-label="Total Price">{{ $o->total_price}} Kyats</td>
+                                  </tr>
+                                @endforeach
                                 </tbody>
-                            </table>
+                              </table>
                             <div class="mt-3">
-                                {{ $orders->links() }}
+                                {{ $orderDetails->links() }}
                             </div>
                         @else
                         <div class=" d-flex  flex-column justify-content-center align-items-center">

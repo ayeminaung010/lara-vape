@@ -72,7 +72,7 @@ class ProductTypeController extends Controller
         $productType->slug = $request->slug;
         if($request->hasFile('image')){
             $oldImg = $productType->image;
-            if(file_exists(public_path('dbImg/product-type/'.$oldImg))){
+            if(file_exists(public_path('dbImg/product-type/'.$oldImg) && $oldImg !== null)){
                 unlink(public_path('dbImg/product-type/'.$oldImg));
             }
             $image = $request->file('image');

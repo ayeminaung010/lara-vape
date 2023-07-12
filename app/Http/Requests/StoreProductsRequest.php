@@ -24,7 +24,7 @@ class StoreProductsRequest extends FormRequest
         return [
             'name' => 'required',
             // 'category_id' => 'required|integer',
-            'brand_id' => 'required|integer',
+            // 'brand_id' => 'required|integer',
             'original_price' => 'required|numeric',
             'stock' => 'required|integer',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp',

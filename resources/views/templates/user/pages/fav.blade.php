@@ -35,18 +35,23 @@
                                 @foreach ($favProducts as $product)
                                 <div class="own--fav--card overflow-hidden shadow px-4 py-3 border-0 position-relative">
                                     <input type="hidden" name="product_id" class="productId" value="{{ $product->id }}">
+                                    <div class=" my-2 text-end">
+                                        <a href="#" class=" btn btn-outline-dark rounded-0 removeFavBtn"><i class="bi bi-x-circle removeFavBtn"></i></a>
+                                    </div>
                                     <div class="image overflow-hidden">
                                         <a href="{{ route('product.detail', $product->id) }}">
-                                            <img src="{{ asset('dbImg/products/' . $product->image) }}" height="300"
+                                            <img src="{{ asset('dbImg/products/' . $product->image) }}" height="200"
                                                 class=" w-100 own-card-image object-fit-cover" alt="{{ $product->name }}" />
                                         </a>
                                     </div>
                                     <input type="hidden" value="{{ $product->stock }}" class="productStock">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center gap-4 justify-content-between mt-3">
-                                            <h6 class="product-name fw-bold">
-                                                {{ $product->name }}
-                                            </h6>
+                                            <a href="{{ route('product.detail', $product->id) }}">
+                                                <h6 class="product-name fw-bold">
+                                                    {{ $product->name }}
+                                                </h6>
+                                            </a>
                                             <div class="d-flex gap-2 flex-wrap">
                                                 @if ($product->discount_price)
                                                     <h6 class="discount-price" data-price="{{ $product->discount_price }}">
@@ -99,4 +104,35 @@
         </section>
 
     </main>
+@endsection
+
+
+@section('js')
+<script>
+    document.addEventListener('click', e => {
+        if (e.target.matches('.removeFavBtn')) {
+            const container = e.target.closest('.own--fav--card');
+            const product_id = container.querySelector('.productId')?.value;
+            const user_id = document.querySelector('.user_id')?.value;
+
+            console.log(product_id,user_id);
+            const data = {
+                'product_id': product_id,
+                'user_id': user_id,
+            }
+            axios.post('/user/removeFav', {
+                data
+            })
+            .then(function(response) {
+                if(response?.data?.status == 'true'){
+                    location.reload();
+                }
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
+
+    })
+</script>
 @endsection

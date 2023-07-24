@@ -63,7 +63,7 @@
         <div class="row justify-content-evenly">
             <div class="col-lg-6">
                 <div class=" d-flex justify-content-center">
-                    <img src="{{ asset('dbImg/products/'.$product->image) }}" class="w-100 product_img" alt="" />
+                    <img src="{{ asset('dbImg/products/'.$product->image) }}" class="w-100 product_img object-fit-cover" alt="" />
                 </div>
             </div>
             <div class="col-lg-6 py-4">
@@ -400,20 +400,25 @@
                 })
                 .then(function(response) {
                     console.log(response);
-
                 })
                 .catch(function(error) {
                     console.log(error);
                 });
         }
-        Swal.fire(
-          'Good job!',
-          'Added to Cart',
-          'success'
-        )
         RemoveEmptyInCart();
         updateTotalQuantity();
         createItemInCart(cartData);
+        Swal.fire({
+          title: 'Good job!',
+          text: 'Added to Cart',
+          icon: 'success',
+        }).then((result) => {
+          // Check if the user clicked the "Okay" button (result.isConfirmed)
+          if (result.isConfirmed) {
+            // Refresh the page
+            location.reload();
+          }
+        });
     })
 
     addToFavBtn?.addEventListener('click',function(){
@@ -458,7 +463,6 @@
             });
     })
 
-
     //review
     const ReviewBtn = document.querySelector('.ReviewBtn');
     ReviewBtn?.addEventListener('click',function(){
@@ -474,7 +478,6 @@
             data
         })
         .then(function(response) {
-            console.log(response);
             if(response?.data ){
                 document.querySelector('#reviewTitle').value = '';
                 document.querySelector('#reviewMessage').value  = '';

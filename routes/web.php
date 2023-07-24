@@ -220,6 +220,7 @@ Route::prefix('admin')->middleware('admin_auth')->group(function () {
         $exitCode = Artisan::call('optimize:clear');
         return redirect()->back();
     })->name('optimize');
+    
 });
 
 

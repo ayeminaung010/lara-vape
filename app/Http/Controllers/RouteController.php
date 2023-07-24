@@ -56,7 +56,7 @@ class RouteController extends Controller
         $subCategories = SubCategory::all();
         $reviews = Review::all();
         $ratings = Rating::all();
-        
+
         return view('admin.dashboard.index');
     }
 
@@ -187,11 +187,16 @@ class RouteController extends Controller
     public function productDetail($id)
     {
         $product = Products::find($id);
-        $reviews = Rating::where('product_id', $id)
+    $reviews = Rating::where('product_id', $id)
             ->leftJoin('users', 'users.id', '=', 'ratings.user_id')
             ->select('users.first_name as firstName', 'users.last_name','ratings.*')
             ->orderBy('created_at','desc')
             ->paginate(10);
+        // where('product_id', $id)
+            // ->leftJoin('users', 'users.id', '=', 'ratings.user_id')
+            // ->select('users.first_name as firstName', 'users.last_name','ratings.*')
+            // ->orderBy('created_at','desc')
+            // ->paginate(10);
 
         $reviewCount = $reviews->count();
         $total_star  = $reviews->count() * 5;
@@ -211,7 +216,6 @@ class RouteController extends Controller
 
         $topRateProducts = Products::where('rating','>=',4)->take(10)->get();
         $similarProducts = Products::where('sub_category_id',$product->sub_category_id)->take(10)->get();
-
         if(Auth::check()){
             if(Auth::user()->role == 'user'){
                 $favProduct  = FavProduct::where('user_id',Auth::user()->id)->where('product_id',$id)->first();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\UserPayment;
 use App\Http\Requests\StoreUserPaymentRequest;
 use App\Http\Requests\UpdateUserPaymentRequest;

@@ -55,7 +55,7 @@
                         @endif
                         @if (session('success'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <strong>Fail!</strong> {{ session('success') }}
+                                <strong>Success!</strong> {{ session('success') }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -83,7 +83,7 @@
                                 @error('password_confirmation')
                                     <small class=" text-danger">{{ $message }}</small>
                                 @enderror
-                                <button type="submit" class=" btn btn-dark text-uppercase rounded-0 py-3">Log In</button>
+                                <button type="submit" class=" btn btn-dark text-uppercase rounded-0 py-3">Change my password</button>
                             </form>
 
                             <div class=" d-flex justify-content-between">

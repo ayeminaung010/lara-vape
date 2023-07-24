@@ -149,6 +149,9 @@
                         </div>
                         @endif
                     </div>
+                    <div class="">
+                        {{ $products->links() }}
+                    </div>
                 </div>
             </div>
         </div>

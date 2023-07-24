@@ -31,7 +31,7 @@
                                 @error('email')
                                     <small class=" text-danger">{{ $message }}</small>
                                 @enderror
-                                <button type="submit" class=" btn btn-dark text-uppercase rounded-0 py-3">Log In</button>
+                                <button type="submit" class=" btn btn-dark text-uppercase rounded-0 py-3">Send Reset Password Link</button>
                             </form>
 
                             <div class=" d-flex justify-content-between">

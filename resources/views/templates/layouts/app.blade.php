@@ -222,7 +222,8 @@
             createItemInCart(cartData);
             cartCount++;
             addAnimate();
-            document.querySelector('#cartCount').innerHTML = cartCount;
+            // document.querySelector('#cartCount').innerHTML = cartCount;
+            updateTotalQuantity();
         }
 
         if (e.target.matches('.addToFavBtn')) {
@@ -268,7 +269,6 @@
                 console.log(error);
             });
         }
-
     })
 
     function addAnimate() {
@@ -361,8 +361,9 @@
         }
         cartCount  = cartCount - currentCart.querySelector('.cart-quantity').valueAsNumber;
         addAnimate();
-        document.querySelector('#cartCount').innerHTML = cartCount;
+        // document.querySelector('#cartCount').innerHTML = cartCount;
         updateTotalCost();
+        updateTotalQuantity();
     }
 
     window.clearCart = function(event){

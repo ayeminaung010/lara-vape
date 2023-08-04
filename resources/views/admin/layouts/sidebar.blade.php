@@ -62,29 +62,6 @@
                     </a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " data-bs-toggle="collapse" href="#menuCollapse" role="button"
-                    aria-expanded="false" aria-controls="menuCollapse">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">lunch_dining</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Menu</span>
-                </a>
-                <div class="collapse" id="menuCollapse">
-                    <a class="nav-link text-white @if(Route::currentRouteName() == 'admin.dashboard') bg-gradient-primary @endif" >
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">lunch_dining</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Menu Lists</span>
-                    </a>
-                    <a class="nav-link text-white  @if(Route::currentRouteName() == 'admin.dashboard') bg-gradient-primary @endif" >
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">fastfood</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Menu Items</span>
-                    </a>
-                </div>
-            </li>
 
             <li class="nav-item">
                 <a class="nav-link text-white " data-bs-toggle="collapse" href="#frontendCollapse" role="button"

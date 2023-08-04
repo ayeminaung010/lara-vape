@@ -9,9 +9,11 @@ use App\Models\Order;
 use App\Models\Brands;
 use App\Models\Rating;
 use App\Models\Review;
+use App\Models\Contact;
 use App\Models\Category;
 use App\Models\Products;
 use App\Models\OrderList;
+use App\Models\Subscribe;
 use App\Models\FavProduct;
 use App\Models\SubCategory;
 use App\Models\UserPayment;
@@ -56,8 +58,15 @@ class RouteController extends Controller
         $subCategories = SubCategory::all();
         $reviews = Review::all();
         $ratings = Rating::all();
+        $orders = Order::all();
+        $users  = User::all();
+        $subscribers = Subscribe::all();
+        $contacts = Contact::all();
+        $payments = UserPayment::all();
+        $successPayments = UserPayment::where('status',1)->get();
+        $rejectPayments = UserPayment::where('status',2)->get();
 
-        return view('admin.dashboard.index');
+        return view('admin.dashboard.index',compact('categories','products','brands','subCategories','reviews','ratings','orders','users','subscribers','contacts','payments','successPayments','rejectPayments'));
     }
 
     //loginAdmin

@@ -9,7 +9,7 @@
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
                 <!-- Slides -->
-                @foreach (App\Models\Products::get() as $product)
+                @foreach ($recommend as $product)
                 <div class="swiper-slide">
                     <a href="{{ route('product.detail',$product->id) }}">
                         <div class=" p-3 " >

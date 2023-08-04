@@ -210,7 +210,7 @@
                                     <div class="single-dropdown-item">
                                         <ul class="list-unstyled">
                                             <li>
-                                                <a class="" href="#">
+                                                <a class="" href="/products/{{$category->slug}}?category%5B%5D={{ $sub->id}}">
                                                     <h6>{{ $sub->name }}</h6>
                                                 </a>
                                             </li>

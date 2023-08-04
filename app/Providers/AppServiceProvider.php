@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Brands;
 use App\Models\Review;
 use App\Models\Frontend;
+use App\Models\Products;
 use App\Models\ProductType;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
@@ -58,6 +59,11 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('templates.sections.banner', function ($view) {
             $frontend = Frontend::first();
             $view->with('frontend', $frontend);
+        });
+
+        view()->composer('templates.sections.recommend-products', function ($view) {
+            $recommend = Products::orderBy('created_at','desc')->paginate('10');
+            $view->with('recommend', $recommend);
         });
 
     }
